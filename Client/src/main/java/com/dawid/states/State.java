@@ -1,4 +1,7 @@
-package com.dawid;
+package com.dawid.states;
+
+import com.dawid.CLI;
+import com.dawid.Commands;
 
 import java.util.EnumMap;
 

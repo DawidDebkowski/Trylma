@@ -1,7 +1,10 @@
-package com.dawid;
+package com.dawid.states;
+
+import com.dawid.CLI;
+import com.dawid.Commands;
 
 public class DisconnectedState extends State {
-    DisconnectedState(CLI cli) {
+    public DisconnectedState(CLI cli) {
         super(cli);
 
         commands.put(Commands.connect, this::connect);

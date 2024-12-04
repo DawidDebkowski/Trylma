@@ -1,9 +1,5 @@
 package com.dawid;
 
-interface ICommand {
-    void execute(String[] args);
-}
-
 public enum Commands{
     help(
       "h", "help",

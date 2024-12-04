@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 //TODO: test this class when the server is online
 public class ServerCommunicator implements ITrylmaProtocol {
-    private Socket socket;
-    private Scanner in;
-    private PrintWriter out;
+    private final Socket socket;
+    private final Scanner in;
+    private final PrintWriter out;
 
 
     ServerCommunicator(String serverAdress, int port) throws IOException {

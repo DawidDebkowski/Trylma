@@ -1,27 +1,28 @@
 package com.dawid;
 
+import com.dawid.states.ClientState;
+import com.dawid.states.CommandException;
+
 import java.util.Scanner;
 
-public class CLI
-{
+public class CLI {
     ClientState clientState;
-    ITrylmaProtocol serverCommunicator;
+    private ITrylmaProtocol socket;
     Scanner scanner;
 
     boolean isRunning = true;
 
-    public CLI(ITrylmaProtocol serverCommunicator) {
+    public CLI(ITrylmaProtocol server) {
         scanner = new Scanner(System.in);
-        clientState = new PlayingState(this);
-        this.serverCommunicator = serverCommunicator;
+        this.socket = server;
     }
 
     public void mainLoop() {
         println("Welcome to the Trylma game!");
         println("Type \"help\" for a list of commands or just connect and start playing!");
-        while(isRunning) {
+        while (isRunning) {
             println("Input a command");
-            String[] args = parseInput(scanner.nextLine());
+            final String[] args = parseInput(scanner.nextLine());
             try {
                 clientState.executeCommand(args);
             } catch (CommandException e) {
@@ -30,6 +31,9 @@ public class CLI
             }
 //            println("end loop");
         }
+    }
+    public ITrylmaProtocol getSocket() {
+        return socket;
     }
 
     public void endLoop() {
@@ -41,7 +45,7 @@ public class CLI
     }
 
     public String[] parseInput(String in) {
-        if(in.isEmpty()) {
+        if (in.isEmpty()) {
             return new String[0];
         }
         return in.split(" ");
