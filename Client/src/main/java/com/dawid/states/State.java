@@ -25,6 +25,9 @@ public class State implements ClientState {
 
     @Override
     public void executeCommand(String[] args) throws CommandException {
+        if(args.length == 0){
+            throw new CommandException("No command specified");
+        }
         Commands command = Commands.stringToCommand(args[0]);
         if(command == null) {
             throw new CommandException("Unknown command");
