@@ -11,7 +11,12 @@ public class PlayingState extends State{
     }
 
     private void move(String[] args) {
-        System.out.println("Move command" + args[1] + args[2]);
+        boolean status = client.serverCommunicator.move(args[1], args[2]);
+        if (status) {
+            System.out.println("Move command" + args[1] + args[2]);
+        } else {
+            System.out.println("Invalid move, try again.");
+        }
     }
 
     private void showBoard(String[] args) {

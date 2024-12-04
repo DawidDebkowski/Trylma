@@ -21,7 +21,7 @@ public class ServerCommunicator implements ITrylmaProtocol {
 
     @Override
     public boolean move(String from, String to) {
-        out.println("MOVE" + from + " " + to);
+        out.println("MOVE" + " " + from + " " + to);
         String response = in.nextLine();
         if(response.equals("VALID_MOVE")) {
             return true;

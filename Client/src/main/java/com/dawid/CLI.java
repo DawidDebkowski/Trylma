@@ -5,13 +5,15 @@ import java.util.Scanner;
 public class CLI
 {
     ClientState clientState;
+    ITrylmaProtocol serverCommunicator;
     Scanner scanner;
 
     boolean isRunning = true;
 
-    public CLI() {
+    public CLI(ITrylmaProtocol serverCommunicator) {
         scanner = new Scanner(System.in);
         clientState = new PlayingState(this);
+        this.serverCommunicator = serverCommunicator;
     }
 
     public void mainLoop() {
