@@ -1,24 +1,13 @@
 package com.dawid;
 
-import java.io.Serializable;
-import java.util.EnumMap;
+public class PlayingState extends State{
 
-public class PlayingState implements ClientState {
-    EnumMap<Commands, ICommand> commands;
+    PlayingState(CLI cli) {
+        super(cli);
 
-    PlayingState() {
-        commands = new EnumMap<>(Commands.class);
-
-        commands.put(Commands.help, this::help);
         commands.put(Commands.move, this::move);
         commands.put(Commands.showBoard, this::showBoard);
-    }
-
-    private void help(String[] args) {
-        System.out.printf("%-7s %-15s %s\n", "Short", "Command", "Usage");
-        for(Commands command : Commands.values()) {
-            System.out.printf("%-7s %-15s - %s\n", command.getShortcut(), command.getFullName(), command.getDescription());
-        }
+        commands.put(Commands.disconnect, this::disconnect);
     }
 
     private void move(String[] args) {
@@ -29,15 +18,8 @@ public class PlayingState implements ClientState {
         System.out.println("Show command");
     }
 
-    @Override
-    public void executeCommand(String[] args) throws CommandException {
-        Commands command = Commands.stringToCommand(args[0]);
-        if(command == null) {
-            throw new CommandException("Unknown command");
-        }
-        if(args.length-1 < command.minArgs()) {
-            throw new CommandException("Not enough arguments");
-        }
-        commands.get(command).execute(args);
+    private void disconnect(String[] args) {
+        System.out.println("Disconnecting");
+        client.changeState(new DisconnectedState(client));
     }
 }

@@ -1,6 +1,5 @@
 package com.dawid;
 
-import java.util.EnumMap;
 import java.util.Scanner;
 
 public class CLI
@@ -8,15 +7,17 @@ public class CLI
     ClientState clientState;
     Scanner scanner;
 
+    boolean isRunning = true;
+
     public CLI() {
         scanner = new Scanner(System.in);
-        clientState = new PlayingState();
+        clientState = new PlayingState(this);
     }
 
     public void mainLoop() {
         println("Welcome to the Trylma game!");
         println("Type \"help\" for a list of commands or just connect and start playing!");
-        while(true) {
+        while(isRunning) {
             println("Input a command");
             String[] args = parseInput(scanner.nextLine());
             try {
@@ -25,10 +26,15 @@ public class CLI
                 println(e.getMessage());
                 continue;
             }
+//            println("end loop");
         }
     }
 
-    public void ChangeState(ClientState newState) {
+    public void endLoop() {
+        isRunning = false;
+    }
+
+    public void changeState(ClientState newState) {
         clientState = newState;
     }
 

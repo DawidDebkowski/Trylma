@@ -15,6 +15,15 @@ public enum Commands{
     showBoard("show", "showBoard",
             "Displays the current state of the board.", 0
     ),
+    exit("exit", "exit",
+            "Exits the program.", 0
+    ),
+    disconnect("dc", "disconnect",
+            "Disconnects the current connection.", 0
+    ),
+    connect("con", "connect",
+            "Connect to a desired gameID", 0
+    )
     ;
 
     private final String shortcut;
@@ -47,7 +56,7 @@ public enum Commands{
 
     private boolean compare(String in) {
         in = in.toLowerCase();
-        return in.startsWith(this.shortcut) || in.startsWith(this.fullName.toLowerCase());
+        return in.compareTo(this.shortcut) == 0 || in.compareTo(this.fullName.toLowerCase()) == 0;
     }
 
     public static Commands stringToCommand(String in) {
