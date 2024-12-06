@@ -1,4 +1,4 @@
-package com.dawid;
+package com.server;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
