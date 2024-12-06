@@ -6,72 +6,14 @@ public class DavidStarBoard implements Board {
     private final int height = 17;
     private final int width = 25;
     private final int homeRegionSize = 4;
-    private final int triangleHeight = 13;
     private Field[][] board;
     private Map<Integer, List<Field>> homeFields;
-    //Temporary
-    public static void main(String[] args) {
-        DavidStarBoard board = new DavidStarBoard();
-        board.initializeBoard();
-        board.printBoard();
-    }
+    private Map<Field, Coordinates> coordinates;
+
     public DavidStarBoard() {
         homeFields = new HashMap<>();
         initializeBoard();
-    }
-    private void initializeBoard() {
-        board  = new Field[height][width];
-        // The david's star can be divided into 2 overlapping triangles,
-        // so this is how I will initialize the board
-        for (int i = 0; i < triangleHeight; i++) {
-            for (int j = width/2-i; j <= width/2+i; j+=2) {
-                board[i][j] = new Field();
-            }
-        }
-        for (int i = 0; i < triangleHeight; i++) {
-            for (int j = width/2-i; j <= width/2+i; j+=2) {
-                board[height-1-i][j] = new Field();
-            }
-        }
-        createHome(0, width/2, false, 1);
-        createHome(2*homeRegionSize-1, width-homeRegionSize, true, 2);
-        createHome(2*homeRegionSize+1, width-homeRegionSize, false, 3);
-        createHome(height-1, width/2, true, 4);
-        createHome(2*homeRegionSize+1, homeRegionSize-1, false, 5);
-        createHome(2*homeRegionSize-1, homeRegionSize-1, true, 6);
-
-    }
-    private void createHome(int y, int x, boolean reversed, int player) {
-        homeFields.put(player, new ArrayList<>());
-        if (reversed) {
-            for (int i = 0; i < homeRegionSize; i++) {
-                for (int j = x-i; j <= x+i; j+=2) {
-                    board[y-i][j].setHome(player);
-                    homeFields.get(player).add(board[y-i][j]);
-
-                }
-            }
-        } else {
-            for (int i = 0; i < homeRegionSize; i++) {
-                for (int j = x-i; j <= x+i; j+=2) {
-                    board[y+i][j].setHome(player);
-                }
-            }
-        }
-
-    }
-    //Temporary
-    private void printBoard() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                if (board[i][j] == null) {
-                    System.out.print(" ");
-                } else {
-                    System.out.print(board[i][j].getHome());
-                }
-            }
-            System.out.println();
-        }
+        initializeCoordinates();
     }
     @Override
     public Field getField(int row, int column) throws IllegalArgumentException {
@@ -90,25 +32,126 @@ public class DavidStarBoard implements Board {
         throw new IllegalArgumentException("Invalid column");
 
     }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-    //TODO
     @Override
     public Collection<Field> getNeighboringFields(Field field) {
-        return null;
+        Coordinates c = coordinates.get(field);
+        List<Field> neighbors = new ArrayList<>();
+        int[][] neighborsDelta = {
+                {0, 2},
+                {0, -2},
+                {1, 1},
+                {1, -1},
+                {-1, -1},
+                {-1, 1}
+        };
+        for (int[] delta : neighborsDelta) {
+            try {
+                neighbors.add(board[c.getRow() + delta[0]][c.getColumn() + delta[1]]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                //Do nothing
+            }
+        }
+        return neighbors;
     }
 
     @Override
     public Collection<Field> getHomeFields(int player) {
         return homeFields.get(player);
+    }
+    @Override
+    public Field getJumpField(Field start, Field across) throws IllegalArgumentException {
+        Coordinates startCoordinates = coordinates.get(start);
+        Coordinates acrossCoordinates = coordinates.get(across);
+
+        if (Math.abs(startCoordinates.getColumn() - acrossCoordinates.getColumn()) == 2 &&
+                startCoordinates.getRow() == acrossCoordinates.getRow()) {
+            try {
+                return board[startCoordinates.getRow()][2*acrossCoordinates.getColumn()-startCoordinates.getColumn()];
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return null;
+            }
+
+        }
+        if (Math.abs(startCoordinates.getColumn() - acrossCoordinates.getColumn()) == 1 &&
+                Math.abs(startCoordinates.getRow() - acrossCoordinates.getRow()) == 1) {
+            int dx = acrossCoordinates.getRow() - startCoordinates.getRow();
+            int dy = acrossCoordinates.getColumn() - startCoordinates.getColumn();
+            try {
+                return board[acrossCoordinates.getRow() + dx][acrossCoordinates.getColumn() + dy];
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return null;
+            }
+
+        }
+        throw new IllegalArgumentException("The fields are not neighbors");
+    }
+
+
+    private void initializeCoordinates() {
+        coordinates = new HashMap<>();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (board[i][j] != null) {
+                    coordinates.put(board[i][j], new Coordinates(i, j));
+                }
+            }
+        }
+    }
+    private void initializeBoard() {
+        board  = new Field[height][width];
+        int triangleHeight = 13;
+        // The david's star can be divided into 2 overlapping triangles,
+        // so this is how I will initialize the board
+        for (int i = 0; i < triangleHeight; i++) {
+            for (int j = width/2-i; j <= width/2+i; j+=2) {
+                board[i][j] = new Field();
+            }
+        }
+        for (int i = 0; i < triangleHeight; i++) {
+            for (int j = width/2-i; j <= width/2+i; j+=2) {
+                board[height-1-i][j] = new Field();
+            }
+        }
+        // Now I will create the home regions (yikes)
+        createHome(0, width/2, false, 1);
+        createHome(2*homeRegionSize-1, width-homeRegionSize, true, 2);
+        createHome(2*homeRegionSize+1, width-homeRegionSize, false, 3);
+        createHome(height-1, width/2, true, 4);
+        createHome(2*homeRegionSize+1, homeRegionSize-1, false, 5);
+        createHome(2*homeRegionSize-1, homeRegionSize-1, true, 6);
+
+    }
+    private void createHome(int row, int column, boolean reversed, int player) {
+        homeFields.put(player, new ArrayList<>());
+        if (reversed) {
+            for (int i = 0; i < homeRegionSize; i++) {
+                for (int j = column -i; j <= column +i; j+=2) {
+                    board[row -i][j].setHome(player);
+                    homeFields.get(player).add(board[row -i][j]);
+
+                }
+            }
+        } else {
+            for (int i = 0; i < homeRegionSize; i++) {
+                for (int j = column -i; j <= column +i; j+=2) {
+                    board[row +i][j].setHome(player);
+                }
+            }
+        }
+
+    }
+    //Dev purposes
+    public void printBoard() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (board[i][j] == null) {
+                    System.out.print(" ");
+                } else {
+                    System.out.print(board[i][j].getHome());
+                }
+            }
+            System.out.println();
+        }
     }
 }
 

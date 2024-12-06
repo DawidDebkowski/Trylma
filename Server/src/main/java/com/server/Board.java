@@ -11,20 +11,10 @@ public interface Board {
      * @throws IllegalArgumentException If the row or column is invalid.
      */
     public Field getField(int row, int column) throws IllegalArgumentException;
-    /**
-     * Returns the height of the board.
-     * @return The height of the board.
-     */
-    public int getHeight();
-    /**
-     * Returns the width of the board.
-     * @return The width of the board.
-     */
-    public int getWidth();
 
     /**
      * Returns the neighboring fields of the given field.
-     * @param field The field.
+     * @param field
      * @return The neighboring fields of the given field.
      */
     public Collection<Field> getNeighboringFields(Field field);
@@ -35,4 +25,13 @@ public interface Board {
      * @return The fields of the home region of the given player.
      */
     public Collection<Field> getHomeFields(int player);
+
+    /**
+     * Get the field that we will land on after jump
+     * @param start the field we currently are on
+     * @param across the field we are jumping across, this should be a neighbor of start
+     * @return the field that we will land on after jump, null if the field does not exist
+     * @throws IllegalArgumentException if the fields are not neighbors or do not exist
+     */
+    public Field getJumpField(Field start, Field across) throws IllegalArgumentException;
 }
