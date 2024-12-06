@@ -1,15 +1,23 @@
 package com.server;
 
-public class DavidStarBoard {
+import java.util.*;
+
+public class DavidStarBoard implements Board {
     private final int height = 17;
     private final int width = 25;
     private final int homeRegionSize = 4;
     private final int triangleHeight = 13;
     private Field[][] board;
+    private Map<Integer, List<Field>> homeFields;
+    //Temporary
     public static void main(String[] args) {
         DavidStarBoard board = new DavidStarBoard();
         board.initializeBoard();
         board.printBoard();
+    }
+    public DavidStarBoard() {
+        homeFields = new HashMap<>();
+        initializeBoard();
     }
     private void initializeBoard() {
         board  = new Field[height][width];
@@ -34,10 +42,13 @@ public class DavidStarBoard {
 
     }
     private void createHome(int y, int x, boolean reversed, int player) {
+        homeFields.put(player, new ArrayList<>());
         if (reversed) {
             for (int i = 0; i < homeRegionSize; i++) {
                 for (int j = x-i; j <= x+i; j+=2) {
                     board[y-i][j].setHome(player);
+                    homeFields.get(player).add(board[y-i][j]);
+
                 }
             }
         } else {
@@ -49,6 +60,7 @@ public class DavidStarBoard {
         }
 
     }
+    //Temporary
     private void printBoard() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -60,6 +72,43 @@ public class DavidStarBoard {
             }
             System.out.println();
         }
+    }
+    @Override
+    public Field getField(int row, int column) throws IllegalArgumentException {
+        if(row <= 0 || row > height) {
+            throw new IllegalArgumentException("Invalid row");
+        }
+        int counter = 0;
+        for(int i = 0; i < width; i++) {
+            if(board[row][i] != null) {
+                counter++;
+            }
+            if(counter == column) {
+                return board[row-1][i];
+            }
+        }
+        throw new IllegalArgumentException("Invalid column");
+
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+    //TODO
+    @Override
+    public Collection<Field> getNeighboringFields(Field field) {
+        return null;
+    }
+
+    @Override
+    public Collection<Field> getHomeFields(int player) {
+        return homeFields.get(player);
     }
 }
 
