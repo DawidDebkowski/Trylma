@@ -1,6 +1,6 @@
 package com.dawid;
 
-public enum Commands{
+public enum Commands {
     help(
       "h", "help",
       "Displays all commands.", 0

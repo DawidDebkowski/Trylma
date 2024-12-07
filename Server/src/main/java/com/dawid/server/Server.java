@@ -38,34 +38,28 @@ public class Server {
 
     private static class Capitalizer implements Runnable {
         private final Socket socket;
-        private final joinGameHandler clientInputHandler;
-
         Capitalizer(Socket socket) {
             this.socket = socket;
-            this.clientInputHandler = joinGameHandler.create(socket);
         }
 
         @Override
         public void run() {
             System.out.println("Connected: " + socket);
             try {
+                final CommandHandler clientInputHandler = CommandHandler.create(new Player(socket.getOutputStream()));
                 Scanner in = new Scanner(socket.getInputStream());
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                while (in.hasNextLine() && !clientInputHandler.joinedGame()) {
-                    String response = clientInputHandler.exec(in.nextLine());
-                    if(response != null) {
-                        out.println(response);
-                    }
+                while (in.hasNextLine()) {
+                    clientInputHandler.exec(in.nextLine());
                 }
             } catch (Exception e) {
                 System.out.println("Error:" + socket);
             } finally {
                 try {
-                    if(!clientInputHandler.joinedGame()) {
                         socket.close();
                         System.out.println("Closed: " + socket);
-                    }
                 } catch (IOException e) {
+                    System.out.println("Error closing socket: " + socket);
                 }
             }
         }
