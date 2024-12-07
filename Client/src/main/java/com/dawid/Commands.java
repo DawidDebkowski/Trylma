@@ -19,7 +19,10 @@ public enum Commands{
     ),
     connect("con", "connect",
             "Connect to a desired gameID", 0
-    )
+    ),
+    create("cr", "create",
+            "Create a new game.", 0
+    ),
     ;
 
     private final String shortcut;

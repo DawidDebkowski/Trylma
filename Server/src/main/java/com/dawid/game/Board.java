@@ -1,4 +1,4 @@
-package com.server;
+package com.dawid.game;
 
 import java.util.Collection;
 

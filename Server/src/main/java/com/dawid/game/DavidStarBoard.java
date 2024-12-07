@@ -1,7 +1,11 @@
-package com.server;
+package com.dawid.game;
 
 import java.util.*;
 
+/**
+ * Represents the board of the game. It is a David's star.
+ * Maybe we'll use it later
+ */
 public class DavidStarBoard implements Board {
     private final int height = 17;
     private final int width = 25;

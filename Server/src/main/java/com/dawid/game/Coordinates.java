@@ -1,4 +1,4 @@
-package com.server;
+package com.dawid.game;
 
 public class Coordinates {
     private int row;
