@@ -9,22 +9,27 @@ public class CommandExecutor implements CommandHandler {
     public CommandExecutor(Player player) {
         this.player = player;
         commands = new HashMap<>();
+        commands.put("MOVE", this::move);
         //TODO: add commands and link them to methods
     }
     @Override
     public void exec(String command) {
         String[] args = command.split(" ");
         if(commands.containsKey(args[0])) {
-            commands.get(args[0]).exec(args);
+            try {
+                commands.get(args[0]).exec(args);
+            } catch (IllegalArgumentException e) {
+                player.sendMessage(e.getMessage());
+            }
         }
         else {
             player.sendMessage("Unknown command");
         }
     }
-    public void joinGame(String[] args) {
+    private void joinGame(String[] args) throws IllegalArgumentException {
         Lobby lobby = GamesManager.getInstance().getLobby(Integer.parseInt(args[1]));
         if(lobby == null) {
-            player.sendMessage("Lobby does not exist");
+            throw new IllegalArgumentException("Lobby does not exist");
         }
         else {
             lobby.addPlayer(player);
@@ -32,10 +37,14 @@ public class CommandExecutor implements CommandHandler {
         }
 
     }
-    public void createLobby(String[] args) {
+    private void createLobby(String[] args) {
         Lobby lobby = new Lobby();
         lobby.addPlayer(player);
         GamesManager.getInstance().addLobby(lobby);
+    }
+    private void move(String[] args) {
+        // Probably we will need to add logic here in the future
+        player.getLobby().notifyAll(player.getNumber() + String.join(" ", args));
     }
 
 }

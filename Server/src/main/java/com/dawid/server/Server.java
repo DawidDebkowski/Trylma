@@ -22,9 +22,8 @@ public class Server {
         try {
             maxThreads = Integer.parseInt(args[0]);
         } catch (Exception e) {
-            System.out.println("Usage: java Server <maxThreads>");
-            System.out.println("(Correct) argument not given, using default values.");
             maxThreads = 50;
+            System.out.println("The server will use the default number of threads: " +  maxThreads);
         }
         try (ServerSocket listener = new ServerSocket(port)) {
             System.out.println("Chinese checkers server is running on port " + port);

@@ -22,6 +22,7 @@ public class Lobby {
     }
     public void addPlayer(Player player) {
         players.add(player);
+        player.setLobby(this);
 
     }
 }

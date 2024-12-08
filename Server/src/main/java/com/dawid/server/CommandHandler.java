@@ -1,7 +1,5 @@
 package com.dawid.server;
 
-import java.net.Socket;
-
 public interface CommandHandler {
     /**
      * Executes the command and returns response.
