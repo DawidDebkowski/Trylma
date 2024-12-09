@@ -1,4 +1,4 @@
-package com.server;
+package com.dawid.server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,27 +16,26 @@ import java.util.concurrent.Executors;
  * handled concurrently.
  */
 public class Server {
-
-    /**
-     * Runs the server. When a client connects, the server spawns a new thread to do
-     * the servicing and immediately returns to listening. The application limits
-     * the number of threads via a thread pool (otherwise millions of clients could
-     * cause the server to run out of resources by allocating too many threads).
-     */
     public static void main(String[] args) throws Exception {
-        int maxThreads = 50;
-        try (ServerSocket listener = new ServerSocket(59898)) {
-            System.out.println("The capitalization server is running...");
+        final int port = 5005;
+        int maxThreads;
+        try {
+            maxThreads = Integer.parseInt(args[0]);
+        } catch (Exception e) {
+            maxThreads = 50;
+            System.out.println("The server will use the default number of threads: " +  maxThreads);
+        }
+        try (ServerSocket listener = new ServerSocket(port)) {
+            System.out.println("Chinese checkers server is running on port " + port);
             ExecutorService pool = Executors.newFixedThreadPool(maxThreads);
-            while (true) {
-                pool.execute(new Capitalizer(listener.accept()));
+                while (true) {
+                    pool.execute(new Capitalizer(listener.accept()));
+                }
             }
         }
-    }
 
     private static class Capitalizer implements Runnable {
-        private Socket socket;
-
+        private final Socket socket;
         Capitalizer(Socket socket) {
             this.socket = socket;
         }
@@ -45,19 +44,21 @@ public class Server {
         public void run() {
             System.out.println("Connected: " + socket);
             try {
+                final CommandHandler clientInputHandler = CommandHandler.create(new Player(socket.getOutputStream()));
                 Scanner in = new Scanner(socket.getInputStream());
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 while (in.hasNextLine()) {
-                    out.println(in.nextLine().toUpperCase());
+                    clientInputHandler.exec(in.nextLine());
                 }
             } catch (Exception e) {
                 System.out.println("Error:" + socket);
             } finally {
                 try {
-                    socket.close();
+                        socket.close();
+                        System.out.println("Closed: " + socket);
                 } catch (IOException e) {
+                    System.out.println("Error closing socket: " + socket);
                 }
-                System.out.println("Closed: " + socket);
             }
         }
     }

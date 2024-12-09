@@ -1,6 +1,6 @@
 package com.dawid;
 
-public enum Commands{
+public enum Commands {
     help(
       "h", "help",
       "Displays all commands.", 0
@@ -19,7 +19,10 @@ public enum Commands{
     ),
     connect("con", "connect",
             "Connect to a desired gameID", 0
-    )
+    ),
+    create("cr", "create",
+            "Create a new game.", 0
+    ),
     ;
 
     private final String shortcut;

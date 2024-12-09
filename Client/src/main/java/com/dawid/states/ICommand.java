@@ -1,5 +1,5 @@
 package com.dawid.states;
 
 public interface ICommand {
-    void execute(String[] args);
+    void execute(String[] args) throws IllegalArgumentException;
 }
