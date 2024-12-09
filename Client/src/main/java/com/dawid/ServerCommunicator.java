@@ -17,18 +17,28 @@ public class ServerCommunicator{
         socket = new Socket(serverAdress, port);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
+
+        ObserverCommunicator observer = new ObserverCommunicator();
+        Thread observerThread = new Thread(observer);
+        observerThread.start();
     }
 
-    /*
-        Możnaby tutaj słuchać serwera. Zaimplementować obserwatora w CLI, żeby robił coś tylko, jak tutaj się coś stanie.
-        Chociaż tak naprawdę to ta klasa chciałby coś robić z CLI.
-        -> przy otrzymaniu ruchu chciałby powiedzieć CLI, że teraz jego ruch
-        -> przy otrzymaniu potwierdzenia klasy State będa zmieniać stany klienta
-     */
+    class ObserverCommunicator extends Thread implements Runnable{
+        @Override
+        public void run() {
+            while(true){
+                try {
+                    String message = in.readLine();
+                    System.out.println(message);
+                } catch (IOException e) {
+                    System.out.println("Połączenie zerwane");
+                }
+            }
+        }
+    }
 
     public boolean move(String from, String to) {
         out.println("MOVE" + " " + from + " " + to);
-        awaitResponse();
         return true;
     }
 
@@ -48,7 +58,6 @@ public class ServerCommunicator{
 
     public boolean create() {
         out.println("CREATE");
-        awaitResponse();
         return true;
     }
 
