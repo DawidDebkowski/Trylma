@@ -27,13 +27,12 @@ public class Server {
         }
         try (ServerSocket listener = new ServerSocket(port)) {
             System.out.println("Chinese checkers server is running on port " + port);
-            try (ExecutorService pool = Executors.newFixedThreadPool(maxThreads)) {
+            ExecutorService pool = Executors.newFixedThreadPool(maxThreads);
                 while (true) {
                     pool.execute(new Capitalizer(listener.accept()));
                 }
             }
         }
-    }
 
     private static class Capitalizer implements Runnable {
         private final Socket socket;

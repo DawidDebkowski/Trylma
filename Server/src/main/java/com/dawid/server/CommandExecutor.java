@@ -10,6 +10,8 @@ public class CommandExecutor implements CommandHandler {
         this.player = player;
         commands = new HashMap<>();
         commands.put("MOVE", this::move);
+        commands.put("CREATE", this::createLobby);
+        commands.put("JOIN", this::joinGame);
         //TODO: add commands and link them to methods
     }
     @Override
@@ -41,10 +43,12 @@ public class CommandExecutor implements CommandHandler {
         Lobby lobby = new Lobby();
         lobby.addPlayer(player);
         GamesManager.getInstance().addLobby(lobby);
+        player.sendMessage("Created lobby " + GamesManager.getInstance().getLobbyId(lobby));
     }
     private void move(String[] args) {
         // Probably we will need to add logic here in the future
-        player.getLobby().notifyAll(player.getNumber() + String.join(" ", args));
+        player.getLobby().notifyAll("VALID_MOVE " + player.getNumber() + String.join(" ", args));
     }
 
+    //TODO: wyjście z  lobby, start game,
 }

@@ -36,7 +36,7 @@ public class GamesManager {
     }
     public int getLobbyId(Lobby lobby) {
         for (int i = 0; i < lobbies.size(); i++) {
-            if(lobbies.get(i).equals(lobby)) {
+            if (lobbies.get(i).equals(lobby)) {
                 return i;
             }
         }
