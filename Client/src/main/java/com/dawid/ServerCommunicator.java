@@ -21,6 +21,7 @@ public class ServerCommunicator{
         ObserverCommunicator observer = new ObserverCommunicator();
         Thread observerThread = new Thread(observer);
         observerThread.start();
+        System.out.printf("Connected and listening to %s:%d\n", serverAdress, port);
     }
 
     class ObserverCommunicator extends Thread implements Runnable{
@@ -30,8 +31,12 @@ public class ServerCommunicator{
                 try {
                     String message = in.readLine();
                     System.out.println(message);
+                    if(message == null){
+                        System.out.println("Server stopped for some reason");
+                        break;
+                    }
                 } catch (IOException e) {
-                    System.out.println("Połączenie zerwane");
+                    System.out.println("Connection error");
                 }
             }
         }
