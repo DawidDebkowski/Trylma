@@ -52,7 +52,7 @@ public class CommandExecutor implements CommandHandler {
     private void move(String[] args) {
         System.out.println("Move command");
         // Probably we will need to add logic here in the future
-        player.getLobby().notifyAll("VALID_MOVE " + player.getNumber() + String.join(" ", args));
+        player.getLobby().notifyAll("VALID_MOVE " + player.getNumber() + " " + String.join(" ", args));
     }
     private void leaveLobby(String[] args) {
         player.getLobby().removePlayer(player);
