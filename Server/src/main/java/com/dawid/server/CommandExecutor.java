@@ -12,6 +12,8 @@ public class CommandExecutor implements CommandHandler {
         commands.put("MOVE", this::move);
         commands.put("CREATE", this::createLobby);
         commands.put("JOIN", this::joinGame);
+        commands.put("LEAVE", this::leaveLobby);
+        commands.put("START", this::startGame);
         //TODO: add commands and link them to methods
     }
     @Override
@@ -49,6 +51,12 @@ public class CommandExecutor implements CommandHandler {
         // Probably we will need to add logic here in the future
         player.getLobby().notifyAll("VALID_MOVE " + player.getNumber() + String.join(" ", args));
     }
+    private void leaveLobby(String[] args) {
+        player.getLobby().removePlayer(player);
+        player.sendMessage("Left lobby");
+    }
+    private void startGame(String[] args) {
+        player.getLobby().startGame();
+    }
 
-    //TODO: wyjście z  lobby, start game,
 }
