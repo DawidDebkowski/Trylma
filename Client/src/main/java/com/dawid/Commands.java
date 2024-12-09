@@ -17,8 +17,14 @@ public enum Commands {
     disconnect("dc", "disconnect",
             "Disconnects the current connection.", 0
     ),
-    connect("con", "connect",
-            "Connect to a desired gameID", 0
+    join("j", "join",
+            "Joins a lobby with the given ID", 1
+    ),
+    leave("l", "leave",
+            "Leaves the lobby.", 0
+    ),
+    start("s", "start",
+            "Starts the game", 0
     ),
     create("cr", "create",
             "Create a new game.", 0

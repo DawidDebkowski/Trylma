@@ -42,12 +42,15 @@ public class CommandExecutor implements CommandHandler {
 
     }
     private void createLobby(String[] args) {
+        System.out.println("Create command");
         Lobby lobby = new Lobby();
         lobby.addPlayer(player);
         GamesManager.getInstance().addLobby(lobby);
         player.sendMessage("Created lobby " + GamesManager.getInstance().getLobbyId(lobby));
+        System.out.println("Create command end");
     }
     private void move(String[] args) {
+        System.out.println("Move command");
         // Probably we will need to add logic here in the future
         player.getLobby().notifyAll("VALID_MOVE " + player.getNumber() + String.join(" ", args));
     }

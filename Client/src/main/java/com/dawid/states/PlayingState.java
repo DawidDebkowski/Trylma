@@ -5,7 +5,7 @@ import com.dawid.Commands;
 
 public class PlayingState extends State{
 
-    PlayingState(CLI cli) {
+    public PlayingState(CLI cli) {
         super(cli);
 
         commands.put(Commands.move, this::move);
@@ -23,7 +23,7 @@ public class PlayingState extends State{
     }
 
     private void showBoard(String[] args) {
-        System.out.println("Show command");
+        System.out.println("*Insert Board Here*");
     }
 
     private void disconnect(String[] args) {

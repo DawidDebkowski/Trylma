@@ -6,13 +6,13 @@ import com.dawid.states.CommandException;
 import java.util.Scanner;
 
 public class CLI {
-    ClientState clientState;
-    private ITrylmaProtocol socket;
-    Scanner scanner;
+    private ClientState clientState;
+    private final ServerCommunicator socket;
+    private final Scanner scanner;
 
     boolean isRunning = true;
 
-    public CLI(ITrylmaProtocol server) {
+    public CLI(ServerCommunicator server) {
         scanner = new Scanner(System.in);
         this.socket = server;
     }
@@ -21,7 +21,7 @@ public class CLI {
         println("Welcome to the Trylma game!");
         println("Type \"help\" for a list of commands or just connect and start playing!");
         while (isRunning) {
-            println("Input a command");
+            System.out.print(">");
             final String[] args = parseInput(scanner.nextLine());
             try {
                 clientState.executeCommand(args);
@@ -32,7 +32,7 @@ public class CLI {
 //            println("end loop");
         }
     }
-    public ITrylmaProtocol getSocket() {
+    public ServerCommunicator getSocket() {
         return socket;
     }
 

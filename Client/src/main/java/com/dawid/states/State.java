@@ -5,6 +5,10 @@ import com.dawid.Commands;
 
 import java.util.EnumMap;
 
+/**
+ * All States inherit from state. It implements basic commands like help.
+ * It also handles executing the command.
+ */
 public class State implements ClientState {
     EnumMap<Commands, ICommand> commands;
     CLI client;
@@ -35,6 +39,9 @@ public class State implements ClientState {
         if(args.length-1 < command.minArgs()) {
             throw new CommandException("Not enough arguments");
         }
-        commands.get(command).execute(args);
+        if(commands.get(command) != null) {
+            commands.get(command).execute(args);
+        } else
+            throw new CommandException("Unknown command in this state");
     }
 }
