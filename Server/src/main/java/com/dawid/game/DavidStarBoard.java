@@ -95,6 +95,23 @@ public class DavidStarBoard implements Board {
         return correct_no_of_players.contains(playerCount);
     }
 
+    @Override
+    public Collection<Integer> getPlayerNumbers(int playerCount) {
+        if(playerCount == 2) {
+            return Arrays.asList(0, 3);
+        }
+        if(playerCount == 3) {
+            return Arrays.asList(0, 2, 4);
+        }
+        if(playerCount == 4) {
+            return Arrays.asList(0, 2, 3, 5);
+        }
+        if(playerCount == 6) {
+            return Arrays.asList(0, 1, 2, 3, 4, 6);
+        }
+        return null;
+    }
+
 
     private void initializeCoordinates() {
         coordinates = new HashMap<>();

@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 public class Player {
     private Lobby lobby;
-    private int number;
+    private Integer number;
     private PrintWriter out;
     public Player(OutputStream out) {
         this.out = new PrintWriter(out, true);
@@ -14,7 +14,7 @@ public class Player {
     public void setNumber(int number) {
         this.number = number;
     }
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
     public void sendMessage(String message) {

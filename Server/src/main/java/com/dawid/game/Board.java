@@ -41,4 +41,6 @@ public interface Board {
      * @return true if the player count is correct, false otherwise
      */
     public boolean correctPlayerCount(int playerCount);
+
+    public Collection<Integer> getPlayerNumbers(int playerCount);
 }
