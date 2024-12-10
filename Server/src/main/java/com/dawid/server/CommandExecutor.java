@@ -23,11 +23,11 @@ public class CommandExecutor implements CommandHandler {
             try {
                 commands.get(args[0]).exec(args);
             } catch (IllegalArgumentException e) {
-                player.sendMessage(e.getMessage());
+                player.sendMessage("ERROR: " + e.getMessage());
             }
         }
         else {
-            player.sendMessage("Unknown command");
+            player.sendMessage("ERROR: Unknown command");
         }
     }
     private void joinGame(String[] args) throws IllegalArgumentException {

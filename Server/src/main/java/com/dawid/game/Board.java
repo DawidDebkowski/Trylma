@@ -34,4 +34,11 @@ public interface Board {
      * @throws IllegalArgumentException if the fields are not neighbors or do not exist
      */
     public Field getJumpField(Field start, Field across) throws IllegalArgumentException;
+
+    /**
+     * Check if the given player count is correct for this board
+     * @param playerCount the player count to check
+     * @return true if the player count is correct, false otherwise
+     */
+    public boolean correctPlayerCount(int playerCount);
 }

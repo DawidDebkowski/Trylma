@@ -13,6 +13,7 @@ public class DavidStarBoard implements Board {
     private Field[][] board;
     private Map<Integer, List<Field>> homeFields;
     private Map<Field, Coordinates> coordinates;
+    private final List<Integer> correct_no_of_players = Arrays.asList(2, 3, 4, 6);
 
     public DavidStarBoard() {
         homeFields = new HashMap<>();
@@ -88,6 +89,10 @@ public class DavidStarBoard implements Board {
 
         }
         throw new IllegalArgumentException("The fields are not neighbors");
+    }
+    @Override
+    public boolean correctPlayerCount(int playerCount) {
+        return correct_no_of_players.contains(playerCount);
     }
 
 
