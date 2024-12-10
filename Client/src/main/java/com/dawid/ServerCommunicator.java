@@ -52,16 +52,25 @@ public class ServerCommunicator{
      * Changes states based on messages.
      */
     class ObserverCommunicator extends Thread implements Runnable{
-        HashMap<String, Runnable> protocol;
+        HashMap<String, IResponse> protocol;
+
+        interface IResponse {
+            void execute(String[] args);
+        }
 
         ObserverCommunicator() {
             protocol = new HashMap<>();
 
-            protocol.put("Created", (Runnable) () -> {client.changeState(new LobbyState(client));});
-            protocol.put("Joined", (Runnable) () -> {client.changeState(new LobbyState(client));});
-            protocol.put("Left", (Runnable) () -> {client.changeState(new DisconnectedState(client));});
-            protocol.put("Started", (Runnable) () -> {client.changeState(new PlayingState(client));});
-            protocol.put("Moved:", (Runnable) () -> {client.changeState(new PlayingState(client));});
+            protocol.put("Created", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
+            protocol.put("Joined", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
+            protocol.put("Left", (IResponse) (message) -> {client.changeState(new DisconnectedState(client));});
+            protocol.put("Started", (IResponse) (message)  -> {client.changeState(new PlayingState(client));});
+            protocol.put("Moved:", this::receiveMove);
+        }
+
+        private void receiveMove(String[] args) {
+            // Moved: Player x MOVE c1 c2
+            client.moveOnBoard(Integer.parseInt(args[2]), args[4], args[5]);
         }
 
         @Override
@@ -74,9 +83,8 @@ public class ServerCommunicator{
                         return;
                     }
                     System.out.printf("\n[Server]: %s\n", message);
-                    Runnable r = protocol.get(args[0]);
-                    if(r != null){
-                        r.run();
+                    if(protocol.containsKey(args[0])){
+                        protocol.get(args[0]).execute(args);
                     }
                     client.prompt();
                 } catch (IOException e) {
@@ -108,16 +116,5 @@ public class ServerCommunicator{
     public boolean create() {
         out.println("CREATE");
         return true;
-    }
-
-    private String awaitResponse() {
-        String response = null;
-        try {
-            response = in.readLine();
-        } catch (IOException e) {
-            System.out.println("zerwane połączenie");
-        }
-        System.out.println(response);
-        return response;
     }
 }

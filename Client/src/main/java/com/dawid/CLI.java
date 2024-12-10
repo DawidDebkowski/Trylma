@@ -35,7 +35,6 @@ public class CLI {
                 println(e.getMessage());
                 continue;
             }
-//            println("end loop");
         }
     }
 
@@ -49,7 +48,8 @@ public class CLI {
     /**
      * The board should do it but right now it cant.
      */
-    public void moveOnBoard(String x, String y) {
+    public void moveOnBoard(int player, String x, String y) {
+        println("<debug> Player " + player + " moved on " + x + " " + y);
         return;
     }
 
