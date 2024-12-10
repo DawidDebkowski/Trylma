@@ -6,6 +6,7 @@ import com.dawid.Commands;
 public class DisconnectedState extends State {
     public DisconnectedState(CLI cli) {
         super(cli);
+        name = "MENU";
 
         commands.put(Commands.join, this::join);
         commands.put(Commands.create, this::create);
@@ -14,12 +15,12 @@ public class DisconnectedState extends State {
 
     private void join(String[] args) {
         client.getSocket().join(Integer.parseInt(args[1]));
-        client.changeState(new PlayingState(client));
+//        client.changeState(new PlayingState(client));
     }
 
     private void create(String[] args) {
         client.getSocket().create();
-        client.changeState(new PlayingState(client));
+//        client.changeState(new PlayingState(client));
     }
 
     private void exit(String[] args) {

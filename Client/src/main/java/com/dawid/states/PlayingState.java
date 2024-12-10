@@ -7,6 +7,7 @@ public class PlayingState extends State{
 
     public PlayingState(CLI cli) {
         super(cli);
+        name = "GAME";
 
         commands.put(Commands.move, this::move);
         commands.put(Commands.showBoard, this::showBoard);
@@ -23,11 +24,13 @@ public class PlayingState extends State{
     }
 
     private void showBoard(String[] args) {
-        System.out.println("*Insert Board Here*");
+        System.out.println("--- Current Board State ---");
+        client.getBoard().printBoard();
     }
+
 
     private void disconnect(String[] args) {
         System.out.println("Disconnecting");
-        client.changeState(new DisconnectedState(client));
+//        client.changeState(new DisconnectedState(client));
     }
 }

@@ -6,6 +6,7 @@ import com.dawid.Commands;
 public class LobbyState extends State {
     public LobbyState(CLI cli) {
         super(cli);
+        name = "LOBBY";
 
         commands.put(Commands.start, this::start);
         commands.put(Commands.leave, this::leave);
