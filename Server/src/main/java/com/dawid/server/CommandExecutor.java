@@ -51,7 +51,7 @@ public class CommandExecutor implements CommandHandler {
     private void move(String[] args) {
         System.out.println("Move command");
         // Probably we will need to add logic here in the future
-        player.getLobby().notifyAll("VALID_MOVE " + player.getNumber() + " " + String.join(" ", args));
+        player.getLobby().notifyAll("Moved: Player " + player.getNumber() + " " + String.join(" ", args));
     }
     private void leaveLobby(String[] args) {
         System.out.printf("Player %d left lobby\n", player.getNumber());
@@ -61,7 +61,6 @@ public class CommandExecutor implements CommandHandler {
     private void startGame(String[] args) {
         System.out.println("Some game has started");
         player.getLobby().startGame();
-        player.getLobby().notifyAll("Started game");
     }
 
 }

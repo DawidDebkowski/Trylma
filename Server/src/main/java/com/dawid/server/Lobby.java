@@ -38,7 +38,7 @@ public class Lobby {
     public void startGame() {
         if(board.correctPlayerCount(this.getPlayerCount())) {
             inGame = true;
-            notifyAll("GAME_STARTED");
+            notifyAll("Started game");
         }
         else {
             notifyAll("ERROR: Incorrect number of players");

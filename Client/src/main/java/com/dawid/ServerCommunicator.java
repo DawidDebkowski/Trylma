@@ -61,6 +61,7 @@ public class ServerCommunicator{
             protocol.put("Joined", (Runnable) () -> {client.changeState(new LobbyState(client));});
             protocol.put("Left", (Runnable) () -> {client.changeState(new DisconnectedState(client));});
             protocol.put("Started", (Runnable) () -> {client.changeState(new PlayingState(client));});
+            protocol.put("Moved:", (Runnable) () -> {client.changeState(new PlayingState(client));});
         }
 
         @Override

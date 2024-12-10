@@ -16,11 +16,6 @@ public class PlayingState extends State{
 
     private void move(String[] args) {
         boolean status = client.getSocket().move(args[1], args[2]);
-        if (status) {
-            System.out.println("Move ok");
-        } else {
-            System.out.println("Invalid move, try again.");
-        }
     }
 
     private void showBoard(String[] args) {
