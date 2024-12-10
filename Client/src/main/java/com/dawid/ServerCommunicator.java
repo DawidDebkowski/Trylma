@@ -51,12 +51,12 @@ public class ServerCommunicator{
      * Thread reading messages from server.
      * Changes states based on messages.
      */
-    class ObserverCommunicator extends Thread implements Runnable{
-        HashMap<String, IResponse> protocol;
+    interface IResponse {
+        void execute(String[] args);
+    }
+    class ObserverCommunicator extends Thread {
 
-        interface IResponse {
-            void execute(String[] args);
-        }
+        HashMap<String, IResponse> protocol;
 
         ObserverCommunicator() {
             protocol = new HashMap<>();
