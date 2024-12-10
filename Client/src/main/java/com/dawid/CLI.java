@@ -27,7 +27,7 @@ public class CLI {
         println("Welcome to the Trylma game!");
         println("Type \"help\" for a list of commands or just connect and start playing!");
         while (isRunning) {
-            System.out.printf("[%s]>", clientState.getName());
+            prompt();
             final String[] args = parseInput(scanner.nextLine());
             try {
                 clientState.executeCommand(args);
@@ -37,6 +37,20 @@ public class CLI {
             }
 //            println("end loop");
         }
+    }
+
+    /**
+     * Used to reset the prompt after server message.
+     */
+    public void prompt() {
+        System.out.printf("[%s]>", clientState.getName());
+    }
+
+    /**
+     * The board should do it but right now it cant.
+     */
+    public void moveOnBoard(String x, String y) {
+        return;
     }
 
     public Board getBoard() {

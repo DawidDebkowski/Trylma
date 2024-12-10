@@ -1,6 +1,8 @@
 package com.dawid;
 
+import com.dawid.states.DisconnectedState;
 import com.dawid.states.LobbyState;
+import com.dawid.states.PlayingState;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +10,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.Scanner;
 
 //TODO: test this class when the server is online
 public class ServerCommunicator{
@@ -16,11 +17,13 @@ public class ServerCommunicator{
     private final BufferedReader in;
     private final PrintWriter out;
     private CLI client;
+    private boolean connected;
 
     ServerCommunicator(String serverAdress, int port) throws IOException {
         socket = new Socket(serverAdress, port);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
+        connected = true;
 
         ObserverCommunicator observer = new ObserverCommunicator();
         Thread observerThread = new Thread(observer);
@@ -33,6 +36,18 @@ public class ServerCommunicator{
     }
 
     /**
+     * Right now the thread throws connection error. I don't know how to fix it.
+     */
+    public void disconnect() {
+        connected = false;
+        try {
+            socket.close();
+        } catch (IOException e) {
+            System.out.println("Error closing connection");
+        }
+    }
+
+    /**
      * Thread reading messages from server.
      * Changes states based on messages.
      */
@@ -42,21 +57,27 @@ public class ServerCommunicator{
         ObserverCommunicator() {
             protocol = new HashMap<>();
 
-            protocol.put("Created lobby", (Runnable) () -> {client.changeState(new LobbyState(client));});
-            protocol.put("Joined lobby", (Runnable) () -> {client.changeState(new LobbyState(client));});
-            protocol.put("VALID_MOVE", (Runnable) () -> {client.changeState(new LobbyState(client));});
+            protocol.put("Created", (Runnable) () -> {client.changeState(new LobbyState(client));});
+            protocol.put("Joined", (Runnable) () -> {client.changeState(new LobbyState(client));});
+            protocol.put("Left", (Runnable) () -> {client.changeState(new DisconnectedState(client));});
+            protocol.put("Started", (Runnable) () -> {client.changeState(new PlayingState(client));});
         }
 
         @Override
         public void run() {
-            while(true){
+            while(connected){
                 try {
                     String message = in.readLine();
-                    System.out.println(message);
-                    if(message == null){
-                        System.out.println("Server stopped for some reason");
-                        break;
+                    String[] args = message.split(" ");
+                    if(args.length == 0){
+                        return;
                     }
+                    System.out.printf("\n[Server]: %s\n", message);
+                    Runnable r = protocol.get(args[0]);
+                    if(r != null){
+                        r.run();
+                    }
+                    client.prompt();
                 } catch (IOException e) {
                     System.out.println("Connection error");
                 }

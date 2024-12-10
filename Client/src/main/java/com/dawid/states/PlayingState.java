@@ -30,7 +30,6 @@ public class PlayingState extends State{
 
 
     private void disconnect(String[] args) {
-        System.out.println("Disconnecting");
-//        client.changeState(new DisconnectedState(client));
+        client.getSocket().leaveLobby();
     }
 }

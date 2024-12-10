@@ -59,6 +59,7 @@ public class CommandExecutor implements CommandHandler {
         player.sendMessage("Left lobby");
     }
     private void startGame(String[] args) {
+        System.out.println("Some game has started");
         player.getLobby().startGame();
         player.getLobby().notifyAll("Started game");
     }

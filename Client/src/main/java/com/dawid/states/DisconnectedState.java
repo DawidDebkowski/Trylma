@@ -25,5 +25,6 @@ public class DisconnectedState extends State {
 
     private void exit(String[] args) {
         client.endLoop();
+        client.getSocket().disconnect();
     }
 }
