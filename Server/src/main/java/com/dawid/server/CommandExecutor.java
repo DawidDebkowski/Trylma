@@ -60,7 +60,7 @@ public class CommandExecutor implements CommandHandler {
     }
     private void startGame(String[] args) {
         player.getLobby().startGame();
-        player.getLobby().notifyAll("Game started");
+        player.getLobby().notifyAll("Started game");
     }
 
 }
