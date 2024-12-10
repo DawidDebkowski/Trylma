@@ -215,6 +215,12 @@
         <mxCell id="jI8Y15pv29QjvpD9m3hr-69" value="diagram jest uproszczony" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;pointerEvents=1;" vertex="1" parent="1">
           <mxGeometry x="70" y="90" width="180" height="70" as="geometry" />
         </mxCell>
+        <mxCell id="jI8Y15pv29QjvpD9m3hr-70" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="370" y="379" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="jI8Y15pv29QjvpD9m3hr-71" value="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="375" y="526" width="30" height="30" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
