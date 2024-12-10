@@ -15,6 +15,7 @@ public class CLI {
     public CLI(ServerCommunicator server) {
         scanner = new Scanner(System.in);
         this.socket = server;
+        socket.setClient(this);
     }
 
     public void mainLoop() {

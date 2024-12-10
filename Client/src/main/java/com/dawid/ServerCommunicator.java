@@ -1,10 +1,13 @@
 package com.dawid;
 
+import com.dawid.states.LobbyState;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.Scanner;
 
 //TODO: test this class when the server is online
@@ -12,6 +15,7 @@ public class ServerCommunicator{
     private final Socket socket;
     private final BufferedReader in;
     private final PrintWriter out;
+    private CLI client;
 
     ServerCommunicator(String serverAdress, int port) throws IOException {
         socket = new Socket(serverAdress, port);
@@ -24,7 +28,25 @@ public class ServerCommunicator{
         System.out.printf("Connected and listening to %s:%d\n", serverAdress, port);
     }
 
+    public void setClient(CLI client) {
+        this.client = client;
+    }
+
+    /**
+     * Thread reading messages from server.
+     * Changes states based on messages.
+     */
     class ObserverCommunicator extends Thread implements Runnable{
+        HashMap<String, Runnable> protocol;
+
+        ObserverCommunicator() {
+            protocol = new HashMap<>();
+
+            protocol.put("Created lobby", (Runnable) () -> {client.changeState(new LobbyState(client));});
+            protocol.put("Joined lobby", (Runnable) () -> {client.changeState(new LobbyState(client));});
+            protocol.put("VALID_MOVE", (Runnable) () -> {client.changeState(new LobbyState(client));});
+        }
+
         @Override
         public void run() {
             while(true){

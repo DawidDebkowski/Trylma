@@ -47,7 +47,6 @@ public class CommandExecutor implements CommandHandler {
         lobby.addPlayer(player);
         GamesManager.getInstance().addLobby(lobby);
         player.sendMessage("Created lobby " + GamesManager.getInstance().getLobbyId(lobby));
-        System.out.println("Create command end");
     }
     private void move(String[] args) {
         System.out.println("Move command");
@@ -55,11 +54,13 @@ public class CommandExecutor implements CommandHandler {
         player.getLobby().notifyAll("VALID_MOVE " + player.getNumber() + " " + String.join(" ", args));
     }
     private void leaveLobby(String[] args) {
+        System.out.printf("Player %d left lobby\n", player.getNumber());
         player.getLobby().removePlayer(player);
         player.sendMessage("Left lobby");
     }
     private void startGame(String[] args) {
         player.getLobby().startGame();
+        player.getLobby().notifyAll("Game started");
     }
 
 }
