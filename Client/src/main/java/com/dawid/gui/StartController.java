@@ -9,7 +9,7 @@ public class StartController {
 
     @FXML
     protected void onConnectButtonClick() {
-        welcomeText.setText("Connected to JavaFX Application!");
+        SceneManager.setScene("lobby");
     }
 
     @FXML

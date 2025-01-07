@@ -8,6 +8,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/*** TODO: read this
+ * Singleton (not yet, to be refactored) to change scenes.
+ *
+ * Klasa powstała, żeby zmieniać pliki .fxml w jakiś sensowy i zorganizowany sposób.
+ * Napisana w połowie przez gpt, mam nadzieje, że usuniemy ten komentarz w przyszłych commitach i nikt go nie zobaczy.
+ * Klasa sama w sobie działa dobrze, wywołanie można zobaczyć w StartController.
+ *
+ * Na razie po prostu bawiłem się javafx, żeby zobaczyć, jakie mamy możliwości, możesz wszystko wyrzucić, jeżeli chcesz.
+ * tyle przecinkow bo mam plugin poprawiajacy bledy lol
+ */
 public class SceneManager {
     private static Stage stage;
     private static final Map<String, Scene> scenes = new HashMap<>();
@@ -17,9 +27,10 @@ public class SceneManager {
         stage.setTitle("JavaFX Application");
 
         // Wczytanie scen
-        loadScene("preGame", "/com/example/pre_game.fxml");
-        loadScene("game", "/com/example/game.fxml");
+        loadScene("disconnected", "disconnectedScene.fxml");
+        loadScene("lobby", "lobbyScene.fxml");
 
+        stage.setTitle("Trylma Chinese Checkers by Ćmolud (TM)");
         stage.show();
     }
 
