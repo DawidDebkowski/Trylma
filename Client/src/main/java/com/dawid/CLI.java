@@ -7,7 +7,7 @@ import com.dawid.states.CommandException;
 
 import java.util.Scanner;
 
-public class CLI {
+public class CLI implements IClient {
     private ClientState clientState;
     private final ServerCommunicator socket;
     private final Scanner scanner;
@@ -48,23 +48,27 @@ public class CLI {
     /**
      * The board should do it but right now it cant.
      */
+    @Override
     public void moveOnBoard(int player, String x, String y) {
         println("<debug> Player " + player + " moved on " + x + " " + y);
         return;
     }
 
+    @Override
     public Board getBoard() {
         return board;
     }
 
+    @Override
     public ServerCommunicator getSocket() {
         return socket;
     }
 
-    public void endLoop() {
+    public void exit() {
         isRunning = false;
     }
 
+    @Override
     public void changeState(ClientState newState) {
         clientState = newState;
     }

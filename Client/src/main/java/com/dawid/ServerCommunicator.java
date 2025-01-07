@@ -16,7 +16,7 @@ public class ServerCommunicator{
     private final Socket socket;
     private final BufferedReader in;
     private final PrintWriter out;
-    private CLI client;
+    private IClient client;
     private boolean connected;
 
     ServerCommunicator(String serverAdress, int port) throws IOException {
@@ -31,7 +31,7 @@ public class ServerCommunicator{
         System.out.printf("Connected and listening to %s:%d\n", serverAdress, port);
     }
 
-    public void setClient(CLI client) {
+    public void setClient(IClient client) {
         this.client = client;
     }
 

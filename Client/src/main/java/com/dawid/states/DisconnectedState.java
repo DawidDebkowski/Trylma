@@ -1,10 +1,10 @@
 package com.dawid.states;
 
-import com.dawid.CLI;
 import com.dawid.Commands;
+import com.dawid.IClient;
 
 public class DisconnectedState extends State {
-    public DisconnectedState(CLI cli) {
+    public DisconnectedState(IClient cli) {
         super(cli);
         name = "MENU";
 
@@ -24,7 +24,7 @@ public class DisconnectedState extends State {
     }
 
     private void exit(String[] args) {
-        client.endLoop();
+        client.exit();
         client.getSocket().disconnect();
     }
 }

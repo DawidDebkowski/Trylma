@@ -1,10 +1,10 @@
 package com.dawid.states;
 
-import com.dawid.CLI;
 import com.dawid.Commands;
+import com.dawid.IClient;
 
 public class LobbyState extends State {
-    public LobbyState(CLI cli) {
+    public LobbyState(IClient cli) {
         super(cli);
         name = "LOBBY";
 

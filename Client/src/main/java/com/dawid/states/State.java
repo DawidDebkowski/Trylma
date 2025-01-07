@@ -1,7 +1,7 @@
 package com.dawid.states;
 
-import com.dawid.CLI;
 import com.dawid.Commands;
+import com.dawid.IClient;
 
 import java.util.EnumMap;
 
@@ -12,9 +12,9 @@ import java.util.EnumMap;
 public class State implements ClientState {
     protected String name;
     EnumMap<Commands, ICommand> commands;
-    CLI client;
+    IClient client;
 
-    public State(CLI cli){
+    public State(IClient cli){
         client = cli;
         commands = new EnumMap<>(Commands.class);
 
