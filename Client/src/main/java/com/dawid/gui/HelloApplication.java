@@ -1,4 +1,4 @@
-package com.dawid;
+package com.dawid.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

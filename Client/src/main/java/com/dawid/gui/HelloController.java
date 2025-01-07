@@ -1,4 +1,4 @@
-package com.dawid;
+package com.dawid.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
