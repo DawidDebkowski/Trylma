@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.dawid.gui.HelloController">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="600.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.dawid.gui.HelloController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
+   <BorderPane prefHeight="604.0" prefWidth="560.0">
+      <center>
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0" style="-fx-background-color: #00a8ff; -fx-border-width: 2; -fx-border-color: #1;" styleClass="default-background" BorderPane.alignment="CENTER">
+            <children>
+               <Button layoutX="226.0" layoutY="250.0" onAction="#onConnectButtonClick" prefHeight="42.0" prefWidth="129.0" style="-fx-background-color: #8c7ae6;" text="Connect" textFill="#f5f6fa" />
+               <Button layoutX="226.0" layoutY="271.0" onAction="#onExitButtonClick" prefHeight="42.0" prefWidth="129.0" style="-fx-background-color: #8c7ae6;" text="Exit" textFill="#f5f6fa" />
+            </children>
+         </VBox>
+      </center>
+   </BorderPane>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+    <Label fx:id="welcomeText" />
 </VBox>
