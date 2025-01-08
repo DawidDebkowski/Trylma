@@ -7,7 +7,7 @@ public class PlayingState extends State{
 
     public PlayingState(IClient cli) {
         super(cli);
-        name = "GAME";
+        name = States.PLAYING;
 
         commands.put(Commands.move, this::move);
         commands.put(Commands.showBoard, this::showBoard);

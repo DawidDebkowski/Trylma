@@ -1,5 +1,6 @@
 package com.dawid.gui;
 
+import com.dawid.states.States;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,21 +21,21 @@ import java.util.Map;
  */
 public class SceneManager {
     private static Stage stage;
-    private static final Map<String, Scene> scenes = new HashMap<>();
+    private static final Map<States, Scene> scenes = new HashMap<>();
 
     public static void initialize(Stage primaryStage) {
         stage = primaryStage;
         stage.setTitle("JavaFX Application");
 
         // Wczytanie scen
-        loadScene("disconnected", "disconnectedScene.fxml");
-        loadScene("lobby", "lobbyScene.fxml");
+        loadScene(States.DISCONNECTED, "disconnectedScene.fxml");
+        loadScene(States.MENU, "menuScene.fxml");
 
         stage.setTitle("Trylma Chinese Checkers by Ćmolud (TM)");
         stage.show();
     }
 
-    private static void loadScene(String name, String resourcePath) {
+    private static void loadScene(States name, String resourcePath) {
         try {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(resourcePath));
             Scene scene = new Scene(loader.load());
@@ -44,7 +45,7 @@ public class SceneManager {
         }
     }
 
-    public static void setScene(String name) {
+    public static void setScene(States name) {
         Scene scene = scenes.get(name);
         if (scene != null) {
             stage.setScene(scene);
