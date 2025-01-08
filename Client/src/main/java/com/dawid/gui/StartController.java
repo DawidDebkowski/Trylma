@@ -1,5 +1,6 @@
 package com.dawid.gui;
 
+import com.dawid.states.States;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -9,7 +10,7 @@ public class StartController {
 
     @FXML
     protected void onConnectButtonClick() {
-        SceneManager.setScene("lobby");
+        SceneManager.setScene(States.MENU);
     }
 
     @FXML

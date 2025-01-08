@@ -6,7 +6,7 @@ import com.dawid.IClient;
 public class LobbyState extends State {
     public LobbyState(IClient cli) {
         super(cli);
-        name = "LOBBY";
+        name = States.LOBBY;
 
         commands.put(Commands.start, this::start);
         commands.put(Commands.leave, this::leave);

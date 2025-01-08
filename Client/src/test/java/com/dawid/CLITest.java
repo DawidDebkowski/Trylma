@@ -1,7 +1,6 @@
 package com.dawid;
 
-import com.dawid.states.DisconnectedState;
-import com.dawid.states.PlayingState;
+import com.dawid.states.MenuState;
 import junit.framework.TestCase;
 
 import java.io.IOException;
@@ -21,7 +20,7 @@ public class CLITest extends TestCase {
     }
 
     public void testParse() {
-        cli.changeState(new DisconnectedState(cli));
+        cli.changeState(new MenuState(cli));
         String[] args = cli.parseInput("move 1 2 abc");
         assertEquals("move", args[0]);
         assertEquals("1", args[1]);

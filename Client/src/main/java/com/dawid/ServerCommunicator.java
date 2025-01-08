@@ -1,6 +1,6 @@
 package com.dawid;
 
-import com.dawid.states.DisconnectedState;
+import com.dawid.states.MenuState;
 import com.dawid.states.LobbyState;
 import com.dawid.states.PlayingState;
 
@@ -63,7 +63,7 @@ public class ServerCommunicator{
 
             protocol.put("Created", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
             protocol.put("Joined", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
-            protocol.put("Left", (IResponse) (message) -> {client.changeState(new DisconnectedState(client));});
+            protocol.put("Left", (IResponse) (message) -> {client.changeState(new MenuState(client));});
             protocol.put("Started", (IResponse) (message)  -> {client.changeState(new PlayingState(client));});
             protocol.put("Moved:", this::receiveMove);
         }

@@ -10,7 +10,7 @@ import java.util.EnumMap;
  * It also handles executing the command.
  */
 public class State implements ClientState {
-    protected String name;
+    protected States name;
     EnumMap<Commands, ICommand> commands;
     IClient client;
 
@@ -46,7 +46,7 @@ public class State implements ClientState {
             throw new CommandException("Unknown command in this state");
     }
 
-    public String getName() {
+    public States getName() {
         return name;
     }
 }
