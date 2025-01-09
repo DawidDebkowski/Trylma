@@ -8,11 +8,12 @@ import java.util.Collection;
  * Assumptions: if there are only 3 players: players 1, 3 and 5 are present
  * Assumptions: if there are only 4 players: 1 vs 4 and 2 vs 5
  */
-public class NormalMoveContoller implements IMoveController {
+public class NormalMoveController implements IMoveController {
     int numberOfPlayers;
     Board board;
+    private Field overField;
 
-    public NormalMoveContoller(Board board, int numberOfPlayers) {
+    public NormalMoveController(Board board, int numberOfPlayers) {
         this.board = board;
         this.numberOfPlayers = numberOfPlayers;
     }
@@ -48,15 +49,51 @@ public class NormalMoveContoller implements IMoveController {
         }
     }
 
+    /**
+     * Recursively searches for all possible moves from a given field. Includes all jumps.
+     * TODO: clear field.visited
+     * @param startField
+     * @return
+     */
     @Override
     public Collection<Field> getPossibleMoves(Field startField) {
-        Collection<Field> possibleMoves = new ArrayList<>();
+        Collection<Field> possibleMoves = new ArrayList<>(); //make it a collection without duplicates?
         Collection<Field> neighboringFields = board.getNeighboringFields(startField);
+
         for (Field field : neighboringFields) {
-            if(field.getPawn() != -1) {
+            if (field == null) continue;
+
+            if (field.getPawn() == 0) {
                 possibleMoves.add(field);
             }
         }
+        possibleMoves.addAll(getPossibleJumps(startField));
+
         return possibleMoves;
+    }
+
+    private Collection<Field> getPossibleJumps(Field startField) {
+        Collection<Field> toCheck = new ArrayList<>();
+        Collection<Field> possibleJumps = new ArrayList<>(); //make it a collection without duplicates?
+        Collection<Field> neighboringFields = board.getNeighboringFields(startField);
+
+        for (Field field : neighboringFields) {
+            if(field.getPawn() != 0) {
+                Field jumpField = board.getJumpField(startField, field);
+                if (jumpField == null || jumpField.getPawn() != 0) continue;
+                possibleJumps.add(jumpField);
+                if (!jumpField.visited) {
+                    jumpField.visited = true;
+                    toCheck.add(jumpField); //BFS ?
+                }
+            }
+        }
+        // recursively add other possible moves
+        for (Field field : toCheck) {
+            System.out.println(field);
+            possibleJumps.addAll(getPossibleJumps(field));
+        }
+
+        return possibleJumps;
     }
 }

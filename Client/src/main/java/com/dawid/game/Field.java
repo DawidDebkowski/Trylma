@@ -10,9 +10,14 @@ public class Field {
      */
     private int home;
     private int pawn;
+    /**
+     *  For simplification of algorithms that find all the possible moves
+     */
+    boolean visited;
     public Field() {
         home = 0;
         pawn = 0;
+        visited = false;
     }
     public void setHome(int home) {
         this.home = home;

@@ -21,20 +21,13 @@ public class DavidStarBoard implements Board {
     }
     @Override
     public Field getField(int row, int column) throws IllegalArgumentException {
-        if(row <= 0 || row > height) {
-            throw new IllegalArgumentException("Invalid row");
+        if(row < 0 || row > height) {
+            throw new IllegalArgumentException("Invalid row " + row);
         }
-        int counter = 0;
-        for(int i = 0; i < width; i++) {
-            if(board[row][i] != null) {
-                counter++;
-            }
-            if(counter == column) {
-                return board[row-1][i];
-            }
+        if(column < 0 || column > width) {
+            throw new IllegalArgumentException("Invalid column " + column);
         }
-        throw new IllegalArgumentException("Invalid column");
-
+        return board[row][column];
     }
     @Override
     public Collection<Field> getNeighboringFields(Field field) {
@@ -150,13 +143,32 @@ public class DavidStarBoard implements Board {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (board[i][j] == null) {
-                    System.out.print("   ");
+                    System.out.print(" ");
                 } else {
-                    System.out.print(board[i][j].getPawn() + " " + board[i][j].getHome());
+                    System.out.print(board[i][j].getPawn());
                 }
             }
             System.out.println();
         }
+    }
+    //Dev purposes
+    public void debugPrint() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (board[i][j] == null) {
+                    System.out.print("   ");
+                } else {
+                    System.out.print(board[i][j].getPawn() + " " + coordinates.get(board[i][j]).getRow() + " " + coordinates.get(board[i][j]).getColumn());
+//                    System.out.print(getField(coordinates.get(board[i][j]).getRow(), coordinates.get(board[i][j]).getColumn()));
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    //for testing purpose
+    Map<Field, Coordinates> getCoordinatesMap() {
+        return coordinates;
     }
 }
 
