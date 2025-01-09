@@ -1,7 +1,7 @@
 package com.dawid.game;
 
 /**
- * -1 is no pawn
+ * 0 is no pawn
  */
 public class Field {
     /**
@@ -12,7 +12,7 @@ public class Field {
     private int pawn;
     public Field() {
         home = 0;
-        pawn = -1;
+        pawn = 0;
     }
     public void setHome(int home) {
         this.home = home;

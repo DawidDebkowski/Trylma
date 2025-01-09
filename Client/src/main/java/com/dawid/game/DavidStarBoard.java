@@ -139,6 +139,7 @@ public class DavidStarBoard implements Board {
             for (int i = 0; i < homeRegionSize; i++) {
                 for (int j = column -i; j <= column +i; j+=2) {
                     board[row +i][j].setHome(player);
+                    homeFields.get(player).add(board[row +i][j]);
                 }
             }
         }
@@ -149,9 +150,9 @@ public class DavidStarBoard implements Board {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (board[i][j] == null) {
-                    System.out.print(" ");
+                    System.out.print("   ");
                 } else {
-                    System.out.print(board[i][j].getHome());
+                    System.out.print(board[i][j].getPawn() + " " + board[i][j].getHome());
                 }
             }
             System.out.println();
