@@ -17,7 +17,7 @@ public class GUI extends Application implements IClient {
 
     @Override
     public void start(Stage stage) throws IOException {
-        SceneManager.initialize(stage);
+        SceneManager.initialize(stage, this);
         SceneManager.setScene(States.DISCONNECTED);
     }
 

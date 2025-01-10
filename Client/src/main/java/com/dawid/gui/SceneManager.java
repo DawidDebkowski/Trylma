@@ -22,8 +22,10 @@ import java.util.Map;
 public class SceneManager {
     private static Stage stage;
     private static final Map<States, Scene> scenes = new HashMap<>();
+    private static GUI client;
 
-    public static void initialize(Stage primaryStage) {
+    public static void initialize(Stage primaryStage, GUI client) {
+        SceneManager.client = client;
         stage = primaryStage;
         stage.setTitle("JavaFX Application");
 
@@ -39,6 +41,8 @@ public class SceneManager {
         try {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(resourcePath));
             Scene scene = new Scene(loader.load());
+            IController controller = loader.getController();
+            controller.setClient(client);
             scenes.put(name, scene);
         } catch (IOException e) {
             e.printStackTrace();

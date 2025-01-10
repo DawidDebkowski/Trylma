@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Lobby {
-    // We could use state pattern, but it's not n ecessary if only 2 states are possible
+    // We could use state pattern, but it's not necessary if only 2 states are possible
     private boolean inGame = false;
     private Board board;
     private final Collection<Player> players;
@@ -53,4 +53,5 @@ public class Lobby {
     public void endGame() {
         inGame = false;
     }
+
 }

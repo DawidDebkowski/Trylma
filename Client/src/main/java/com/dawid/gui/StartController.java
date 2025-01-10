@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-public class StartController implements IController {
-    @FXML
-    private Label welcomeText;
-
+public class StartController extends BaseController{
     @FXML
     protected void onConnectButtonClick() {
         SceneManager.setScene(States.MENU);
@@ -16,11 +13,6 @@ public class StartController implements IController {
 
     @FXML
     protected void onExitButtonClick() {
-        welcomeText.setText("Exiting Application!");
-    }
-
-    @Override
-    public void print(String message) {
-
+        print("Exiting Application!");
     }
 }

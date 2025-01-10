@@ -1,5 +1,6 @@
 package com.dawid.server;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,16 @@ public class CommandExecutor implements CommandHandler {
         commands.put("JOIN", this::joinGame);
         commands.put("LEAVE", this::leaveLobby);
         commands.put("START", this::startGame);
-        //TODO: add commands and link them to methods
+        commands.put("LOBBYINFO", this::sendLobbyInfo);
     }
+
+    private void sendLobbyInfo(String[] strings) {
+        Collection<Lobby> lobbies = GamesManager.getInstance().getLobbies();
+        for (Lobby lobby : lobbies) {
+
+        }
+    }
+
     @Override
     public void exec(String command) {
         String[] args = command.split(" ");

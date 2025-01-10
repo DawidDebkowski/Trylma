@@ -42,4 +42,5 @@ public class GamesManager {
         }
         return -1;
     }
+    public List<Lobby> getLobbies() {return lobbies;}
 }
