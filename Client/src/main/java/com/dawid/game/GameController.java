@@ -2,6 +2,7 @@ package com.dawid.game;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * This class will control how the game is played.
@@ -11,7 +12,9 @@ public class GameController {
     // ID of player that is using this controller
     int playerID;
     // List of currently playing playerIDs
-    Collection<Integer> players;
+    List<Integer> players;
+    // Index of the player that is currently moving in the players list
+    int movingPlayer = 0;
     // Board type
     Board board;
     // Game Variant
@@ -29,6 +32,42 @@ public class GameController {
         board.printBoard();
     }
 
+    /**
+     *  If player owning this GameController can move.
+     */
+    public boolean isYourTurn() {
+        return players.get(movingPlayer) == playerID;
+    }
+
+    /**
+     * It will just (without checking anything) make that move.
+     * Should only be used if the server tells you to move, not for local moves.
+     *
+     * Sets movingPlayer to the player that is after param "player"
+     */
+    public void makeMove(int row, int col, int player) {
+        moveController.movePawn(row, col, player);
+    }
+
+    /**
+     * Validate local moves before sending them to the server.
+     * @param row
+     * @param col
+     * @param destRow
+     * @param destCol
+     * @return
+     */
+    public boolean tryMove(int row, int col, int destRow, int destCol) {
+        if(!isYourTurn()) return false;
+        return true;
+    }
+
+    /**
+     * To be finished and integrated with GUI using a good coordinate system.
+     * Returns a collection of all the possible moves from a given field.
+     * @param c
+     * @return
+     */
     public Collection<Coordinates> getPossibleMoves(Coordinates c) {
         Field field = board.getField(c.getRow(), c.getColumn());
         Collection<Field> possibleMoves = moveController.getPossibleMoves(field);
@@ -36,6 +75,9 @@ public class GameController {
         return null;
     }
 
+    /**
+     * For testing. Marks all possible moves with a 9-pawn.
+     */
     public void showPossibleMoves(Coordinates c) {
         Field field = board.getField(c.getRow(), c.getColumn());
         Collection<Field> possibleMoves = moveController.getPossibleMoves(field);

@@ -2,6 +2,7 @@ package com.dawid.game;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Assumptions: if there are only 2 players: player 1 fights player 4
@@ -18,8 +19,8 @@ public class NormalMoveController implements IMoveController {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public Collection<Integer> setupPlayers() {
-        Collection<Integer> players = new ArrayList<>();
+    public List<Integer> setupPlayers() {
+        List<Integer> players = new ArrayList<>();
         if(numberOfPlayers == 3) {
             players.add(1);
             players.add(3);
@@ -44,7 +45,7 @@ public class NormalMoveController implements IMoveController {
     /**
      * Spawns pawns in player home regions.
      */
-    public void setupPawns(Collection<Integer> players) {
+    public void setupPawns(List<Integer> players) {
         for(Integer player : players) {
             System.out.println(player);
             Collection<Field> homeFields = board.getHomeFields(player);
@@ -55,12 +56,7 @@ public class NormalMoveController implements IMoveController {
         }
     }
 
-    /**
-     * Recursively searches for all possible moves from a given field. Includes all jumps.
-     * TODO: clear field.visited
-     * @param startField
-     * @return
-     */
+
     @Override
     public Collection<Field> getPossibleMoves(Field startField) {
         Collection<Field> possibleMoves = new ArrayList<>(); //make it a collection without duplicates?
@@ -81,6 +77,11 @@ public class NormalMoveController implements IMoveController {
         }
 
         return possibleMoves;
+    }
+
+    @Override
+    public void movePawn(int row, int col, int pawn) {
+
     }
 
     /**
