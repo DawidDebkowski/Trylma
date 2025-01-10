@@ -18,8 +18,8 @@ public class NormalMoveController implements IMoveController {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    public void setupPawns() {
-        ArrayList<Integer> players = new ArrayList<>();
+    public Collection<Integer> setupPlayers() {
+        Collection<Integer> players = new ArrayList<>();
         if(numberOfPlayers == 3) {
             players.add(1);
             players.add(3);
@@ -38,7 +38,13 @@ public class NormalMoveController implements IMoveController {
                 players.add(6);
             }
         }
+        return players;
+    }
 
+    /**
+     * Spawns pawns in player home regions.
+     */
+    public void setupPawns(Collection<Integer> players) {
         for(Integer player : players) {
             System.out.println(player);
             Collection<Field> homeFields = board.getHomeFields(player);
@@ -69,9 +75,19 @@ public class NormalMoveController implements IMoveController {
         }
         possibleMoves.addAll(getPossibleJumps(startField));
 
+        //clear .visited
+        for (Field field : possibleMoves) {
+            field.visited = false;
+        }
+
         return possibleMoves;
     }
 
+    /**
+     * Returns all possible jumps from a given field. Includes multi-jumping.
+     * @param startField
+     * @return
+     */
     private Collection<Field> getPossibleJumps(Field startField) {
         Collection<Field> toCheck = new ArrayList<>();
         Collection<Field> possibleJumps = new ArrayList<>(); //make it a collection without duplicates?
