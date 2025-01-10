@@ -14,7 +14,7 @@ public class GameController {
     // List of currently playing playerIDs
     List<Integer> players;
     // Index of the player that is currently moving in the players list
-    int movingPlayer = 0;
+    int movingPlayerIndex = 0;
     // Board type
     Board board;
     // Game Variant
@@ -36,21 +36,28 @@ public class GameController {
      *  If player owning this GameController can move.
      */
     public boolean isYourTurn() {
-        return players.get(movingPlayer) == playerID;
+        return players.get(movingPlayerIndex) == playerID;
     }
 
     /**
      * It will just (without checking anything) make that move.
      * Should only be used if the server tells you to move, not for local moves.
-     *
-     * Sets movingPlayer to the player that is after param "player"
+     * Increments movingPlayerIndex
      */
     public void makeMove(int row, int col, int player) {
         moveController.movePawn(row, col, player);
+
+        //possible synchronization error
+        movingPlayerIndex++;
+        if(movingPlayerIndex == players.size()) {
+            movingPlayerIndex = 0;
+        }
     }
 
     /**
      * Validate local moves before sending them to the server.
+     * It should be called when a player selects a place to move their pawn to.
+     * It shouldn't be used to move the pawn - only the server's response should do that.
      * @param row
      * @param col
      * @param destRow
@@ -59,7 +66,9 @@ public class GameController {
      */
     public boolean tryMove(int row, int col, int destRow, int destCol) {
         if(!isYourTurn()) return false;
-        return true;
+        Field startField = board.getField(row, col);
+        Field finishField = board.getField(destRow, destCol);
+        return moveController.getPossibleMoves(startField).contains(finishField);
     }
 
     /**
