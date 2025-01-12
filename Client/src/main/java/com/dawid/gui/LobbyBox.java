@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
 
+/**
+ * This represents one of the lobbies the player can join on menu scene.
+ */
 public class LobbyBox extends HBox {
     private final GUI client;
     private final int id;

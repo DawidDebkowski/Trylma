@@ -44,7 +44,7 @@ public class GUI extends Application implements IClient {
 
     @Override
     public ServerCommunicator getSocket() {
-        return null;
+        return communicator;
     }
 
     @Override

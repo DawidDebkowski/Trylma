@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
 
-//TODO: test this class when the server is online
 public class ServerCommunicator{
     private final Socket socket;
     private final BufferedReader in;
