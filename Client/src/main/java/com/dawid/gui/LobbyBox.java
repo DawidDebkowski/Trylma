@@ -1,6 +1,7 @@
 package com.dawid.gui;
 
 import com.dawid.game.Variant;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
@@ -21,6 +22,9 @@ public class LobbyBox extends HBox {
     }
 
     public void show() {
+        this.setPadding(new Insets(30));
+        this.setSpacing(40);
+
         Label playersLabel = new Label("Players: " + currentPlayers + " / " + maxPlayers);
         Label name = new Label("Lobby: " + id);
         Label variantLabel = new Label("Variant: " + variant.toString());

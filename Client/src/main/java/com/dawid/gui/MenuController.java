@@ -12,11 +12,6 @@ public class MenuController extends BaseController{
     @FXML
     protected VBox lobbyHolder;
 
-    @FXML
-    protected void onJoinButtonClick() {
-        print("Joined");
-    }
-
     public void initialize() {
         super.initialize();
         lobbyBoxes = new ArrayList<>();
