@@ -7,6 +7,30 @@ import java.util.List;
 /**
  * This class will control how the game is played.
  * It combines a board and a variant to make a game.
+ *
+ * Notatka: Licze ze ta klasa wyjasnia sama siebie komentarzami
+ * ale zalozenie bylo takie ze bedzie kontrolowac przebieg gry
+ *
+ * niestety przez moje niezrouzmienie DavidStarBoard wyszlo glupio z koordynatami ale wedlug mnie
+ * mozemy z tym pracowac, bo wiekszosc kodu jest na Field, wiec nic nie szkodzi
+ *
+ * Jak sobie to odpalisz to zobaczysz rozne boardy wyprintowane, jak poczytasz kod to zobaczysz o co chodzi
+ *
+ * Ogolnie do zrobienia jest jakiegos rodzaju mainLoop() gry, zeby no po prostu sie toczyla xd
+ * tryMove() i getPossibleMoves() trzeba podlaczyc do planszy, ktorej nie ma na razie
+ * ale tez ja trzeba zmienic
+ * no i wtedy te metody powinny operowac na tych samych rodzajach koordynatow
+ *
+ * Na serwerze sa chyba jakies zmiany ale juz nie pamietam, ale raczej nieznaczace
+ *
+ * Notatka: a no i jest w fieldzie .visited, ktore jest czyms w stylu tablicy visited[] w
+ * cudownych algorytmach grafowych zeby sie nie zapetlic bo mozna duzo razy trafic
+ * na to samo pole
+ * uznalem ze jak bedzie w fieldzie to bedzie to duze uproszczenie, bo nie wiedzialem do konca gdzie
+ * trzymac informacje w tym czy pole zostalo odwiedzone czy nie
+ * i mysle ze to jest okej pozdrawiam cieplutko z rodzina i powodzenia jutro
+ *
+ * sorry za chaos i wgl ale jakos programowanie obiektowe mnie czasami przytłacza
  */
 public class GameController {
     // ID of player that is using this controller

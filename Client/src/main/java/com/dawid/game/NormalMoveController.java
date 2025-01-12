@@ -19,6 +19,11 @@ public class NormalMoveController implements IMoveController {
         this.numberOfPlayers = numberOfPlayers;
     }
 
+    /**
+     * Notatka: ta cudowna metoda robi liste graczy, bo 1 i 4 sa naprzeciwko siebie, wiec jezeli jest 2 graczy to
+     * oni musza grac przeciwko sobie
+     * @return
+     */
     public List<Integer> setupPlayers() {
         List<Integer> players = new ArrayList<>();
         if(numberOfPlayers == 3) {
