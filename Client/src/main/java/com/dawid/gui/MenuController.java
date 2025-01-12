@@ -22,6 +22,7 @@ public class MenuController extends BaseController{
         lobbyBoxes = new ArrayList<>();
         startRefresh();
         addLobby(1, 2, 6, Variant.normal);
+        addLobby(2, 0, 3, Variant.capture);
         showLobbies();
     }
 
@@ -38,6 +39,7 @@ public class MenuController extends BaseController{
     public void showLobbies() {
         for (LobbyBox lb : lobbyBoxes) {
             lobbyHolder.getChildren().add(lb);
+            lb.show();
         }
     }
 }
