@@ -82,7 +82,7 @@ public class ServerCommunicator{
                     if(args.length == 0){
                         return;
                     }
-                    System.out.printf("\n[Server]: %s\n", message);
+                    client.message("\n[Server]: " + message);
                     if(protocol.containsKey(args[0])){
                         protocol.get(args[0]).execute(args);
                     }

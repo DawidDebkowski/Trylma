@@ -69,6 +69,11 @@ public class CLI implements IClient {
     }
 
     @Override
+    public void message(String message) {
+        println(message);
+    }
+
+    @Override
     public void changeState(ClientState newState) {
         clientState = newState;
     }

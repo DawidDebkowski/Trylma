@@ -1,5 +1,6 @@
 package com.dawid.gui;
 
+import com.dawid.Commands;
 import com.dawid.IClient;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.Board;
@@ -14,6 +15,8 @@ import java.io.IOException;
 
 public class GUI extends Application implements IClient {
     private ServerCommunicator communicator;
+    private ClientState state;
+    private IController controller;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -25,12 +28,8 @@ public class GUI extends Application implements IClient {
         launch();
     }
 
-    public void connect(String serverAdress, int port) {
-        try {
-            communicator = new ServerCommunicator(serverAdress, port);
-        } catch (IOException e) {
-
-        }
+    public void connect(String serverAdress, int port) throws IOException {
+        communicator = new ServerCommunicator(serverAdress, port);
     }
 
     @Override
@@ -53,13 +52,22 @@ public class GUI extends Application implements IClient {
         SceneManager.setScene(newState.getName());
     }
 
+//    public void executeCommand(Commands command) {
+//        state.executeCommand(command);
+//    }
+
     @Override
     public void exit() {
 
     }
 
     @Override
-    public void prompt() {
+    public void message(String message) {
+        controller.print(message);
+    }
 
+    @Override
+    public void prompt() {
+        return;
     }
 }

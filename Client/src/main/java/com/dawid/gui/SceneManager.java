@@ -43,6 +43,7 @@ public class SceneManager {
             Scene scene = new Scene(loader.load());
             IController controller = loader.getController();
             controller.setClient(client);
+            controller.initialize();
             scenes.put(name, scene);
         } catch (IOException e) {
             e.printStackTrace();

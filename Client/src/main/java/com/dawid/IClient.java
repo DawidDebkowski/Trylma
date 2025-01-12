@@ -14,6 +14,8 @@ public interface IClient {
 
     void exit();
 
+    void message(String message);
+
     //TODO refactor ServerCommunicator to remove this method
     void prompt();
 }

@@ -17,4 +17,9 @@ public class BaseController implements IController {
     public void setClient(GUI client) {
         this.client = client;
     }
+
+    @Override
+    public void initialize() {
+
+    }
 }
