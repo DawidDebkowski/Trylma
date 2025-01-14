@@ -35,4 +35,5 @@ public interface Board {
      */
     public Field getJumpField(Field start, Field across) throws IllegalArgumentException;
     public void printBoard();
+    public void debugPrint();
 }
