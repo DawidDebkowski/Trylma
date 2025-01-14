@@ -1,7 +1,10 @@
 package com.dawid;
 
 import com.dawid.game.Board;
+import com.dawid.game.LobbyInfo;
 import com.dawid.states.ClientState;
+
+import java.util.Collection;
 
 public interface IClient {
     void moveOnBoard(int player, String x, String y);
@@ -18,4 +21,8 @@ public interface IClient {
 
     //TODO refactor ServerCommunicator to remove this method
     void prompt();
+
+    void updateLobbies(Collection<LobbyInfo> lobbies);
+
+    Collection<LobbyInfo> getLobbies();
 }

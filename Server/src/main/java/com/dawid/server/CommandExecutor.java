@@ -18,12 +18,6 @@ public class CommandExecutor implements CommandHandler {
         commands.put("LOBBYINFO", this::sendLobbyInfo);
     }
 
-    private void sendLobbyInfo(String[] strings) {
-        Collection<Lobby> lobbies = GamesManager.getInstance().getLobbies();
-        for (Lobby lobby : lobbies) {
-
-        }
-    }
 
     @Override
     public void exec(String command) {
@@ -39,6 +33,16 @@ public class CommandExecutor implements CommandHandler {
             player.sendMessage("ERROR: Unknown command");
         }
     }
+
+    private void sendLobbyInfo(String[] strings) {
+        Collection<Lobby> lobbies = GamesManager.getInstance().getLobbies();
+        for (Lobby lobby : lobbies) {
+            //Format "Number players variant"
+            player.sendMessage(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant());
+        }
+        player.sendMessage("END");
+    }
+
     private void joinGame(String[] args) throws IllegalArgumentException {
         Lobby lobby = GamesManager.getInstance().getLobby(Integer.parseInt(args[1]));
         if(lobby == null) {
@@ -59,7 +63,7 @@ public class CommandExecutor implements CommandHandler {
     }
     private void move(String[] args) {
         System.out.println("Move command in lobby " + player.getLobby());
-        player.getLobby().makeMove(player, args[1]);
+        player.getLobby().makeMove(player, args);
 
     }
     private void leaveLobby(String[] args) {

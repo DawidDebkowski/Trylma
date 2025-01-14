@@ -40,8 +40,9 @@ public class MenuController extends BaseController{
         super.lateInitialize();
         lobbyBoxes = new ArrayList<>();
         startRefresh();
-        addLobby(1, 2, 6, Variant.normal);
-        addLobby(2, 0, 3, Variant.capture);
+        for(var lobby: client.getLobbies()){
+            addLobby(lobby.getId(), lobby.getCurrentPlayers(), lobby.getMaxPlayers(), lobby.getVariant());
+        }
         showLobbies();
     }
 

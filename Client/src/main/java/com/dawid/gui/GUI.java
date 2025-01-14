@@ -6,17 +6,20 @@ import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.GameEngine;
 import com.dawid.game.NormalMoveController;
+import com.dawid.game.LobbyInfo;
 import com.dawid.states.ClientState;
 import com.dawid.states.States;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Collection;
 
 public class GUI extends Application implements IClient {
     private ServerCommunicator communicator;
     private ClientState state;
     private IController controller;
+    private Collection<LobbyInfo> lobbies;
     private GameEngine gameEngine;
 
     @Override
@@ -90,5 +93,15 @@ public class GUI extends Application implements IClient {
     @Override
     public void prompt() {
         return;
+    }
+
+    @Override
+    public void updateLobbies(Collection<LobbyInfo> lobbies) {
+        this.lobbies = lobbies;
+    }
+
+    @Override
+    public Collection<LobbyInfo> getLobbies() {
+        return lobbies;
     }
 }

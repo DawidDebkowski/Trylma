@@ -1,5 +1,7 @@
 package com.dawid;
 
+import com.dawid.game.LobbyInfo;
+import com.dawid.game.Variant;
 import com.dawid.states.MenuState;
 import com.dawid.states.LobbyState;
 import com.dawid.states.PlayingState;
@@ -9,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class ServerCommunicator{
@@ -65,12 +69,26 @@ public class ServerCommunicator{
             protocol.put("Left", (IResponse) (message) -> {client.changeState(new MenuState(client));});
             protocol.put("Started", (IResponse) (message)  -> {client.changeState(new PlayingState(client));});
             protocol.put("Moved:", this::receiveMove);
+            protocol.put("Lobbies:", this::receiveLobbies);
         }
 
         private void receiveMove(String[] args) {
             // Moved: Player x MOVE c1 c2
             client.moveOnBoard(Integer.parseInt(args[2]), args[4], args[5]);
             System.out.println("Got move on from " + args[2] + " " + args[4] + " to " + args[5]);
+        }
+        private void receiveLobbies(String[] args) {
+            var lobbies = new ArrayList<LobbyInfo>();
+            try {
+                var line = in.readLine();
+                while (!line.equals("END")) {
+                    var lobbyInfo = line.split(" ");
+                    lobbies.add(new LobbyInfo(Integer.parseInt(lobbyInfo[0]), Integer.parseInt(lobbyInfo[1]), Variant.getVariantByName(lobbyInfo[2])));
+                }
+            } catch (IOException e) {
+                System.out.println("Error reading lobbies");
+            }
+            client.updateLobbies(lobbies);
         }
 
         @Override
@@ -116,5 +134,9 @@ public class ServerCommunicator{
     public boolean create() {
         out.println("CREATE");
         return true;
+    }
+
+    public void getLobbyInfo() {
+        out.println("LOBBYINFO");
     }
 }

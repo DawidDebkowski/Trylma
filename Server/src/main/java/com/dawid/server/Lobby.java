@@ -3,6 +3,7 @@ package com.dawid.server;
 import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.TurnController;
+import com.dawid.game.Variant;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,6 +70,10 @@ public class Lobby {
         player.getLobby().notifyAll("Moved: Player " + player.getNumber() + " " + String.join(" ", args));
         turnController.nextTurn();
         turnController.getCurrrentPlayer().sendMessage("TURN");
+    }
+    public Variant getVariant() {
+        // TODO
+        return null;
     }
 
 }
