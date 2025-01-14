@@ -4,11 +4,10 @@ import com.dawid.Commands;
 import com.dawid.IClient;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.Board;
+import com.dawid.game.GameController;
 import com.dawid.states.ClientState;
 import com.dawid.states.States;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,11 +16,12 @@ public class GUI extends Application implements IClient {
     private ServerCommunicator communicator;
     private ClientState state;
     private IController controller;
+    private GameController gameController;
 
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
-        SceneManager.setScene(States.PLAYING);
+        SceneManager.setScene(States.MENU);
     }
 
     public static void main(String[] args) {
@@ -33,8 +33,15 @@ public class GUI extends Application implements IClient {
     }
 
     @Override
-    public void moveOnBoard(int player, String x, String y) {
-
+    public void moveOnBoard(int player, String from, String to) {
+        String[] fromCoordinates = from.split("-");
+        String[] toCoordinates = to.split("-");
+        int sx, sy, fx, fy;
+        sx = Integer.parseInt(fromCoordinates[0]);
+        sy = Integer.parseInt(fromCoordinates[1]);
+        fx = Integer.parseInt(toCoordinates[0]);
+        fy = Integer.parseInt(toCoordinates[1]);
+        gameController.makeMove(player, sx, sy, fx, fy);
     }
 
     @Override
@@ -51,10 +58,6 @@ public class GUI extends Application implements IClient {
     public void changeState(ClientState newState) {
         SceneManager.setScene(newState.getName());
     }
-
-//    public void executeCommand(Commands command) {
-//        state.executeCommand(command);
-//    }
 
     @Override
     public void exit() {

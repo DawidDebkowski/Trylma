@@ -68,8 +68,8 @@ public class GameController {
      * Should only be used if the server tells you to move, not for local moves.
      * Increments movingPlayerIndex
      */
-    public void makeMove(int row, int col, int player) {
-        moveController.movePawn(row, col, player);
+    public void makeMove(int player, int sx, int sy, int fx, int fy)  {
+        moveController.movePawn(player, sx, sy, fx, fy);
 
         //possible synchronization error
         movingPlayerIndex++;

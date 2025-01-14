@@ -84,9 +84,19 @@ public class NormalMoveController implements IMoveController {
         return possibleMoves;
     }
 
+    /**
+     * Sets given pawn in given coordinates.
+     *
+     * @param pawn
+     * @param sx
+     * @param sy
+     * @param fx
+     * @param fy
+     */
     @Override
-    public void movePawn(int row, int col, int pawn) {
-
+    public void movePawn(int pawn, int sx, int sy, int fx, int fy) {
+        board.getField(sx, sy).setPawn(0);
+        board.getField(fx, fy).setPawn(pawn);
     }
 
     /**

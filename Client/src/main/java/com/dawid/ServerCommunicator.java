@@ -93,8 +93,8 @@ public class ServerCommunicator{
         }
     }
 
-    public boolean move(String from, String to) {
-        out.println("MOVE" + " " + from + " " + to);
+    public boolean move(int sx, int sy, int fx, int fy) {
+        out.println("MOVE" + " " + sx + "-" + sy + " " + fx + "-" + fy);
         return true;
     }
 
