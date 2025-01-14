@@ -12,13 +12,10 @@ public interface IMoveController {
      * @param startField
      * @return
      */
-    public Collection<Field> getPossibleMoves(Field field);
+    public Collection<Field> getPossibleMoves(Field startField);
 
     /**
      * Sets given pawn in given coordinates.
-     * @param row
-     * @param col
-     * @param pawn
      */
-    public void movePawn(int row, int col, int pawn);
+    public void movePawn(int pawn, int sx, int sy, int fx, int fy);
 }

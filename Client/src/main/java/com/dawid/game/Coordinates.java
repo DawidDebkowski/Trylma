@@ -23,6 +23,10 @@ public class Coordinates {
         return row == c.getRow() && column == c.getColumn();
     }
     public String toString() {
-        return "(" + row + ", " + column + ")";
+        return row + "-" + column;
+    }
+    public static Coordinates fromString(String s) {
+        String[] split = s.split("-");
+        return new Coordinates(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
     }
 }

@@ -32,7 +32,7 @@ import java.util.List;
  *
  * sorry za chaos i wgl ale jakos programowanie obiektowe mnie czasami przytłacza
  */
-public class GameController {
+public class GameEngine {
     // ID of player that is using this controller
     int playerID;
     // List of currently playing playerIDs
@@ -44,7 +44,7 @@ public class GameController {
     // Game Variant
     IMoveController moveController;
 
-    GameController(Board board, IMoveController moveController, int playerNumber) {
+    public GameEngine(Board board, IMoveController moveController, int playerNumber) {
         this.board = board;
         this.moveController = moveController;
         this.playerID = playerNumber;
@@ -68,8 +68,8 @@ public class GameController {
      * Should only be used if the server tells you to move, not for local moves.
      * Increments movingPlayerIndex
      */
-    public void makeMove(int row, int col, int player) {
-        moveController.movePawn(row, col, player);
+    public void makeMove(int player, int sx, int sy, int fx, int fy)  {
+        moveController.movePawn(player, sx, sy, fx, fy);
 
         //possible synchronization error
         movingPlayerIndex++;
@@ -82,16 +82,12 @@ public class GameController {
      * Validate local moves before sending them to the server.
      * It should be called when a player selects a place to move their pawn to.
      * It shouldn't be used to move the pawn - only the server's response should do that.
-     * @param row
-     * @param col
-     * @param destRow
-     * @param destCol
      * @return
      */
-    public boolean tryMove(int row, int col, int destRow, int destCol) {
+    public boolean tryMove(Coordinates from, Coordinates to) {
         if(!isYourTurn()) return false;
-        Field startField = board.getField(row, col);
-        Field finishField = board.getField(destRow, destCol);
+        Field startField = board.getField(from.getRow(), from.getColumn());
+        Field finishField = board.getField(to.getRow(), to.getColumn());
         return moveController.getPossibleMoves(startField).contains(finishField);
     }
 
@@ -105,7 +101,10 @@ public class GameController {
         Field field = board.getField(c.getRow(), c.getColumn());
         Collection<Field> possibleMoves = moveController.getPossibleMoves(field);
         Collection<Coordinates> possibleMovesList = new ArrayList<>();
-        return null;
+        for(Field possibleMove : possibleMoves) {
+            possibleMovesList.add(board.getCoordinates(possibleMove));
+        }
+        return possibleMovesList;
     }
 
     /**
@@ -122,8 +121,8 @@ public class GameController {
     // ludzki test getPossibleMoves()
     public static void main(String[] args) {
         DavidStarBoard board = new DavidStarBoard();
-        GameController gameController = new GameController(board, new NormalMoveController(board, 6), 0);
-        gameController.startGame();
+        GameEngine gameEngine = new GameEngine(board, new NormalMoveController(board, 6), 0);
+        gameEngine.startGame();
         board.debugPrint();
         board.getField(6, 10).setPawn(7);
         board.getField(6, 12).setPawn(7);
@@ -131,7 +130,11 @@ public class GameController {
         board.getField(7, 9).setPawn(7);
         board.getField(9, 7).setPawn(7);
         board.printBoard();
-        gameController.showPossibleMoves(new Coordinates(6, 10));
+        gameEngine.showPossibleMoves(new Coordinates(6, 10));
         board.printBoard();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
