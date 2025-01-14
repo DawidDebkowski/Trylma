@@ -15,7 +15,7 @@ public class PlayingState extends State{
     }
 
     private void move(String[] args) {
-        boolean status = client.getSocket().move(args[1], args[2]);
+//        boolean status = client.getSocket().move(args[1], args[2]);
     }
 
     private void showBoard(String[] args) {

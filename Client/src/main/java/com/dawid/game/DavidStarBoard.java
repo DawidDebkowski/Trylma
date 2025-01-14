@@ -176,6 +176,11 @@ public class DavidStarBoard implements Board {
         return height;
     }
 
+    @Override
+    public IBoardListener addListener() {
+        return null;
+    }
+
     //for testing purpose
     Map<Field, Coordinates> getCoordinatesMap() {
         return coordinates;

@@ -39,4 +39,6 @@ public interface Board {
 
     public int getWidth();
     public int getHeight();
+
+    public IBoardListener addListener();
 }

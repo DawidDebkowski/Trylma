@@ -22,4 +22,9 @@ public class BaseController implements IController {
     public void initialize() {
 
     }
+
+    @Override
+    public void refresh() {
+
+    }
 }
