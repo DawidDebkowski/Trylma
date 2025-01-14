@@ -58,9 +58,9 @@ public class CommandExecutor implements CommandHandler {
         player.sendMessage("Created lobby " + GamesManager.getInstance().getLobbyId(lobby));
     }
     private void move(String[] args) {
-        System.out.println("Move command");
-        // Probably we will need to add logic here in the future
-        player.getLobby().notifyAll("Moved: Player " + player.getNumber() + " " + String.join(" ", args));
+        System.out.println("Move command in lobby " + player.getLobby());
+        player.getLobby().makeMove(player, args[1]);
+
     }
     private void leaveLobby(String[] args) {
         System.out.printf("Player %d left lobby\n", player.getNumber());
