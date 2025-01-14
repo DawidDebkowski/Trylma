@@ -40,6 +40,7 @@ public class SceneManager {
         // Wczytanie scen
         scenes.put(States.DISCONNECTED, "disconnectedScene.fxml");
         scenes.put(States.MENU, "menuScene.fxml");
+        scenes.put(States.PLAYING, "gameScene.fxml");
 
         stage.setTitle("Trylma Chinese Checkers by Ćmolud (TM)");
         stage.show();

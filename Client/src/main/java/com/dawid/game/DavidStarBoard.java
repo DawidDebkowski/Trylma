@@ -166,6 +166,16 @@ public class DavidStarBoard implements Board {
         }
     }
 
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
     //for testing purpose
     Map<Field, Coordinates> getCoordinatesMap() {
         return coordinates;
