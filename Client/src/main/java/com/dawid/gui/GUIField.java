@@ -18,10 +18,12 @@ public class GUIField extends Circle {
         this.setRadius(20);
         pawnLabel = new Label(Integer.toString(field.getPawn()));
 
-        this.setFill(GameController.playerColors.get(field.getPawn()));
-        this.setStroke(GameController.playerColors.get(field.getHome()));
-
         System.out.println(field.getHome());
         System.out.println(GameController.playerColors.get(field.getHome()));
+    }
+
+    public void refresh() {
+        this.setFill(GameController.playerColors.get(field.getPawn()));
+        this.setStroke(GameController.playerColors.get(field.getHome()));
     }
 }

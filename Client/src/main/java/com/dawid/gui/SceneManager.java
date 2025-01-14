@@ -46,15 +46,18 @@ public class SceneManager {
         stage.show();
     }
 
-    public static void setScene(States name) {
+    public static IController setScene(States name) {
         try {
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(scenes.get(name)));
             Scene scene = new Scene(loader.load());
             IController controller = loader.getController();
             controller.setClient(client);
+            controller.lateInitialize();
             stage.setScene(scene);
+            return controller;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

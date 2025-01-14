@@ -44,7 +44,7 @@ public class GameController {
     // Game Variant
     IMoveController moveController;
 
-    GameController(Board board, IMoveController moveController, int playerNumber) {
+    public GameController(Board board, IMoveController moveController, int playerNumber) {
         this.board = board;
         this.moveController = moveController;
         this.playerID = playerNumber;
@@ -133,5 +133,9 @@ public class GameController {
         board.printBoard();
         gameController.showPossibleMoves(new Coordinates(6, 10));
         board.printBoard();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

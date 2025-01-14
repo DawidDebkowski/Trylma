@@ -36,8 +36,8 @@ public class MenuController extends BaseController{
     @FXML
     protected VBox lobbyHolder;
 
-    public void initialize() {
-        super.initialize();
+    public void lateInitialize() {
+        super.lateInitialize();
         lobbyBoxes = new ArrayList<>();
         startRefresh();
         addLobby(1, 2, 6, Variant.normal);

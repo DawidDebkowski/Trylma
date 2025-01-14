@@ -1,16 +1,12 @@
 package com.dawid.gui;
 
 import com.dawid.game.Board;
-import com.dawid.game.Coordinates;
-import com.dawid.game.DavidStarBoard;
 import com.dawid.game.IBoardListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +22,8 @@ public class GameController extends BaseController implements IBoardListener {
 
     public GameController() {}
 
-    public void initialize() {
-        super.initialize();
+    public void lateInitialize() {
+        super.lateInitialize();
         playerColors = new HashMap<>();
         playerColors.put(0, Color.BLACK);
         playerColors.put(1, Color.GREEN);
@@ -36,7 +32,7 @@ public class GameController extends BaseController implements IBoardListener {
         playerColors.put(4, Color.PURPLE);
         playerColors.put(5, Color.YELLOW);
         playerColors.put(6, Color.PINK);
-        intialiseBoard(new DavidStarBoard());
+        intialiseBoard(client.getBoard());
         mainBorderPane.setCenter(mainGrid);
         mainGrid.setAlignment(Pos.CENTER);
         mainGrid.setHgap(0);
@@ -68,6 +64,13 @@ public class GameController extends BaseController implements IBoardListener {
 
     public void refresh() {
         super.refresh();
+        for (GUIField[] fieldRow : fields) {
+            for (GUIField guiField : fieldRow) {
+                if(guiField != null) {
+                    guiField.refresh();
+                }
+            }
+        }
     }
 
     @Override

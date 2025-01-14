@@ -19,7 +19,7 @@ public class BaseController implements IController {
     }
 
     @Override
-    public void initialize() {
+    public void lateInitialize() {
 
     }
 

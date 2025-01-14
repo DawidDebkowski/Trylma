@@ -4,7 +4,9 @@ import com.dawid.Commands;
 import com.dawid.IClient;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.Board;
+import com.dawid.game.DavidStarBoard;
 import com.dawid.game.GameController;
+import com.dawid.game.NormalMoveController;
 import com.dawid.states.ClientState;
 import com.dawid.states.States;
 import javafx.application.Application;
@@ -21,7 +23,11 @@ public class GUI extends Application implements IClient {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
-        SceneManager.setScene(States.PLAYING);
+        DavidStarBoard board = new DavidStarBoard();
+        gameController = new GameController(board, new NormalMoveController(board,6), 1);
+        controller = SceneManager.setScene(States.PLAYING);
+        gameController.startGame();
+        controller.refresh();
     }
 
     public static void main(String[] args) {
@@ -46,7 +52,7 @@ public class GUI extends Application implements IClient {
 
     @Override
     public Board getBoard() {
-        return null;
+        return gameController.getBoard();
     }
 
     @Override
