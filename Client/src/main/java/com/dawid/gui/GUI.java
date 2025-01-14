@@ -23,6 +23,10 @@ public class GUI extends Application implements IClient {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
+        launchGame();
+    }
+
+    private void launchGame() {
         DavidStarBoard board = new DavidStarBoard();
         gameController = new GameController(board, new NormalMoveController(board,6), 1);
         controller = SceneManager.setScene(States.PLAYING);
