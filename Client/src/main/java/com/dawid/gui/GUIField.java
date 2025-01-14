@@ -2,13 +2,11 @@ package com.dawid.gui;
 
 import com.dawid.game.Coordinates;
 import com.dawid.game.Field;
-import com.dawid.game.GameController;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 import java.util.Collection;

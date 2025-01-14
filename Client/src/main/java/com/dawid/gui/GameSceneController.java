@@ -2,8 +2,7 @@ package com.dawid.gui;
 
 import com.dawid.game.Board;
 import com.dawid.game.Coordinates;
-import com.dawid.game.GameController;
-import com.dawid.game.IBoardListener;
+import com.dawid.game.GameEngine;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
@@ -31,14 +30,14 @@ public class GameSceneController extends BaseController {
 
     static Map<Integer, Color> playerColors;
 
-    private GameController gameController;
+    private GameEngine gameEngine;
 
     public GameSceneController() {
     }
 
     public void lateInitialize() {
         super.lateInitialize();
-        gameController = client.getGameController();
+        gameEngine = client.getGameController();
         playerColors = new HashMap<>();
         playerColors.put(0, Color.BLACK);
         playerColors.put(1, Color.GREEN);
@@ -104,7 +103,7 @@ public class GameSceneController extends BaseController {
         }
     }
 
-    public GameController getGameController() {
-        return gameController;
+    public GameEngine getGameController() {
+        return gameEngine;
     }
 }

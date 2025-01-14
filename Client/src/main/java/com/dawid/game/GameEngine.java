@@ -32,7 +32,7 @@ import java.util.List;
  *
  * sorry za chaos i wgl ale jakos programowanie obiektowe mnie czasami przytłacza
  */
-public class GameController {
+public class GameEngine {
     // ID of player that is using this controller
     int playerID;
     // List of currently playing playerIDs
@@ -44,7 +44,7 @@ public class GameController {
     // Game Variant
     IMoveController moveController;
 
-    public GameController(Board board, IMoveController moveController, int playerNumber) {
+    public GameEngine(Board board, IMoveController moveController, int playerNumber) {
         this.board = board;
         this.moveController = moveController;
         this.playerID = playerNumber;
@@ -121,8 +121,8 @@ public class GameController {
     // ludzki test getPossibleMoves()
     public static void main(String[] args) {
         DavidStarBoard board = new DavidStarBoard();
-        GameController gameController = new GameController(board, new NormalMoveController(board, 6), 0);
-        gameController.startGame();
+        GameEngine gameEngine = new GameEngine(board, new NormalMoveController(board, 6), 0);
+        gameEngine.startGame();
         board.debugPrint();
         board.getField(6, 10).setPawn(7);
         board.getField(6, 12).setPawn(7);
@@ -130,7 +130,7 @@ public class GameController {
         board.getField(7, 9).setPawn(7);
         board.getField(9, 7).setPawn(7);
         board.printBoard();
-        gameController.showPossibleMoves(new Coordinates(6, 10));
+        gameEngine.showPossibleMoves(new Coordinates(6, 10));
         board.printBoard();
     }
 

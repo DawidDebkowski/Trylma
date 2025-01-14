@@ -70,6 +70,7 @@ public class ServerCommunicator{
         private void receiveMove(String[] args) {
             // Moved: Player x MOVE c1 c2
             client.moveOnBoard(Integer.parseInt(args[2]), args[4], args[5]);
+            System.out.println("Got move on from " + args[2] + " " + args[4] + " to " + args[5]);
         }
 
         @Override

@@ -1,11 +1,10 @@
 package com.dawid.gui;
 
-import com.dawid.Commands;
 import com.dawid.IClient;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
-import com.dawid.game.GameController;
+import com.dawid.game.GameEngine;
 import com.dawid.game.NormalMoveController;
 import com.dawid.states.ClientState;
 import com.dawid.states.States;
@@ -18,19 +17,23 @@ public class GUI extends Application implements IClient {
     private ServerCommunicator communicator;
     private ClientState state;
     private IController controller;
-    private GameController gameController;
+    private GameEngine gameEngine;
 
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
+//        connect("localhost", 5005);
+//        communicator.create();
+//        communicator.join(0);
+//        communicator.startGame();
         launchGame();
     }
 
     private void launchGame() {
         DavidStarBoard board = new DavidStarBoard();
-        gameController = new GameController(board, new NormalMoveController(board,3), 1);
+        gameEngine = new GameEngine(board, new NormalMoveController(board,3), 1);
         controller = SceneManager.setScene(States.PLAYING);
-        gameController.startGame();
+        gameEngine.startGame();
         controller.refresh();
     }
 
@@ -51,17 +54,17 @@ public class GUI extends Application implements IClient {
         sy = Integer.parseInt(fromCoordinates[1]);
         fx = Integer.parseInt(toCoordinates[0]);
         fy = Integer.parseInt(toCoordinates[1]);
-        gameController.makeMove(player, sx, sy, fx, fy);
+        gameEngine.makeMove(player, sx, sy, fx, fy);
         controller.refresh();
     }
 
     @Override
     public Board getBoard() {
-        return gameController.getBoard();
+        return gameEngine.getBoard();
     }
 
-    public GameController getGameController() {
-        return gameController;
+    public GameEngine getGameController() {
+        return gameEngine;
     }
 
     @Override
