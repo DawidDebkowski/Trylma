@@ -96,6 +96,8 @@ public class ServerCommunicator{
             while(connected){
                 try {
                     String message = in.readLine();
+                    //TODO: remove in production XD
+                    System.out.println("Received: " + message);
                     String[] args = message.split(" ");
                     if(args.length == 0){
                         return;

@@ -16,13 +16,16 @@ public class Lobby {
     private Board board;
     private TurnController turnController;
     private final List<Player> players;
+    private final Variant variant;
     public Lobby(List<Player> players) {
         this.players = players;
+        this.variant = Variant.NORMAL;
     }
-    public Lobby() {
+    public Lobby(Variant variant) {
         this.players = new ArrayList<>();
         //only DavidStarBoard is implemented
         board = new DavidStarBoard();
+        this.variant = variant;
     }
     public void notifyAll(String message) {
         for (Player player : players) {
@@ -72,8 +75,7 @@ public class Lobby {
         turnController.getCurrrentPlayer().sendMessage("TURN");
     }
     public Variant getVariant() {
-        // TODO
-        return null;
+        return variant;
     }
 
 }

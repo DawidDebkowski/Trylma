@@ -1,12 +1,14 @@
 package com.dawid.server;
 
+import com.dawid.game.Variant;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandExecutor implements CommandHandler {
     private Map<String, Command> commands;
-    private Player player;
+    private final Player player;
     public CommandExecutor(Player player) {
         this.player = player;
         commands = new HashMap<>();
@@ -56,7 +58,13 @@ public class CommandExecutor implements CommandHandler {
     }
     private void createLobby(String[] args) {
         System.out.println("Create command");
-        Lobby lobby = new Lobby();
+        Lobby lobby;
+        if(args.length == 1) {
+            lobby = new Lobby(Variant.NORMAL);
+        }
+        else {
+            lobby = new Lobby(Variant.getVariantByName(args[1]));
+        }
         lobby.addPlayer(player);
         GamesManager.getInstance().addLobby(lobby);
         player.sendMessage("Created lobby " + GamesManager.getInstance().getLobbyId(lobby));
