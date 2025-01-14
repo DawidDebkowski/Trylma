@@ -2,9 +2,12 @@ package com.dawid;
 
 import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
+import com.dawid.game.LobbyInfo;
 import com.dawid.states.ClientState;
 import com.dawid.states.CommandException;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 
 public class CLI implements IClient {
@@ -43,6 +46,18 @@ public class CLI implements IClient {
      */
     public void prompt() {
         System.out.printf("[%s]>", clientState.getName());
+    }
+
+    @Override
+    public void updateLobbies(Collection<LobbyInfo> lobbies) {
+        //TODO implement
+        return;
+    }
+
+    @Override
+    public Collection<LobbyInfo> getLobbies() {
+        //TODO implement
+        return List.of();
     }
 
     /**
@@ -88,4 +103,5 @@ public class CLI implements IClient {
     public void println(String message) {
         System.out.println(message);
     }
+
 }
