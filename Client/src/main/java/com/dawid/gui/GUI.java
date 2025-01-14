@@ -28,7 +28,7 @@ public class GUI extends Application implements IClient {
 
     private void launchGame() {
         DavidStarBoard board = new DavidStarBoard();
-        gameController = new GameController(board, new NormalMoveController(board,6), 1);
+        gameController = new GameController(board, new NormalMoveController(board,3), 1);
         controller = SceneManager.setScene(States.PLAYING);
         gameController.startGame();
         controller.refresh();
@@ -57,6 +57,10 @@ public class GUI extends Application implements IClient {
     @Override
     public Board getBoard() {
         return gameController.getBoard();
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 
     @Override

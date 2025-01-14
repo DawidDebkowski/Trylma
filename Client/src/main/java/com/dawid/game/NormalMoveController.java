@@ -110,6 +110,7 @@ public class NormalMoveController implements IMoveController {
         Collection<Field> neighboringFields = board.getNeighboringFields(startField);
 
         for (Field field : neighboringFields) {
+            if(field == null) continue;
             if(field.getPawn() != 0) {
                 Field jumpField = board.getJumpField(startField, field);
                 if (jumpField == null || jumpField.getPawn() != 0) continue;

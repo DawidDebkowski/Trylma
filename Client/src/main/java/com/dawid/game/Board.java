@@ -41,4 +41,6 @@ public interface Board {
     public int getHeight();
 
     public IBoardListener addListener();
+
+    public Coordinates getCoordinates(Field field);
 }

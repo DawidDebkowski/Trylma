@@ -1,6 +1,8 @@
 package com.dawid.gui;
 
 import com.dawid.game.Board;
+import com.dawid.game.Coordinates;
+import com.dawid.game.GameController;
 import com.dawid.game.IBoardListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -8,22 +10,29 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameController extends BaseController implements IBoardListener {
+public class GameSceneController extends BaseController implements IBoardListener {
     @FXML
     private BorderPane mainBorderPane;
 
     private GridPane mainGrid;
     private GUIField[][] fields;
+    private Collection<GUIField> lastHightlited;
 
     static Map<Integer, Color> playerColors;
 
-    public GameController() {}
+    private GameController gameController;
+
+    public GameSceneController() {
+    }
 
     public void lateInitialize() {
         super.lateInitialize();
+        gameController = client.getGameController();
         playerColors = new HashMap<>();
         playerColors.put(0, Color.BLACK);
         playerColors.put(1, Color.GREEN);
@@ -52,7 +61,7 @@ public class GameController extends BaseController implements IBoardListener {
                     if(board.getField(i, j) == null) {
                         continue;
                     }
-                    GUIField circle = new GUIField(board.getField(i, j));
+                    GUIField circle = new GUIField(board.getField(i, j), i, j, this);
                     fields[i][j] = circle;
                     mainGrid.add(circle, j, i);
                 } catch (IllegalArgumentException e) {
@@ -73,8 +82,28 @@ public class GameController extends BaseController implements IBoardListener {
         }
     }
 
+    public void highlight(Collection<Coordinates> coordinates) {
+        if(lastHightlited != null) {
+            for (GUIField guiField : lastHightlited) {
+                guiField.refresh();
+            }
+        }
+        lastHightlited = new ArrayList<>();
+        for (Coordinates c : coordinates) {
+            GUIField guiField = fields[c.getRow()][c.getColumn()];
+            if(guiField != null) {
+                guiField.setFill(Color.BLUEVIOLET);
+                lastHightlited.add(guiField);
+            }
+        }
+    }
+
     @Override
     public void recieveChange(int newPawn, int x, int y) {
         return;
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 }

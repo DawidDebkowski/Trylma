@@ -82,16 +82,12 @@ public class GameController {
      * Validate local moves before sending them to the server.
      * It should be called when a player selects a place to move their pawn to.
      * It shouldn't be used to move the pawn - only the server's response should do that.
-     * @param row
-     * @param col
-     * @param destRow
-     * @param destCol
      * @return
      */
-    public boolean tryMove(int row, int col, int destRow, int destCol) {
+    public boolean tryMove(Coordinates from, Coordinates to) {
         if(!isYourTurn()) return false;
-        Field startField = board.getField(row, col);
-        Field finishField = board.getField(destRow, destCol);
+        Field startField = board.getField(from.getRow(), from.getColumn());
+        Field finishField = board.getField(to.getRow(), to.getColumn());
         return moveController.getPossibleMoves(startField).contains(finishField);
     }
 
@@ -105,7 +101,10 @@ public class GameController {
         Field field = board.getField(c.getRow(), c.getColumn());
         Collection<Field> possibleMoves = moveController.getPossibleMoves(field);
         Collection<Coordinates> possibleMovesList = new ArrayList<>();
-        return null;
+        for(Field possibleMove : possibleMoves) {
+            possibleMovesList.add(board.getCoordinates(possibleMove));
+        }
+        return possibleMovesList;
     }
 
     /**

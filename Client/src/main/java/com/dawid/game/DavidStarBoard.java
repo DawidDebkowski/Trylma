@@ -29,6 +29,11 @@ public class DavidStarBoard implements Board {
         }
         return board[row][column];
     }
+
+    public Coordinates getCoordinates(Field field) {
+        return coordinates.get(field);
+    }
+
     @Override
     public Collection<Field> getNeighboringFields(Field field) {
         Coordinates c = coordinates.get(field);
