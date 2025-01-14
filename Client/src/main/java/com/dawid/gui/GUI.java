@@ -52,6 +52,7 @@ public class GUI extends Application implements IClient {
         fx = Integer.parseInt(toCoordinates[0]);
         fy = Integer.parseInt(toCoordinates[1]);
         gameController.makeMove(player, sx, sy, fx, fy);
+        controller.refresh();
     }
 
     @Override

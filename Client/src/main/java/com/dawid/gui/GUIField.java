@@ -69,8 +69,9 @@ public class GUIField extends Circle {
             boolean success = false;
             if (db.hasString()) {
                 String sourceFieldId = db.getString();
-                // Handle the move logic here, e.g., update the game state
+                Coordinates c = Coordinates.fromString(sourceFieldId);
                 System.out.println("Moved from field " + sourceFieldId + " to field " + row + "-" + column);
+                gameController.client.moveOnBoard(gameController.client.getBoard().getField(c.getRow(), c.getColumn()).getPawn(), sourceFieldId, row + "-" + column);
                 success = true;
             }
             event.setDropCompleted(success);
