@@ -8,10 +8,18 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 import java.util.Collection;
 
+/**
+ * Handles drag and drop
+ * Check with GameEngine if it can move
+ * then send a move to the server through ServerCommunicator
+ *
+ * Actual movement will be handled by the client and refreshing the board.
+ */
 public class GUIField extends Circle {
     private final Field field;
     private final GameSceneController controller;
@@ -27,8 +35,8 @@ public class GUIField extends Circle {
 
         System.out.println(field.getHome());
         System.out.println(GameSceneController.playerColors.get(field.getHome()));
-    
-       // Enable drag detection
+
+        // Enable drag detection
         this.setOnDragDetected(event -> {
             Dragboard db = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
@@ -71,7 +79,10 @@ public class GUIField extends Circle {
                 String sourceFieldId = db.getString();
                 Coordinates c = Coordinates.fromString(sourceFieldId);
                 System.out.println("Moved from field " + sourceFieldId + " to field " + row + "-" + column);
-                gameController.client.moveOnBoard(gameController.client.getBoard().getField(c.getRow(), c.getColumn()).getPawn(), sourceFieldId, row + "-" + column);
+                boolean canMove = controller.getGameController().tryMove(Coordinates.fromString(sourceFieldId), new Coordinates(row, column));
+                if(canMove) {
+                    controller.client.getSocket().move(c.getRow(), c.getColumn(), row, column);
+                }
                 success = true;
             }
             event.setDropCompleted(success);

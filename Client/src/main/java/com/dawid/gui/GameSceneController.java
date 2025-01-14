@@ -15,7 +15,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameSceneController extends BaseController implements IBoardListener {
+/**
+ * Controller for GameScene
+ *
+ * Build a GUI board. It should in theory work with any board.
+ * Will have the same Coordinates as a board.
+ */
+public class GameSceneController extends BaseController {
     @FXML
     private BorderPane mainBorderPane;
 
@@ -41,14 +47,14 @@ public class GameSceneController extends BaseController implements IBoardListene
         playerColors.put(4, Color.PURPLE);
         playerColors.put(5, Color.YELLOW);
         playerColors.put(6, Color.PINK);
-        intialiseBoard(client.getBoard());
+        initialiseBoard(client.getBoard());
         mainBorderPane.setCenter(mainGrid);
         mainGrid.setAlignment(Pos.CENTER);
         mainGrid.setHgap(0);
         mainGrid.setVgap(10);
     }
 
-    public void intialiseBoard(Board board) {
+    public void initialiseBoard(Board board) {
         int width = board.getWidth();
         int height = board.getHeight();
         fields = new GUIField[height][width];
@@ -96,11 +102,6 @@ public class GameSceneController extends BaseController implements IBoardListene
                 lastHightlited.add(guiField);
             }
         }
-    }
-
-    @Override
-    public void recieveChange(int newPawn, int x, int y) {
-        return;
     }
 
     public GameController getGameController() {
