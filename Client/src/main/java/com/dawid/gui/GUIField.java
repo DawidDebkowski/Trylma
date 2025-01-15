@@ -32,6 +32,7 @@ public class GUIField extends Circle {
         this.column = column;
         this.controller = gameController;
         this.setRadius(20);
+        this.setStrokeWidth(5);
 
         // Enable drag detection
         this.setOnDragDetected(event -> {
@@ -66,7 +67,6 @@ public class GUIField extends Circle {
         // Handle drag exited
         this.setOnDragExited(event -> {
             if (event.getGestureSource() != this && event.getDragboard().hasString()) {
-//                this.setFill(GameSceneController.playerColors.get(field.getPawn()));
                 this.setFill(lastColor);
             }
             event.consume();

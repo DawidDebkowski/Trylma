@@ -54,6 +54,7 @@ public class SceneManager {
             controller.setClient(client);
             controller.lateInitialize();
             stage.setScene(scene);
+//            stage.sizeToScene();
             return controller;
         } catch (IOException e) {
             e.printStackTrace();

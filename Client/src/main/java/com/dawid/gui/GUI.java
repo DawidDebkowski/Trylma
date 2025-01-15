@@ -19,12 +19,15 @@ public class GUI extends Application implements IClient {
     private IController controller;
     private Collection<LobbyInfo> lobbies;
     private GameEngine gameEngine;
+    private Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
+        this.stage = stage;
         SceneManager.initialize(stage, this);
         SceneManager.setScene(States.DISCONNECTED);
-        //TODO: change to
+
+        startGame(1, new DavidStarBoard(), Variant.NORMAL, 6);
         communicator = new ServerCommunicator();
 //        communicator = new MockServer();
         lobbies = new ArrayList<>();
@@ -33,6 +36,7 @@ public class GUI extends Application implements IClient {
 
 //        communicator.join(0);
 //        communicator.startGame();
+//        moveOnBoard(1, "0_12", "7_13");
     }
 
     public static void main(String[] args) {
@@ -87,7 +91,6 @@ public class GUI extends Application implements IClient {
     }
 
     private void launchGame(int myID, Board board, Variant variant, int playerCount) {
-//        DavidStarBoard board = new DavidStarBoard();
         if(variant == Variant.NORMAL) {
             gameEngine = new GameEngine(board, new NormalMoveController(board,playerCount), myID);
         }
@@ -137,5 +140,9 @@ public class GUI extends Application implements IClient {
 
     public void sendStartGameRequest() {
         communicator.startGame();
+    }
+
+    public void stageToScene() {
+        stage.sizeToScene();
     }
 }

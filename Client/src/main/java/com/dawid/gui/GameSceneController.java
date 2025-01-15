@@ -5,6 +5,7 @@ import com.dawid.game.Coordinates;
 import com.dawid.game.GameEngine;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -53,9 +54,12 @@ public class GameSceneController extends BaseController {
         playerColors.put(6, Color.PINK);
         initialiseBoard(client.getBoard());
         mainBorderPane.setCenter(mainGrid);
+//        mainBorderPane.setPadding(new Insets(0));
         mainGrid.setAlignment(Pos.CENTER);
         mainGrid.setHgap(0);
         mainGrid.setVgap(10);
+        client.stageToScene();
+
     }
 
     public void initialiseBoard(Board board) {
