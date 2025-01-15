@@ -25,11 +25,7 @@ public class GUI extends Application implements IClient {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
-//        connect("localhost", 5005);
-//        communicator.create();
-//        communicator.join(0);
-//        communicator.startGame();
-        launchGame();
+        SceneManager.setScene(States.DISCONNECTED);
     }
 
     private void launchGame() {

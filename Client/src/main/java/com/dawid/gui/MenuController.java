@@ -1,5 +1,6 @@
 package com.dawid.gui;
 
+import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
@@ -55,6 +56,13 @@ public class MenuController extends BaseController{
         LobbyBox lb = new LobbyBox(client, id, currentPlayers, maxPlayers, variant);
         lobbyBoxes.add(lb);
     }
+    public void updateLobbyBoxes() {
+        startRefresh();
+        Collection<LobbyInfo> lobbies = client.getLobbies();
+        for (LobbyInfo lobby : lobbies) {
+            addLobby(lobby.getId(), lobby.getCurrentPlayers(), lobby.getMaxPlayers(), lobby.getVariant());
+        }
+    }
 
     public void showLobbies() {
         for (LobbyBox lb : lobbyBoxes) {
@@ -62,4 +70,5 @@ public class MenuController extends BaseController{
             lb.show();
         }
     }
+
 }

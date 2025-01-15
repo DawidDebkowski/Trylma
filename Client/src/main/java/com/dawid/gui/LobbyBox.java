@@ -1,5 +1,6 @@
 package com.dawid.gui;
 
+import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -22,6 +23,9 @@ public class LobbyBox extends HBox {
         this.currentPlayers = currentPlayers;
         this.maxPlayers = maxPlayers;
         this.variant = variant;
+    }
+    public LobbyBox(LobbyInfo lobbyInfo, GUI client) {
+        this(client, lobbyInfo.getId(), lobbyInfo.getCurrentPlayers(), lobbyInfo.getMaxPlayers(), lobbyInfo.getVariant());
     }
 
     public void show() {
