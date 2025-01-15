@@ -13,6 +13,7 @@ public class NormalMoveController implements IMoveController {
     int numberOfPlayers;
     Board board;
     private Field overField;
+    List<Player> players;
 
     public NormalMoveController(Board board, int numberOfPlayers) {
         this.board = board;
@@ -24,24 +25,24 @@ public class NormalMoveController implements IMoveController {
      * oni musza grac przeciwko sobie
      * @return
      */
-    public List<Integer> setupPlayers() {
-        List<Integer> players = new ArrayList<>();
+    public List<Player> setupPlayers() {
+        players = new ArrayList<>();
         if(numberOfPlayers == 3) {
-            players.add(1);
-            players.add(3);
-            players.add(5);
+            players.add(new Player(1, 4));
+            players.add(new Player(3, 6));
+            players.add(new Player(5, 2));
         } else {
             if(numberOfPlayers >= 2) {
-                players.add(1);
-                players.add(4);
+                players.add(new Player(1, 4));
+                players.add(new Player(4, 1));
             }
             if(numberOfPlayers >= 4) {
-                players.add(2);
-                players.add(5);
+                players.add(new Player(2, 5));
+                players.add(new Player(5, 2));
             }
             if(numberOfPlayers >= 6) {
-                players.add(3);
-                players.add(6);
+                players.add(new Player(3, 6));
+                players.add(new Player(6, 3));
             }
         }
         return players;
@@ -50,13 +51,13 @@ public class NormalMoveController implements IMoveController {
     /**
      * Spawns pawns in player home regions.
      */
-    public void setupPawns(List<Integer> players) {
-        for(Integer player : players) {
+    public void setupPawns(List<Player> players) {
+        for(Player player : players) {
             System.out.println(player);
-            Collection<Field> homeFields = board.getHomeFields(player);
+            Collection<Field> homeFields = board.getHomeFields(player.homeField);
             System.out.println(homeFields);
             for(Field field : homeFields) {
-                field.setPawn(player);
+                field.setPawn(player.homeField);
             }
         }
     }
@@ -97,6 +98,24 @@ public class NormalMoveController implements IMoveController {
     public void movePawn(int pawn, int sx, int sy, int fx, int fy) {
         board.getField(sx, sy).setPawn(0);
         board.getField(fx, fy).setPawn(pawn);
+
+    }
+
+    @Override
+    public Player checkWin() {
+        for (Player player : players) {
+            Collection<Field> homeFields = board.getHomeFields(player.winField);
+            int count = 0;
+            for (Field field : homeFields) {
+                if(field.getPawn() == player.homeField) {
+                    count++;
+                }
+            }
+            if(count == homeFields.size()) {
+                return player;
+            }
+        }
+        return null;
     }
 
     /**

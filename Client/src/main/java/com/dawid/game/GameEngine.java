@@ -36,7 +36,7 @@ public class GameEngine {
     // ID of player that is using this controller
     int playerID;
     // List of currently playing playerIDs
-    List<Integer> players;
+    List<Player> players;
     // Index of the player that is currently moving in the players list
     int movingPlayerIndex = 0;
     // Board type
@@ -81,11 +81,10 @@ public class GameEngine {
         }
         moveController.movePawn(player, sx, sy, fx, fy);
 
-//        //possible synchronization error
-//        movingPlayerIndex++;
-//        if(movingPlayerIndex == players.size()) {
-//            movingPlayerIndex = 0;
-//        }
+        Player winner = moveController.checkWin();
+        if(winner != null) {
+            System.out.println("[GameEngine]:" + player + " won");
+        }
     }
 
     /**
