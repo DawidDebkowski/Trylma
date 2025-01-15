@@ -6,6 +6,7 @@ import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
 import com.dawid.states.MenuState;
 import com.dawid.states.LobbyState;
+import javafx.application.Platform;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -120,7 +121,7 @@ public class ServerCommunicator{
                     String message = in.readLine();
                     //TODO: remove in production XD
                     if(message == null){continue;}
-                    System.out.println("Received: " + message);
+                    Platform.runLater(() -> {System.out.println("Received: " + message);});
                     String[] args = message.split(" ");
                     if(args.length == 0){
                         return;
