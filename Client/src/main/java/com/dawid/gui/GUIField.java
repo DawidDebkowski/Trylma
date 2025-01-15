@@ -7,6 +7,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 import java.util.Collection;
@@ -21,6 +22,7 @@ import java.util.Collection;
 public class GUIField extends Circle {
     private final Field field;
     private final GameSceneController controller;
+    private Paint lastColor;
     int row, column;
 
     public GUIField(Field myField, int row, int column, GameSceneController gameController) {
@@ -55,6 +57,7 @@ public class GUIField extends Circle {
         // Handle drag entered
         this.setOnDragEntered(event -> {
             if (event.getGestureSource() != this && event.getDragboard().hasString()) {
+                lastColor = this.getFill();
                 this.setFill(Color.LIGHTGREEN);
             }
             event.consume();
@@ -63,7 +66,8 @@ public class GUIField extends Circle {
         // Handle drag exited
         this.setOnDragExited(event -> {
             if (event.getGestureSource() != this && event.getDragboard().hasString()) {
-                this.setFill(GameSceneController.playerColors.get(field.getPawn()));
+//                this.setFill(GameSceneController.playerColors.get(field.getPawn()));
+                this.setFill(lastColor);
             }
             event.consume();
         });
