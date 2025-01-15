@@ -111,8 +111,8 @@ public class ServerCommunicator{
                 try {
                     String message = in.readLine();
                     //TODO: remove in production XD
-                    System.out.println("Received: " + message);
                     if(message == null){continue;}
+                    System.out.println("Received: " + message);
                     String[] args = message.split(" ");
                     if(args.length == 0){
                         return;
@@ -130,7 +130,7 @@ public class ServerCommunicator{
     }
 
     public boolean move(int sx, int sy, int fx, int fy) {
-        out.println("MOVE" + " " + sx + "-" + sy + " " + fx + "-" + fy);
+        out.println("MOVE" + " " + sx + "_" + sy + " " + fx + "_" + fy);
         return true;
     }
 

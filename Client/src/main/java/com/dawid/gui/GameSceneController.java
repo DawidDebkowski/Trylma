@@ -116,14 +116,14 @@ public class GameSceneController extends BaseController {
     @FXML
     public void onSkipButtonClicked(ActionEvent event) {
         if(gameEngine.isYourTurn()) {
-            client.getSocket().move(0, 12,0, 12);
-
+            issueMove(-1, -1,-1, -1);
         }
     }
 
     void issueMove(int sx, int sy, int fx, int fy) {
         client.getSocket().move(sx, sy, fx, fy);
         getGameEngine().setMyTurn(false);
+        refresh();
     }
 
     public GameEngine getGameEngine() {

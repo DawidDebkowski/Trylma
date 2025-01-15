@@ -75,13 +75,17 @@ public class GameEngine {
      * Increments movingPlayerIndex
      */
     public void makeMove(int player, int sx, int sy, int fx, int fy)  {
+        if(sx == -1 && sy == -1) {
+            System.out.println("[GameEngine]:" + player + " skipped move");
+            return;
+        }
         moveController.movePawn(player, sx, sy, fx, fy);
 
-        //possible synchronization error
-        movingPlayerIndex++;
-        if(movingPlayerIndex == players.size()) {
-            movingPlayerIndex = 0;
-        }
+//        //possible synchronization error
+//        movingPlayerIndex++;
+//        if(movingPlayerIndex == players.size()) {
+//            movingPlayerIndex = 0;
+//        }
     }
 
     /**

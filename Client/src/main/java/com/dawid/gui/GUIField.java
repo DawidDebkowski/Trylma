@@ -36,7 +36,7 @@ public class GUIField extends Circle {
             Dragboard db = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
             if(gameController.getGameEngine().isMyPawn(field.getPawn())) {
-                content.putString(row + "-" + column); // Assuming field has a method getId()
+                content.putString(row + "_" + column); // Assuming field has a method getId()
                 db.setContent(content);
                 Collection<Coordinates> coordinates = gameController.getGameEngine().getPossibleMoves(new Coordinates(row, column));
                 gameController.highlight(coordinates);

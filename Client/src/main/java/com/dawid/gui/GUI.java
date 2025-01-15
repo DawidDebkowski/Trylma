@@ -19,13 +19,12 @@ public class GUI extends Application implements IClient {
     private Collection<LobbyInfo> lobbies;
     private GameEngine gameEngine;
 
-    private static boolean testFlag;
+    private static boolean testFlag = true;
 
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
-        connect("localhost", 5005);
-//        testFlag = true;
+        connect("localhost", 5006);
         testFlag = false;
         if(testFlag) {
             communicator.create();
@@ -49,8 +48,8 @@ public class GUI extends Application implements IClient {
 
     @Override
     public void moveOnBoard(int player, String from, String to) {
-        String[] fromCoordinates = from.split("-");
-        String[] toCoordinates = to.split("-");
+        String[] fromCoordinates = from.split("_");
+        String[] toCoordinates = to.split("_");
         int sx, sy, fx, fy;
         sx = Integer.parseInt(fromCoordinates[0]);
         sy = Integer.parseInt(fromCoordinates[1]);
@@ -123,7 +122,11 @@ public class GUI extends Application implements IClient {
     @Override
     public void myTurn() {
         gameEngine.setMyTurn(true);
-        controller.refresh();
+        Platform.runLater(() -> {
+            if(controller != null)
+                controller.refresh();
+            else System.out.println("controller is null");
+        });
     }
 
     @Override
