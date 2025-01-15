@@ -40,6 +40,7 @@ public class CommandExecutor implements CommandHandler {
     private void sendLobbyInfo(String[] strings) {
         System.out.println("Sending lobby info");
         Collection<Lobby> lobbies = GamesManager.getInstance().getLobbies();
+        player.sendMessage("Lobbies:");
         for (Lobby lobby : lobbies) {
             //Format "Number players variant"
             player.sendMessage(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant());

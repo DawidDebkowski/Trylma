@@ -46,7 +46,7 @@ public class State implements ClientState {
             throw new CommandException("Unknown command in this state");
     }
 
-    public States getName() {
+    public States getState() {
         return name;
     }
 }

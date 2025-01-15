@@ -44,6 +44,8 @@ public class GameEngine {
     // Game Variant
     IMoveController moveController;
 
+    boolean isMyTurn = false;
+
     public GameEngine(Board board, IMoveController moveController, int playerNumber) {
         this.board = board;
         this.moveController = moveController;
@@ -60,7 +62,11 @@ public class GameEngine {
      *  If player owning this GameController can move.
      */
     public boolean isYourTurn() {
-        return players.get(movingPlayerIndex) == playerID;
+        return isMyTurn;
+    }
+
+    public void setMyTurn(boolean myTurn) {
+        isMyTurn = myTurn;
     }
 
     /**
@@ -69,13 +75,17 @@ public class GameEngine {
      * Increments movingPlayerIndex
      */
     public void makeMove(int player, int sx, int sy, int fx, int fy)  {
+        if(sx == -1 && sy == -1) {
+            System.out.println("[GameEngine]:" + player + " skipped move");
+            return;
+        }
         moveController.movePawn(player, sx, sy, fx, fy);
 
-        //possible synchronization error
-        movingPlayerIndex++;
-        if(movingPlayerIndex == players.size()) {
-            movingPlayerIndex = 0;
-        }
+//        //possible synchronization error
+//        movingPlayerIndex++;
+//        if(movingPlayerIndex == players.size()) {
+//            movingPlayerIndex = 0;
+//        }
     }
 
     /**
@@ -136,5 +146,8 @@ public class GameEngine {
 
     public Board getBoard() {
         return board;
+    }
+    public boolean isMyPawn(int pawn) {
+        return pawn == playerID;
     }
 }

@@ -3,6 +3,7 @@ package com.dawid.gui;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
 import com.dawid.states.States;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 

@@ -45,12 +45,16 @@ public class Lobby {
     public void startGame() {
         if(board.correctPlayerCount(this.getPlayerCount())) {
             inGame = true;
-            notifyAll("Started game");
+//            notifyAll("Started game");
+            // players must know their numbers
             turnController = new TurnController(players);
             Collection<Integer> playerNumbers = board.getPlayerNumbers(this.getPlayerCount());
             Iterator<Integer> iterator = playerNumbers.iterator();
             for(Player player : players) {
                 player.setNumber(iterator.next());
+            }
+            for (Player player : players) {
+                player.sendMessage("Started " + player.getNumber() + " " + getPlayerCount() + " " + getVariant());
             }
             turnController.getCurrrentPlayer().sendMessage("TURN");
         }

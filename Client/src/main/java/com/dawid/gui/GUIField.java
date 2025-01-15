@@ -7,6 +7,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 import java.util.Collection;
@@ -21,6 +22,7 @@ import java.util.Collection;
 public class GUIField extends Circle {
     private final Field field;
     private final GameSceneController controller;
+    private Paint lastColor;
     int row, column;
 
     public GUIField(Field myField, int row, int column, GameSceneController gameController) {
@@ -31,17 +33,16 @@ public class GUIField extends Circle {
         this.controller = gameController;
         this.setRadius(20);
 
-        System.out.println(field.getHome());
-        System.out.println(GameSceneController.playerColors.get(field.getHome()));
-
         // Enable drag detection
         this.setOnDragDetected(event -> {
             Dragboard db = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
-            content.putString(row + "-" + column); // Assuming field has a method getId()
-            db.setContent(content);
-            Collection<Coordinates> coordinates = gameController.getGameController().getPossibleMoves(new Coordinates(row, column));
-            gameController.highlight(coordinates);
+            if(gameController.getGameEngine().isMyPawn(field.getPawn())) {
+                content.putString(row + "_" + column); // Assuming field has a method getId()
+                db.setContent(content);
+                Collection<Coordinates> coordinates = gameController.getGameEngine().getPossibleMoves(new Coordinates(row, column));
+                gameController.highlight(coordinates);
+            }
             event.consume();
         });
 
@@ -56,6 +57,7 @@ public class GUIField extends Circle {
         // Handle drag entered
         this.setOnDragEntered(event -> {
             if (event.getGestureSource() != this && event.getDragboard().hasString()) {
+                lastColor = this.getFill();
                 this.setFill(Color.LIGHTGREEN);
             }
             event.consume();
@@ -64,7 +66,8 @@ public class GUIField extends Circle {
         // Handle drag exited
         this.setOnDragExited(event -> {
             if (event.getGestureSource() != this && event.getDragboard().hasString()) {
-                this.setFill(GameSceneController.playerColors.get(field.getPawn()));
+//                this.setFill(GameSceneController.playerColors.get(field.getPawn()));
+                this.setFill(lastColor);
             }
             event.consume();
         });
@@ -77,9 +80,9 @@ public class GUIField extends Circle {
                 String sourceFieldId = db.getString();
                 Coordinates c = Coordinates.fromString(sourceFieldId);
                 System.out.println("Moved from field " + sourceFieldId + " to field " + row + "-" + column);
-                boolean canMove = controller.getGameController().tryMove(Coordinates.fromString(sourceFieldId), new Coordinates(row, column));
+                boolean canMove = controller.getGameEngine().tryMove(Coordinates.fromString(sourceFieldId), new Coordinates(row, column));
                 if(canMove) {
-                    controller.client.getSocket().move(c.getRow(), c.getColumn(), row, column);
+                    controller.issueMove(c.getRow(), c.getColumn(), row, column);
                 }
                 success = true;
             }

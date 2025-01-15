@@ -2,14 +2,11 @@ package com.dawid.gui;
 
 import com.dawid.IClient;
 import com.dawid.ServerCommunicator;
-import com.dawid.game.Board;
-import com.dawid.game.DavidStarBoard;
-import com.dawid.game.GameEngine;
-import com.dawid.game.NormalMoveController;
-import com.dawid.game.LobbyInfo;
+import com.dawid.game.*;
 import com.dawid.states.ClientState;
 import com.dawid.states.States;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -44,7 +41,7 @@ public class GUI extends Application implements IClient {
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
     public void connect(String serverAdress, int port) throws IOException {
@@ -53,8 +50,8 @@ public class GUI extends Application implements IClient {
 
     @Override
     public void moveOnBoard(int player, String from, String to) {
-        String[] fromCoordinates = from.split("-");
-        String[] toCoordinates = to.split("-");
+        String[] fromCoordinates = from.split("_");
+        String[] toCoordinates = to.split("_");
         int sx, sy, fx, fy;
         sx = Integer.parseInt(fromCoordinates[0]);
         sy = Integer.parseInt(fromCoordinates[1]);
@@ -62,6 +59,7 @@ public class GUI extends Application implements IClient {
         fy = Integer.parseInt(toCoordinates[1]);
         gameEngine.makeMove(player, sx, sy, fx, fy);
         controller.refresh();
+        System.out.println("Moved on client " + from + " to " + to);
     }
 
     @Override
@@ -80,7 +78,7 @@ public class GUI extends Application implements IClient {
 
     @Override
     public void changeState(ClientState newState) {
-        SceneManager.setScene(newState.getName());
+//        SceneManager.setScene(newState.getState());
     }
 
     @Override
@@ -89,8 +87,27 @@ public class GUI extends Application implements IClient {
     }
 
     @Override
+    public void startGame(int myID, Board board, Variant variant, int playerCount) {
+        launchGame(myID, board, variant, playerCount);
+    }
+
+    private void launchGame(int myID, Board board, Variant variant, int playerCount) {
+//        DavidStarBoard board = new DavidStarBoard();
+        if(variant == Variant.NORMAL) {
+            gameEngine = new GameEngine(board, new NormalMoveController(board,playerCount), myID);
+        }
+        Platform.runLater(() -> {
+            controller = SceneManager.setScene(States.PLAYING);
+            assert controller != null;
+            controller.refresh();
+        });
+        gameEngine.startGame();
+    }
+
+    @Override
     public void message(String message) {
-        controller.print(message);
+//        controller.print(message);
+        System.out.println(message);
     }
 
     @Override
@@ -101,6 +118,16 @@ public class GUI extends Application implements IClient {
     @Override
     public void updateLobbies(Collection<LobbyInfo> lobbies) {
         this.lobbies = lobbies;
+    }
+
+    @Override
+    public void myTurn() {
+        gameEngine.setMyTurn(true);
+        Platform.runLater(() -> {
+            if(controller != null)
+                controller.refresh();
+            else System.out.println("controller is null");
+        });
     }
 
     @Override

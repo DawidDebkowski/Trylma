@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
  */
 public class Server {
     public static void main(String[] args) throws Exception {
-        final int port = 5005;
+        final int port = 5006;
         int maxThreads;
         try {
             maxThreads = Integer.parseInt(args[0]);
