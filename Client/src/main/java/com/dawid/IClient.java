@@ -2,6 +2,7 @@ package com.dawid;
 
 import com.dawid.game.Board;
 import com.dawid.game.LobbyInfo;
+import com.dawid.game.Variant;
 import com.dawid.states.ClientState;
 
 import java.util.Collection;
@@ -16,6 +17,8 @@ public interface IClient {
     void changeState(ClientState newState);
 
     void exit();
+
+    public void startGame(int myID, Board board, Variant variant, int playerCount);
 
     void message(String message);
 

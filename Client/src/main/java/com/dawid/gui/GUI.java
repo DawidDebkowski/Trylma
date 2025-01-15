@@ -2,11 +2,7 @@ package com.dawid.gui;
 
 import com.dawid.IClient;
 import com.dawid.ServerCommunicator;
-import com.dawid.game.Board;
-import com.dawid.game.DavidStarBoard;
-import com.dawid.game.GameEngine;
-import com.dawid.game.NormalMoveController;
-import com.dawid.game.LobbyInfo;
+import com.dawid.game.*;
 import com.dawid.states.ClientState;
 import com.dawid.states.States;
 import javafx.application.Application;
@@ -29,16 +25,8 @@ public class GUI extends Application implements IClient {
 //        communicator.create();
         communicator.join(0);
         communicator.startGame();
-        launchGame();
+//        launchGame(1, new DavidStarBoard());
         SceneManager.setScene(States.DISCONNECTED);
-    }
-
-    private void launchGame() {
-        DavidStarBoard board = new DavidStarBoard();
-        gameEngine = new GameEngine(board, new NormalMoveController(board,3), 1);
-        controller = SceneManager.setScene(States.PLAYING);
-        gameEngine.startGame();
-        controller.refresh();
     }
 
     public static void main(String[] args) {
@@ -80,12 +68,27 @@ public class GUI extends Application implements IClient {
 
     @Override
     public void changeState(ClientState newState) {
-        SceneManager.setScene(newState.getName());
+        SceneManager.setScene(newState.getState());
     }
 
     @Override
     public void exit() {
 
+    }
+
+    @Override
+    public void startGame(int myID, Board board, Variant variant, int playerCount) {
+        launchGame(myID, board, variant, playerCount);
+    }
+
+    private void launchGame(int myID, Board board, Variant variant, int playerCount) {
+//        DavidStarBoard board = new DavidStarBoard();
+        if(variant == Variant.NORMAL) {
+            gameEngine = new GameEngine(board, new NormalMoveController(board,playerCount), myID);
+        }
+        controller = SceneManager.setScene(States.PLAYING);
+        gameEngine.startGame();
+        controller.refresh();
     }
 
     @Override

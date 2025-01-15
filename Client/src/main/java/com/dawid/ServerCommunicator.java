@@ -1,10 +1,11 @@
 package com.dawid;
 
+import com.dawid.game.Board;
+import com.dawid.game.DavidStarBoard;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
 import com.dawid.states.MenuState;
 import com.dawid.states.LobbyState;
-import com.dawid.states.PlayingState;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +13,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 public class ServerCommunicator{
@@ -67,9 +67,19 @@ public class ServerCommunicator{
             protocol.put("Created", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
             protocol.put("Joined", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
             protocol.put("Left", (IResponse) (message) -> {client.changeState(new MenuState(client));});
-            protocol.put("Started", (IResponse) (message)  -> {client.changeState(new PlayingState(client));});
+            protocol.put("Started", this::receiveStart);
             protocol.put("Moved:", this::receiveMove);
             protocol.put("Lobbies:", this::receiveLobbies);
+            protocol.put("TURN", this::receiveLobbies);
+        }
+
+        // "started" myID maxPlayers Variant
+        private void receiveStart(String[] args) {
+            int playerID = Integer.parseInt(args[1]);
+            int maxPlayers = Integer.parseInt(args[2]);
+            Board board = new DavidStarBoard();
+            Variant variant = Variant.getVariantByName(args[3]);
+            client.startGame(playerID, board, variant, maxPlayers);
         }
 
         private void receiveMove(String[] args) {

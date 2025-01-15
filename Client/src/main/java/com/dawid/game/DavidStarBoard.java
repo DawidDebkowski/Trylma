@@ -195,16 +195,16 @@ public class DavidStarBoard implements Board {
     @Override
     public Collection<Integer> getPlayerNumbers(int playerCount) {
         if(playerCount == 2) {
-            return Arrays.asList(0, 3);
+            return Arrays.asList(1, 4);
         }
         if(playerCount == 3) {
-            return Arrays.asList(0, 2, 4);
+            return Arrays.asList(1, 3, 5);
         }
         if(playerCount == 4) {
-            return Arrays.asList(0, 2, 3, 5);
+            return Arrays.asList(1, 3, 4, 6);
         }
         if(playerCount == 6) {
-            return Arrays.asList(0, 1, 2, 3, 4, 6);
+            return Arrays.asList(1, 2, 3, 4, 5, 6);
         }
         return null;
     }
