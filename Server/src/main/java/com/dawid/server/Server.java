@@ -1,5 +1,6 @@
 package com.dawid.server;
 
+import com.dawid.game.DavidStarBoard;
 import com.dawid.game.Variant;
 
 import java.io.IOException;
@@ -19,6 +20,10 @@ import java.util.concurrent.Executors;
  */
 public class Server {
     public static void main(String[] args) throws Exception {
+        DavidStarBoard board = new DavidStarBoard();
+        for(int i = 1; i <= 6; i++) {
+            System.out.println(board.getHomeFields(i));
+        }
         final int port = 5005;
         int maxThreads;
         try {

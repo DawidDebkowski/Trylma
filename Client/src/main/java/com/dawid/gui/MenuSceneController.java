@@ -82,7 +82,6 @@ public class MenuSceneController extends BaseController{
     protected void onRefreshButtonClick() {
         updateLobbyBoxes();
         showLobbies();
-        client.getSocket().join(0);
     }
     @FXML
     protected void onNewGameClicked() {

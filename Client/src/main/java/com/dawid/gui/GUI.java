@@ -57,7 +57,8 @@ public class GUI extends Application implements IClient {
         fx = Integer.parseInt(toCoordinates[0]);
         fy = Integer.parseInt(toCoordinates[1]);
         gameEngine.makeMove(player, sx, sy, fx, fy);
-        controller.refresh();
+        if(controller != null)
+            controller.refresh();
         System.out.println("Moved on client " + from + " to " + to);
     }
 

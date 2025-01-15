@@ -174,6 +174,7 @@ public class DavidStarBoard implements Board {
             for (int i = 0; i < homeRegionSize; i++) {
                 for (int j = column -i; j <= column +i; j+=2) {
                     board[row +i][j].setHome(player);
+                    homeFields.get(player).add(board[row +i][j]);
                 }
             }
         }
