@@ -31,9 +31,6 @@ public class GUIField extends Circle {
         this.controller = gameController;
         this.setRadius(20);
 
-        System.out.println(field.getHome());
-        System.out.println(GameSceneController.playerColors.get(field.getHome()));
-
         // Enable drag detection
         this.setOnDragDetected(event -> {
             Dragboard db = this.startDragAndDrop(TransferMode.MOVE);

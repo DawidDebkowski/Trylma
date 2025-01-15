@@ -98,6 +98,7 @@ public class ServerCommunicator{
                     String message = in.readLine();
                     //TODO: remove in production XD
                     System.out.println("Received: " + message);
+                    if(message == null){continue;}
                     String[] args = message.split(" ");
                     if(args.length == 0){
                         return;

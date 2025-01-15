@@ -25,6 +25,11 @@ public class GUI extends Application implements IClient {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
+        connect("localhost", 5005);
+//        communicator.create();
+        communicator.join(0);
+        communicator.startGame();
+        launchGame();
         SceneManager.setScene(States.DISCONNECTED);
     }
 
@@ -42,6 +47,7 @@ public class GUI extends Application implements IClient {
 
     public void connect(String serverAdress, int port) throws IOException {
         communicator = new ServerCommunicator(serverAdress, port);
+        communicator.setClient(this);
     }
 
     @Override
@@ -55,6 +61,7 @@ public class GUI extends Application implements IClient {
         fy = Integer.parseInt(toCoordinates[1]);
         gameEngine.makeMove(player, sx, sy, fx, fy);
         controller.refresh();
+        System.out.println("Moved on client " + from + " to " + to);
     }
 
     @Override

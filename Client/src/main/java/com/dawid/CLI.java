@@ -45,7 +45,7 @@ public class CLI implements IClient {
      * Used to reset the prompt after server message.
      */
     public void prompt() {
-        System.out.printf("[%s]>", clientState.getName());
+        System.out.printf("[%s]>", clientState.getState());
     }
 
     @Override
