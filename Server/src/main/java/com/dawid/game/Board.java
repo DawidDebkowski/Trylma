@@ -42,5 +42,10 @@ public interface Board {
      */
     public boolean correctPlayerCount(int playerCount);
 
+    /**
+     * For a given player count, return the numbers of the players
+     * @param playerCount the player count
+     * @return the numbers of the players
+     */
     public Collection<Integer> getPlayerNumbers(int playerCount);
 }

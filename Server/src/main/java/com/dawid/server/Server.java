@@ -12,11 +12,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * A server program which accepts requests from clients to capitalize strings.
- * When a client connects, a new thread is started to handle it. Receiving
- * client data, capitalizing it, and sending the response back is all done on
- * the thread, allowing much greater throughput because more clients can be
- * handled concurrently.
+ * The server for the Chinese checkers game.
+ * The server listens for incoming connections and creates a new thread for each client.
+ * The server can be run with a specified number of threads.
+ * The server uses the CommandHandler to handle client commands.
+ * The server uses the Player class to send messages to clients.
+ * The server uses the Lobby class to manage the game state.
  */
 public class Server {
     public static void main(String[] args) throws Exception {

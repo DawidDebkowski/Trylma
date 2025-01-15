@@ -4,10 +4,17 @@ package com.dawid.server;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+/**
+ * Represents a player in the game.
+ */
 public class Player {
     private Lobby lobby;
     private Integer number;
     private PrintWriter out;
+    /**
+     * Creates a new player.
+     * @param out The output stream to send messages to the player.
+     */
     public Player(OutputStream out) {
         this.out = new PrintWriter(out, true);
     }

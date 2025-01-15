@@ -111,6 +111,11 @@ public class DavidStarBoard implements Board {
         }
         return null;
     }
+    /*
+        * Returns the fields that are not home fields
+        * @return the fields that are not home fields
+        * @see OrderOfChaosVariant
+     */
     public List<Field> getNonHomeFields() {
         List<Field> nonHomeFields = new ArrayList<>();
         for (Field[] row : board) {
@@ -122,6 +127,10 @@ public class DavidStarBoard implements Board {
         }
         return nonHomeFields;
     }
+    /*
+        * Get coordinateas of the field
+        * @return   the coordinates of the field
+     */
     public Coordinates getCoordinates(Field field) {
         return coordinates.get(field);
     }

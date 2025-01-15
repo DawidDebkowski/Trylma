@@ -7,8 +7,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * Represents a game variant order of chaos.
+ * Here starting fields are randomly chosen from non-home fields.
+ * To win, player must move all his pieces to
+ * his own home fields.
+ */
 public class OrderOfChaosVariant implements GameVariant {
+    @Override
     public void initializeGame(Lobby lobby) {
         System.out.println("Order of Chaos variant - intializing game");
         DavidStarBoard board = (DavidStarBoard) lobby.getBoard();
@@ -31,6 +37,7 @@ public class OrderOfChaosVariant implements GameVariant {
         }
 
     }
+    @Override
     public Variant getVariant() {
         return Variant.ORDER_CHAOS;
     }

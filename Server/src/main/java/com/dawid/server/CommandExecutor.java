@@ -5,7 +5,9 @@ import com.dawid.game.Variant;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Executes commands sent by the player.
+ */
 public class CommandExecutor implements CommandHandler {
     private Map<String, Command> commands;
     private final Player player;

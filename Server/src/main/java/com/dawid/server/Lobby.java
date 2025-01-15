@@ -7,6 +7,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Represents a lobby.
+ */
 public class Lobby {
     // We could use state pattern, but it's not necessary if only 2 states are possible
     private boolean inGame = false;
@@ -25,21 +28,40 @@ public class Lobby {
         board = new DavidStarBoard();
         this.variant = Variant.getGameVariant(variant);
     }
+    /**
+     * Notifies all players in the lobby.
+     * @param message The message to send.
+     */
     public void notifyAll(String message) {
         for (Player player : players) {
             player.sendMessage(message);
         }
     }
+    /**
+     * Returns the number of players in the lobby.
+     * @return The number of players in the lobby.
+     */
     public int getPlayerCount() {
         return players.size();
     }
+    /**
+     * Adds a player to the lobby.
+     * @param player The player to add.
+     */
     public void addPlayer(Player player) {
         players.add(player);
         player.setLobby(this);
     }
+    /**
+     * Removes a player from the lobby.
+     * @param player The player to remove.
+     */
     public void removePlayer(Player player) {
         players.remove(player);
     }
+    /**
+     * Starts the game.
+     */
     public void startGame() {
         if(board.correctPlayerCount(this.getPlayerCount())) {
             inGame = true;
@@ -59,10 +81,18 @@ public class Lobby {
             notifyAll("ERROR: Incorrect number of players");
         }
     }
+    /**
+     * Ends the game.
+     */
     public void endGame() {
         inGame = false;
     }
 
+    /**
+     * Makes a move in the game.
+     * @param player The player making the move.
+     * @param args The arguments of the move.
+     */
     public void makeMove(Player player, String[] args) {
         if(!inGame) {
             player.sendMessage("ERROR: Game not started");
@@ -75,13 +105,22 @@ public class Lobby {
         turnController.nextTurn();
         turnController.getCurrrentPlayer().sendMessage("TURN");
     }
+    /**
+     * Returns the variant of the game.
+     */
     public Variant getVariant() {
         return variant.getVariant();
     }
+    /**
+     * Returns the board of the game.
+     */
     public Board getBoard() {
         return board;
     }
-
+    /**
+     * Sets the variant of the game.
+     * @param variant The variant of the game.
+     */
     public void setVariant(Variant variant) {
         this.variant = Variant.getGameVariant(variant);
     }

@@ -33,7 +33,10 @@ import java.util.List;
  * sorry za chaos i wgl ale jakos programowanie obiektowe mnie czasami przytłacza
  */
 public class GameEngine {
-    // ID of player that is using this controller
+    /**
+     * ID of player that is using this controller
+      */
+
     int playerID;
     // List of currently playing playerIDs
     List<Player> players;

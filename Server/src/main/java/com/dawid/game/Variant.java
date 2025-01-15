@@ -1,6 +1,8 @@
 package com.dawid.game;
 
-
+/**
+ * Represents a game variant.
+ */
 public enum Variant {
     NORMAL("NORMAL"),
     ORDER_CHAOS("ORDER_CHAOS");
@@ -21,6 +23,9 @@ public enum Variant {
         }
         return null;
     }
+    /*
+        * Returns the game variant based on the variant.
+     */
     public static GameVariant getGameVariant(Variant variant) {
         switch (variant) {
             case NORMAL:
