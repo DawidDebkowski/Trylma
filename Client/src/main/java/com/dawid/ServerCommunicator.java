@@ -70,7 +70,7 @@ public class ServerCommunicator{
             protocol.put("Started", this::receiveStart);
             protocol.put("Moved:", this::receiveMove);
             protocol.put("Lobbies:", this::receiveLobbies);
-            protocol.put("TURN", this::receiveLobbies);
+            protocol.put("TURN", this::receiveTurn);
         }
 
         // "started" myID maxPlayers Variant
@@ -80,6 +80,10 @@ public class ServerCommunicator{
             Board board = new DavidStarBoard();
             Variant variant = Variant.getVariantByName(args[3]);
             client.startGame(playerID, board, variant, maxPlayers);
+        }
+
+        private void receiveTurn(String[] args) {
+            client.myTurn();
         }
 
         private void receiveMove(String[] args) {

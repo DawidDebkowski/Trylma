@@ -44,6 +44,8 @@ public class GameEngine {
     // Game Variant
     IMoveController moveController;
 
+    boolean isMyTurn = false;
+
     public GameEngine(Board board, IMoveController moveController, int playerNumber) {
         this.board = board;
         this.moveController = moveController;
@@ -60,7 +62,11 @@ public class GameEngine {
      *  If player owning this GameController can move.
      */
     public boolean isYourTurn() {
-        return players.get(movingPlayerIndex) == playerID;
+        return isMyTurn;
+    }
+
+    public void setMyTurn(boolean myTurn) {
+        isMyTurn = myTurn;
     }
 
     /**

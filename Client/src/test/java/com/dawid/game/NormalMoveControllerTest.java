@@ -16,7 +16,7 @@ public class NormalMoveControllerTest extends TestCase {
     }
 
     public void testGetPossibleMoves() {
-        controller.setupPawns();
+//        controller.setupPawns();
         Field f = board.getField(6, 10);
         f.setPawn(7);
         Field[] f1 = board.getNeighboringFields(f).toArray(new Field[0]);

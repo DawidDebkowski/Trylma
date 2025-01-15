@@ -2,9 +2,11 @@ package com.dawid.gui;
 
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 

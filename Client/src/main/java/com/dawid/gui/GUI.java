@@ -6,6 +6,7 @@ import com.dawid.game.*;
 import com.dawid.states.ClientState;
 import com.dawid.states.States;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,19 +19,27 @@ public class GUI extends Application implements IClient {
     private Collection<LobbyInfo> lobbies;
     private GameEngine gameEngine;
 
+    private static boolean testFlag;
+
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
         connect("localhost", 5005);
-//        communicator.create();
-        communicator.join(0);
-        communicator.startGame();
+//        testFlag = true;
+        testFlag = false;
+        if(testFlag) {
+            communicator.create();
+        } else
+        {
+            communicator.join(0);
+            communicator.startGame();
+        }
 //        launchGame(1, new DavidStarBoard());
-        SceneManager.setScene(States.DISCONNECTED);
+//        SceneManager.setScene(States.DISCONNECTED);
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
     public void connect(String serverAdress, int port) throws IOException {
@@ -68,7 +77,7 @@ public class GUI extends Application implements IClient {
 
     @Override
     public void changeState(ClientState newState) {
-        SceneManager.setScene(newState.getState());
+//        SceneManager.setScene(newState.getState());
     }
 
     @Override
@@ -86,15 +95,20 @@ public class GUI extends Application implements IClient {
         if(variant == Variant.NORMAL) {
             gameEngine = new GameEngine(board, new NormalMoveController(board,playerCount), myID);
         }
-        controller = SceneManager.setScene(States.PLAYING);
+        Platform.runLater(() -> {
+            controller = SceneManager.setScene(States.PLAYING);
+            assert controller != null;
+            controller.refresh();
+        });
         gameEngine.startGame();
-        controller.refresh();
     }
 
     @Override
     public void message(String message) {
-        controller.print(message);
+//        controller.print(message);
+        System.out.println(message);
     }
+
 
     @Override
     public void prompt() {
@@ -104,6 +118,12 @@ public class GUI extends Application implements IClient {
     @Override
     public void updateLobbies(Collection<LobbyInfo> lobbies) {
         this.lobbies = lobbies;
+    }
+
+    @Override
+    public void myTurn() {
+        gameEngine.setMyTurn(true);
+        controller.refresh();
     }
 
     @Override

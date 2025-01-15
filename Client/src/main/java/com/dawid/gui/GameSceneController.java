@@ -3,11 +3,13 @@ package com.dawid.gui;
 import com.dawid.game.Board;
 import com.dawid.game.Coordinates;
 import com.dawid.game.GameEngine;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +25,9 @@ import java.util.Map;
 public class GameSceneController extends BaseController {
     @FXML
     private BorderPane mainBorderPane;
+
+    @FXML
+    protected Rectangle turnIndicator;
 
     private GridPane mainGrid;
     private GUIField[][] fields;
@@ -85,6 +90,11 @@ public class GameSceneController extends BaseController {
                 }
             }
         }
+        if(gameEngine.isYourTurn()) {
+            turnIndicator.setFill(Color.FORESTGREEN);
+        } else {
+            turnIndicator.setFill(Color.DARKRED);
+        }
     }
 
     public void highlight(Collection<Coordinates> coordinates) {
@@ -101,6 +111,19 @@ public class GameSceneController extends BaseController {
                 lastHightlited.add(guiField);
             }
         }
+    }
+
+    @FXML
+    public void onSkipButtonClicked(ActionEvent event) {
+        if(gameEngine.isYourTurn()) {
+            client.getSocket().move(0, 12,0, 12);
+
+        }
+    }
+
+    void issueMove(int sx, int sy, int fx, int fy) {
+        client.getSocket().move(sx, sy, fx, fy);
+        getGameEngine().setMyTurn(false);
     }
 
     public GameEngine getGameEngine() {

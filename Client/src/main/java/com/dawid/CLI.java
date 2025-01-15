@@ -3,6 +3,7 @@ package com.dawid;
 import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.LobbyInfo;
+import com.dawid.game.Variant;
 import com.dawid.states.ClientState;
 import com.dawid.states.CommandException;
 
@@ -55,6 +56,11 @@ public class CLI implements IClient {
     }
 
     @Override
+    public void myTurn() {
+
+    }
+
+    @Override
     public Collection<LobbyInfo> getLobbies() {
         //TODO implement
         return List.of();
@@ -81,6 +87,11 @@ public class CLI implements IClient {
 
     public void exit() {
         isRunning = false;
+    }
+
+    @Override
+    public void startGame(int myID, Board board, Variant variant, int playerCount) {
+
     }
 
     @Override

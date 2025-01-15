@@ -27,5 +27,7 @@ public interface IClient {
 
     void updateLobbies(Collection<LobbyInfo> lobbies);
 
+    public void myTurn();
+
     Collection<LobbyInfo> getLobbies();
 }
