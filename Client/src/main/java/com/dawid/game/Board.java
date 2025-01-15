@@ -41,4 +41,8 @@ public interface Board {
     public int getHeight();
 
     public Coordinates getCoordinates(Field field);
+
+    public boolean correctPlayerCount(int playerCount);
+
+    public Collection<Integer> getPlayerNumbers(int playerCount);
 }

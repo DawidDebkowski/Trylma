@@ -13,6 +13,7 @@ public class DavidStarBoard implements Board {
     private Field[][] board;
     private Map<Integer, List<Field>> homeFields;
     private Map<Field, Coordinates> coordinates;
+    private final List<Integer> correct_no_of_players = Arrays.asList(2, 3, 4, 6);
 
     public DavidStarBoard() {
         homeFields = new HashMap<>();
@@ -184,6 +185,28 @@ public class DavidStarBoard implements Board {
     //for testing purpose
     Map<Field, Coordinates> getCoordinatesMap() {
         return coordinates;
+    }
+
+    @Override
+    public boolean correctPlayerCount(int playerCount) {
+        return correct_no_of_players.contains(playerCount);
+    }
+
+    @Override
+    public Collection<Integer> getPlayerNumbers(int playerCount) {
+        if(playerCount == 2) {
+            return Arrays.asList(0, 3);
+        }
+        if(playerCount == 3) {
+            return Arrays.asList(0, 2, 4);
+        }
+        if(playerCount == 4) {
+            return Arrays.asList(0, 2, 3, 5);
+        }
+        if(playerCount == 6) {
+            return Arrays.asList(0, 1, 2, 3, 4, 6);
+        }
+        return null;
     }
 }
 
