@@ -87,6 +87,11 @@ public class GameEngine {
         }
     }
 
+    public int getMyPlayerID() {
+        return playerID;
+    }
+
+
     /**
      * Validate local moves before sending them to the server.
      * It should be called when a player selects a place to move their pawn to.
@@ -95,6 +100,16 @@ public class GameEngine {
      */
     public boolean tryMove(Coordinates from, Coordinates to) {
         if(!isYourTurn()) return false;
+        return isMovePossible(from, to);
+    }
+
+    /**
+     * Function for the GUI to know if the move can be made regardless of turn order
+     * @param from
+     * @param to
+     * @return
+     */
+    public boolean isMovePossible(Coordinates from, Coordinates to) {
         Field startField = board.getField(from.getRow(), from.getColumn());
         Field finishField = board.getField(to.getRow(), to.getColumn());
         return moveController.getPossibleMoves(startField).contains(finishField);

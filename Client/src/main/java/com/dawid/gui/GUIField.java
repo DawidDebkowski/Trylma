@@ -6,6 +6,7 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -44,6 +45,7 @@ public class GUIField extends Circle {
                 Collection<Coordinates> coordinates = gameController.getGameEngine().getPossibleMoves(new Coordinates(row, column));
                 gameController.highlight(coordinates);
             }
+            db.setDragView(null);
             event.consume();
         });
 
@@ -59,7 +61,15 @@ public class GUIField extends Circle {
         this.setOnDragEntered(event -> {
             if (event.getGestureSource() != this && event.getDragboard().hasString()) {
                 lastColor = this.getFill();
-                this.setFill(Color.LIGHTGREEN);
+                Dragboard db = event.getDragboard();
+                String sourceFieldId = db.getString();
+                if(gameController.getGameEngine().isMovePossible(Coordinates.fromString(sourceFieldId), new Coordinates(row, column))) {
+                    this.setFill(GameSceneController.playerColors.get(gameController.getGameEngine().getMyPlayerID()).brighter());
+                } else {
+                    this.setFill(Color.DARKGRAY);
+                    System.out.println("cant move from " + sourceFieldId + " to " + row + "_" + column);
+
+                }
             }
             event.consume();
         });

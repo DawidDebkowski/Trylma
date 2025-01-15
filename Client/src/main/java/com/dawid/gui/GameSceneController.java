@@ -111,7 +111,7 @@ public class GameSceneController extends BaseController {
         for (Coordinates c : coordinates) {
             GUIField guiField = fields[c.getRow()][c.getColumn()];
             if(guiField != null) {
-                guiField.setFill(Color.BLUEVIOLET);
+                guiField.setFill(Color.BLUEVIOLET.brighter());
                 lastHightlited.add(guiField);
             }
         }
