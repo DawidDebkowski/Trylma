@@ -137,4 +137,7 @@ public class GameEngine {
     public Board getBoard() {
         return board;
     }
+    public boolean isMyPawn(int pawn) {
+        return pawn == playerID;
+    }
 }

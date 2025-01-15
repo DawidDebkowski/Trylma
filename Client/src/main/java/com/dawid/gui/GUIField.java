@@ -38,10 +38,12 @@ public class GUIField extends Circle {
         this.setOnDragDetected(event -> {
             Dragboard db = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
-            content.putString(row + "-" + column); // Assuming field has a method getId()
-            db.setContent(content);
-            Collection<Coordinates> coordinates = gameController.getGameController().getPossibleMoves(new Coordinates(row, column));
-            gameController.highlight(coordinates);
+            if(gameController.getGameEngine().isMyPawn(field.getPawn())) {
+                content.putString(row + "-" + column); // Assuming field has a method getId()
+                db.setContent(content);
+                Collection<Coordinates> coordinates = gameController.getGameEngine().getPossibleMoves(new Coordinates(row, column));
+                gameController.highlight(coordinates);
+            }
             event.consume();
         });
 
@@ -77,7 +79,7 @@ public class GUIField extends Circle {
                 String sourceFieldId = db.getString();
                 Coordinates c = Coordinates.fromString(sourceFieldId);
                 System.out.println("Moved from field " + sourceFieldId + " to field " + row + "-" + column);
-                boolean canMove = controller.getGameController().tryMove(Coordinates.fromString(sourceFieldId), new Coordinates(row, column));
+                boolean canMove = controller.getGameEngine().tryMove(Coordinates.fromString(sourceFieldId), new Coordinates(row, column));
                 if(canMove) {
                     controller.client.getSocket().move(c.getRow(), c.getColumn(), row, column);
                 }

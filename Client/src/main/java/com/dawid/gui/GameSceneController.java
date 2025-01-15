@@ -103,7 +103,7 @@ public class GameSceneController extends BaseController {
         }
     }
 
-    public GameEngine getGameController() {
+    public GameEngine getGameEngine() {
         return gameEngine;
     }
 }
