@@ -16,7 +16,7 @@ public class Lobby {
     private Board board;
     private TurnController turnController;
     private final List<Player> players;
-    private final Variant variant;
+    private Variant variant;
     public Lobby(List<Player> players) {
         this.players = players;
         this.variant = Variant.NORMAL;
@@ -78,4 +78,7 @@ public class Lobby {
         return variant;
     }
 
+    public void setVariant(Variant variant) {
+        this.variant = variant;
+    }
 }

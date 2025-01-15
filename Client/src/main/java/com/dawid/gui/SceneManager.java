@@ -35,12 +35,12 @@ public class SceneManager {
     public static void initialize(Stage primaryStage, GUI client) {
         SceneManager.client = client;
         stage = primaryStage;
-        stage.setTitle("JavaFX Application");
 
         // Wczytanie scen
         scenes.put(States.DISCONNECTED, "disconnectedScene.fxml");
         scenes.put(States.MENU, "menuScene.fxml");
         scenes.put(States.PLAYING, "gameScene.fxml");
+        scenes.put(States.LOBBY, "lobbyScene.fxml");
 
         stage.setTitle("Trylma Chinese Checkers by Ćmolud (TM)");
         stage.show();

@@ -25,7 +25,7 @@ public class GUI extends Application implements IClient {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
-        SceneManager.setScene(States.DISCONNECTED);
+        SceneManager.setScene(States.LOBBY);
     }
 
     private void launchGame() {
@@ -99,5 +99,9 @@ public class GUI extends Application implements IClient {
     @Override
     public Collection<LobbyInfo> getLobbies() {
         return lobbies;
+    }
+
+    public void sendStartGameRequest() {
+        communicator.startGame();
     }
 }
