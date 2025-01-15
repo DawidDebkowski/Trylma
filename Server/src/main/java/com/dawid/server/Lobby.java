@@ -16,6 +16,7 @@ public class Lobby {
     private GameVariant variant;
     public Lobby(List<Player> players) {
         this.players = players;
+        board = new DavidStarBoard();
         this.variant = Variant.getGameVariant(Variant.NORMAL);
     }
     public Lobby(Variant variant) {
@@ -44,16 +45,14 @@ public class Lobby {
             inGame = true;
 //            notifyAll("Started game");
             // players must know their numbers
-            variant.initializeGame(this);
             turnController = new TurnController(players);
             Collection<Integer> playerNumbers = board.getPlayerNumbers(this.getPlayerCount());
             Iterator<Integer> iterator = playerNumbers.iterator();
             for(Player player : players) {
                 player.setNumber(iterator.next());
-            }
-            for (Player player : players) {
                 player.sendMessage("Started " + player.getNumber() + " " + getPlayerCount() + " " + getVariant());
             }
+            variant.initializeGame(this);
             turnController.getCurrrentPlayer().sendMessage("TURN");
         }
         else {
@@ -76,8 +75,8 @@ public class Lobby {
         turnController.nextTurn();
         turnController.getCurrrentPlayer().sendMessage("TURN");
     }
-    public GameVariant getVariant() {
-        return variant;
+    public Variant getVariant() {
+        return variant.getVariant();
     }
     public Board getBoard() {
         return board;

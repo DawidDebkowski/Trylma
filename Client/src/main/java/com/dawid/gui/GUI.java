@@ -94,6 +94,9 @@ public class GUI extends Application implements IClient {
         if(variant == Variant.NORMAL) {
             gameEngine = new GameEngine(board, new NormalMoveController(board,playerCount), myID);
         }
+        else {
+            gameEngine = new GameEngine(board, new NormalMoveController(board, playerCount), myID);
+        }
         Platform.runLater(() -> {
             controller = SceneManager.setScene(States.PLAYING);
             assert controller != null;

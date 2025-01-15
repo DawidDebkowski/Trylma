@@ -25,6 +25,7 @@ public class CommandExecutor implements CommandHandler {
     @Override
     public void exec(String command) {
         String[] args = command.split(" ");
+        System.out.println(command);
         if(commands.containsKey(args[0])) {
             try {
                 commands.get(args[0]).exec(args);
@@ -43,8 +44,8 @@ public class CommandExecutor implements CommandHandler {
         player.sendMessage("Lobbies:");
         for (Lobby lobby : lobbies) {
             //Format "Number players variant"
-            player.sendMessage(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant());
-            System.out.println(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant());
+            player.sendMessage(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant().getName());
+            System.out.println(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant().getName());
         }
         player.sendMessage("END");
         System.out.println("End of lobbies");
@@ -87,6 +88,7 @@ public class CommandExecutor implements CommandHandler {
     private void startGame(String[] args) {
         System.out.println("Some game has started");
         player.getLobby().startGame();
+
     }
     private void setVariant(String[] args) {
         System.out.println("Setting variant");

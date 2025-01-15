@@ -22,7 +22,12 @@ public class Coordinates {
     public boolean equals(Coordinates c) {
         return row == c.getRow() && column == c.getColumn();
     }
+    @Override
     public String toString() {
-        return row + " " + column + " ";
+        return row + "_" + column;
+    }
+    public static Coordinates fromString(String s) {
+        String[] split = s.split("_");
+        return new Coordinates(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
     }
 }
