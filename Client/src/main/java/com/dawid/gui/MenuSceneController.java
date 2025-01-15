@@ -3,7 +3,6 @@ package com.dawid.gui;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
 import com.dawid.states.States;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
@@ -34,7 +33,7 @@ import java.util.Collection;
  *
  * no i nie wiem do konca jak zrobic gre
  */
-public class MenuController extends BaseController{
+public class MenuSceneController extends BaseController{
     Collection<LobbyBox> lobbyBoxes;
     @FXML
     protected VBox lobbyHolder;
@@ -73,6 +72,12 @@ public class MenuController extends BaseController{
             lb.show();
         }
     }
+
+    @Override
+    public void refresh() {
+        updateLobbyBoxes();
+    }
+
     @FXML
     protected void onRefreshButtonClick() {
         updateLobbyBoxes();

@@ -11,6 +11,7 @@ public class BaseController implements IController {
     @Override
     public void print(String message) {
         logLabel.setText(message);
+        System.out.println("LOG: " + message);
     }
 
     @Override

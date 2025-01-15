@@ -29,15 +29,9 @@ public class GUI extends Application implements IClient {
 //        communicator = new MockServer();
         lobbies = new ArrayList<>();
 
-        communicator.setClient(this);
-    }
+        System.out.println("hello");
 
-    private void launchGame() {
-        DavidStarBoard board = new DavidStarBoard();
-        gameEngine = new GameEngine(board, new NormalMoveController(board,3), 1);
-        controller = SceneManager.setScene(States.PLAYING);
-        gameEngine.startGame();
-        controller.refresh();
+        communicator.setClient(this);
     }
 
     public static void main(String[] args) {
@@ -118,6 +112,9 @@ public class GUI extends Application implements IClient {
     @Override
     public void updateLobbies(Collection<LobbyInfo> lobbies) {
         this.lobbies = lobbies;
+        Platform.runLater(() -> {
+            controller.refresh();
+        });
     }
 
     @Override
@@ -135,8 +132,7 @@ public class GUI extends Application implements IClient {
         return lobbies;
     }
 
-    public void startGame() {
+    public void sendStartGameRequest() {
         communicator.startGame();
-        launchGame();
     }
 }
