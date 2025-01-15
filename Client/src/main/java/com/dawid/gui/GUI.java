@@ -1,7 +1,6 @@
 package com.dawid.gui;
 
 import com.dawid.IClient;
-import com.dawid.MockServer;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
@@ -109,7 +108,8 @@ public class GUI extends Application implements IClient {
         return lobbies;
     }
 
-    public void sendStartGameRequest() {
+    public void startGame() {
         communicator.startGame();
+        launchGame();
     }
 }
