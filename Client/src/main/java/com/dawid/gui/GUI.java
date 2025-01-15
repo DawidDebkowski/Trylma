@@ -29,9 +29,10 @@ public class GUI extends Application implements IClient {
 //        communicator = new MockServer();
         lobbies = new ArrayList<>();
 
-        System.out.println("hello");
-
         communicator.setClient(this);
+
+//        communicator.join(0);
+//        communicator.startGame();
     }
 
     public static void main(String[] args) {
@@ -113,7 +114,9 @@ public class GUI extends Application implements IClient {
     public void updateLobbies(Collection<LobbyInfo> lobbies) {
         this.lobbies = lobbies;
         Platform.runLater(() -> {
-            controller.refresh();
+            if(controller != null)
+                controller.refresh();
+            else System.out.println("controller is null");
         });
     }
 

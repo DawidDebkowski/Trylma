@@ -40,6 +40,7 @@ public class ServerCommunicator{
         setInputOutput(new BufferedReader(new InputStreamReader(socket.getInputStream())),
                 new PrintWriter(socket.getOutputStream(), true));
         connected = true;
+        initObserver();
     }
     protected void  initObserver() {
         ObserverCommunicator observer = new ObserverCommunicator();
@@ -107,6 +108,7 @@ public class ServerCommunicator{
                 while (!line.equals("END")) {
                     var lobbyInfo = line.split(" ");
                     lobbies.add(new LobbyInfo(Integer.parseInt(lobbyInfo[0]), Integer.parseInt(lobbyInfo[1]), Variant.getVariantByName(lobbyInfo[2])));
+                    System.out.println("Received: " + line);
                 }
             } catch (IOException e) {
                 System.out.println("Error reading lobbies");
@@ -116,6 +118,7 @@ public class ServerCommunicator{
 
         @Override
         public void run() {
+            System.err.println("Server communicator started");
             while(connected){
                 try {
                     String message = in.readLine();
