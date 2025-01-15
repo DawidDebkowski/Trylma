@@ -44,8 +44,10 @@ public class CommandExecutor implements CommandHandler {
         for (Lobby lobby : lobbies) {
             //Format "Number players variant"
             player.sendMessage(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant());
+            System.out.println(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant());
         }
         player.sendMessage("END");
+        System.out.println("End of lobbies");
     }
 
     private void joinGame(String[] args) throws IllegalArgumentException {

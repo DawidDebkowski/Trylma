@@ -104,8 +104,9 @@ public class ServerCommunicator{
         private void receiveLobbies(String[] args) {
             var lobbies = new ArrayList<LobbyInfo>();
             try {
-                var line = in.readLine();
-                while (!line.equals("END")) {
+                while (true) {
+                    String line = in.readLine();
+                    if(line.equals("END")) break;
                     var lobbyInfo = line.split(" ");
                     lobbies.add(new LobbyInfo(Integer.parseInt(lobbyInfo[0]), Integer.parseInt(lobbyInfo[1]), Variant.getVariantByName(lobbyInfo[2])));
                     System.out.println("Received: " + line);
@@ -122,7 +123,6 @@ public class ServerCommunicator{
             while(connected){
                 try {
                     String message = in.readLine();
-                    //TODO: remove in production XD
                     if(message == null){continue;}
                     Platform.runLater(() -> {System.out.println("Received: " + message);});
                     String[] args = message.split(" ");
