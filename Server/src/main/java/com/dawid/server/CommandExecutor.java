@@ -18,6 +18,7 @@ public class CommandExecutor implements CommandHandler {
         commands.put("LEAVE", this::leaveLobby);
         commands.put("START", this::startGame);
         commands.put("LOBBYINFO", this::sendLobbyInfo);
+        commands.put("VARIANT: ", this::setVariant);
     }
 
 
@@ -82,6 +83,10 @@ public class CommandExecutor implements CommandHandler {
     private void startGame(String[] args) {
         System.out.println("Some game has started");
         player.getLobby().startGame();
+    }
+    private void setVariant(String[] args) {
+        System.out.println("Setting variant");
+        player.getLobby().setVariant(Variant.getVariantByName(args[1]));
     }
 
 }

@@ -141,4 +141,7 @@ public class ServerCommunicator{
     public void getLobbyInfo() {
         out.println("LOBBYINFO");
     }
+    public void setVariant(String variant) {
+        out.println("VARIANT: " + variant);
+    }
 }
