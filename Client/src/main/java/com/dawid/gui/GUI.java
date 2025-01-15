@@ -28,8 +28,10 @@ public class GUI extends Application implements IClient {
         SceneManager.initialize(stage, this);
         SceneManager.setScene(States.LOBBY);
         //TODO: change to
-        //communicator = new ServerCommunicator(serverAdress, port)
+        //communicator = new ServerCommunicator()
         communicator = new MockServer();
+
+        communicator.setClient(this);
     }
 
     private void launchGame() {
@@ -45,9 +47,7 @@ public class GUI extends Application implements IClient {
     }
 
     public void connect(String serverAdress, int port) throws IOException {
-        communicator = new MockServer();
         communicator.connect(serverAdress, port);
-        //communicator = new ServerCommunicator(serverAdress, port);
     }
 
     @Override

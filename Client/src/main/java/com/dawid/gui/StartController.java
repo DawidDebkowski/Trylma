@@ -11,11 +11,11 @@ import java.io.IOException;
 public class StartController extends BaseController{
     @FXML
     protected void onConnectButtonClick() {
-//        try {
-//            client.connect("localhost", 5005);
-//        } catch (IOException e) {
-//            print("Failed to connect to the server");
-//        }
+        try {
+            client.connect("localhost", 5005);
+        } catch (IOException e) {
+            print("Failed to connect to the server");
+        }
         SceneManager.setScene(States.MENU);
     }
 
