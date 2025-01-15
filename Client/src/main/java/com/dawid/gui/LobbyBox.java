@@ -2,6 +2,7 @@ package com.dawid.gui;
 
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
+import com.dawid.states.States;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -39,6 +40,7 @@ public class LobbyBox extends HBox {
         Button joinButton = new Button("Join");
         joinButton.setOnAction(event -> {
             client.getSocket().join(id);
+            SceneManager.setScene(States.LOBBY);
         });
 
         getChildren().addAll(name, playersLabel, variantLabel, joinButton);

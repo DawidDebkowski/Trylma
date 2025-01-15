@@ -2,6 +2,7 @@ package com.dawid.gui;
 
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
+import com.dawid.states.States;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
@@ -79,6 +80,7 @@ public class MenuController extends BaseController{
     @FXML
     protected void onNewGameClicked() {
         client.getSocket().create();
+        SceneManager.setScene(States.LOBBY);
     }
 
 }
