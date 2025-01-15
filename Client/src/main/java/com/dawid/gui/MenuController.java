@@ -48,6 +48,7 @@ public class MenuController extends BaseController{
     }
 
     public void startRefresh() {
+        client.getSocket().getLobbyInfo();
         lobbyBoxes.clear();
         lobbyHolder.getChildren().clear();
     }
@@ -69,6 +70,15 @@ public class MenuController extends BaseController{
             lobbyHolder.getChildren().add(lb);
             lb.show();
         }
+    }
+    @FXML
+    protected void onRefreshButtonClick() {
+        updateLobbyBoxes();
+        showLobbies();
+    }
+    @FXML
+    protected void onNewGameClicked() {
+        client.getSocket().create();
     }
 
 }

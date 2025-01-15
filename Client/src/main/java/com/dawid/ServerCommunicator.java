@@ -111,7 +111,7 @@ public class ServerCommunicator{
                         return;
                     }
                     System.err.println("\n[Server]: " + message);
-                    //client.message("\n[Server]: " + message);
+                    client.message("\n[Server]: " + message);
                     if(protocol.containsKey(args[0])){
                         protocol.get(args[0]).execute(args);
                     }

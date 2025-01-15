@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class GUI extends Application implements IClient {
@@ -26,10 +27,11 @@ public class GUI extends Application implements IClient {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
-        SceneManager.setScene(States.LOBBY);
+        SceneManager.setScene(States.DISCONNECTED);
         //TODO: change to
-        //communicator = new ServerCommunicator()
-        communicator = new MockServer();
+        communicator = new ServerCommunicator();
+//        communicator = new MockServer();
+        lobbies = new ArrayList<>();
 
         communicator.setClient(this);
     }

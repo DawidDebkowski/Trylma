@@ -22,4 +22,5 @@ public class MockServer extends ServerCommunicator {
     public void disconnect() {
        connected = false;
     }
+
 }
