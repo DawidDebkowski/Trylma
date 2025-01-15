@@ -1,9 +1,6 @@
 package com.dawid.server;
 
-import com.dawid.game.Board;
-import com.dawid.game.DavidStarBoard;
-import com.dawid.game.TurnController;
-import com.dawid.game.Variant;
+import com.dawid.game.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,16 +13,16 @@ public class Lobby {
     private Board board;
     private TurnController turnController;
     private final List<Player> players;
-    private Variant variant;
+    private GameVariant variant;
     public Lobby(List<Player> players) {
         this.players = players;
-        this.variant = Variant.NORMAL;
+        this.variant = Variant.getGameVariant(Variant.NORMAL);
     }
     public Lobby(Variant variant) {
         this.players = new ArrayList<>();
         //only DavidStarBoard is implemented
         board = new DavidStarBoard();
-        this.variant = variant;
+        this.variant = Variant.getGameVariant(variant);
     }
     public void notifyAll(String message) {
         for (Player player : players) {
@@ -47,6 +44,7 @@ public class Lobby {
             inGame = true;
 //            notifyAll("Started game");
             // players must know their numbers
+            variant.initializeGame(this);
             turnController = new TurnController(players);
             Collection<Integer> playerNumbers = board.getPlayerNumbers(this.getPlayerCount());
             Iterator<Integer> iterator = playerNumbers.iterator();
@@ -78,11 +76,14 @@ public class Lobby {
         turnController.nextTurn();
         turnController.getCurrrentPlayer().sendMessage("TURN");
     }
-    public Variant getVariant() {
+    public GameVariant getVariant() {
         return variant;
+    }
+    public Board getBoard() {
+        return board;
     }
 
     public void setVariant(Variant variant) {
-        this.variant = variant;
+        this.variant = Variant.getGameVariant(variant);
     }
 }

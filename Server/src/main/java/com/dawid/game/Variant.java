@@ -21,4 +21,14 @@ public enum Variant {
         }
         return null;
     }
+    public static GameVariant getGameVariant(Variant variant) {
+        switch (variant) {
+            case NORMAL:
+                return new StandardVariant();
+            case ORDER_CHAOS:
+                return new OrderOfChaosVariant();
+            default:
+                return null;
+        }
+    }
 }

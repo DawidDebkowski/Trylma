@@ -170,6 +170,6 @@ public class ServerCommunicator{
         out.println("LOBBYINFO");
     }
     public void setVariant(String variant) {
-        out.println("VARIANT: " + variant);
+        out.println("VARIANT " + variant);
     }
 }

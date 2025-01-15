@@ -18,7 +18,7 @@ public class CommandExecutor implements CommandHandler {
         commands.put("LEAVE", this::leaveLobby);
         commands.put("START", this::startGame);
         commands.put("LOBBYINFO", this::sendLobbyInfo);
-        commands.put("VARIANT: ", this::setVariant);
+        commands.put("VARIANT", this::setVariant);
     }
 
 

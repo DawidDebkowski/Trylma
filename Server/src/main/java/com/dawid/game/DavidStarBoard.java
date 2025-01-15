@@ -111,7 +111,20 @@ public class DavidStarBoard implements Board {
         }
         return null;
     }
-
+    public List<Field> getNonHomeFields() {
+        List<Field> nonHomeFields = new ArrayList<>();
+        for (Field[] row : board) {
+            for (Field field : row) {
+                if (field != null && field.getHome() == -1) {
+                    nonHomeFields.add(field);
+                }
+            }
+        }
+        return nonHomeFields;
+    }
+    public Coordinates getCoordinates(Field field) {
+        return coordinates.get(field);
+    }
 
     private void initializeCoordinates() {
         coordinates = new HashMap<>();
