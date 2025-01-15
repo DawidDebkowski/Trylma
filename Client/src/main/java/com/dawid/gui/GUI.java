@@ -1,6 +1,7 @@
 package com.dawid.gui;
 
 import com.dawid.IClient;
+import com.dawid.MockServer;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
@@ -26,6 +27,9 @@ public class GUI extends Application implements IClient {
     public void start(Stage stage) throws IOException {
         SceneManager.initialize(stage, this);
         SceneManager.setScene(States.LOBBY);
+        //TODO: change to
+        //communicator = new ServerCommunicator(serverAdress, port)
+        communicator = new MockServer();
     }
 
     private void launchGame() {
@@ -41,7 +45,9 @@ public class GUI extends Application implements IClient {
     }
 
     public void connect(String serverAdress, int port) throws IOException {
-        communicator = new ServerCommunicator(serverAdress, port);
+        communicator = new MockServer();
+        communicator.connect(serverAdress, port);
+        //communicator = new ServerCommunicator(serverAdress, port);
     }
 
     @Override

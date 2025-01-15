@@ -16,28 +16,36 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class ServerCommunicator{
-    private final Socket socket;
-    private final BufferedReader in;
-    private final PrintWriter out;
+    private  Socket socket;
+    private  BufferedReader in;
+    private  PrintWriter out;
     private IClient client;
-    private boolean connected;
+    protected boolean connected;
 
     public ServerCommunicator(String serverAdress, int port) throws IOException {
-        socket = new Socket(serverAdress, port);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new PrintWriter(socket.getOutputStream(), true);
-        connected = true;
-
-        ObserverCommunicator observer = new ObserverCommunicator();
-        Thread observerThread = new Thread(observer);
-        observerThread.start();
-        System.out.printf("Connected and listening to %s:%d\n", serverAdress, port);
+        connect(serverAdress, port);
+        initObserver();
     }
-
+    public ServerCommunicator() {}
+    protected void setInputOutput(BufferedReader in, PrintWriter out) {
+        this.in = in;
+        this.out = out;
+    }
     public void setClient(IClient client) {
         this.client = client;
     }
-
+    public void connect(String serverAdress, int port) throws IOException {
+        socket = new Socket(serverAdress, port);
+        setInputOutput(new BufferedReader(new InputStreamReader(socket.getInputStream())),
+                new PrintWriter(socket.getOutputStream(), true));
+        connected = true;
+    }
+    protected void  initObserver() {
+        ObserverCommunicator observer = new ObserverCommunicator();
+        Thread observerThread = new Thread(observer);
+        observerThread.start();
+        System.out.printf("Connected and listening\n");
+    }
     /**
      * Right now the thread throws connection error. I don't know how to fix it.
      */
