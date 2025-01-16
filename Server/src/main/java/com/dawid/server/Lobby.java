@@ -2,10 +2,9 @@ package com.dawid.server;
 
 import com.dawid.game.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.*;
 
 /**
  * Represents a lobby.
@@ -16,6 +15,7 @@ public class Lobby {
     private Board board;
     private TurnController turnController;
     private final List<Player> players;
+    private int maxPlayers; //TODO: add to lobbyinfo
     private GameVariant variant;
     public Lobby(List<Player> players) {
         this.players = players;
@@ -63,6 +63,16 @@ public class Lobby {
      * Starts the game.
      */
     public void startGame() {
+        // make bots to the desired number of players
+        for(int i=0;i<maxPlayers-getPlayerCount();i++) {
+            BotPlayer bot = new BotPlayer(System.out);
+            CommandHandler.create(bot);
+//            Scanner in = new Scanner(socket.getInputStream());
+//            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+//            while (in.hasNextLine()) {
+//                clientInputHandler.exec(in.nextLine());
+//            }
+        }
         if(board.correctPlayerCount(this.getPlayerCount())) {
             inGame = true;
 //            notifyAll("Started game");
