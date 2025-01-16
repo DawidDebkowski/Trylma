@@ -27,7 +27,7 @@ public class GUI extends Application implements IClient {
         SceneManager.initialize(stage, this);
         SceneManager.setScene(States.DISCONNECTED);
 
-        startGame(1, new DavidStarBoard(), Variant.NORMAL, 6);
+//        startGame(1, new DavidStarBoard(), Variant.NORMAL, 6);
         communicator = new ServerCommunicator();
 //        communicator = new MockServer();
         lobbies = new ArrayList<>();

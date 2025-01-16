@@ -66,7 +66,9 @@ public class GUIField extends Circle {
                 if(gameController.getGameEngine().isMovePossible(Coordinates.fromString(sourceFieldId), new Coordinates(row, column))) {
                     this.setFill(GameSceneController.playerColors.get(gameController.getGameEngine().getMyPlayerID()).brighter());
                 } else {
-                    this.setFill(Color.DARKGRAY);
+                    if(field.getPawn() == 0){
+                        this.setFill(Color.DARKGRAY);
+                    }
                     System.out.println("cant move from " + sourceFieldId + " to " + row + "_" + column);
 
                 }
