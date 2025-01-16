@@ -16,16 +16,6 @@ import java.util.Map;
  * Napisana w połowie przez gpt, mam nadzieje, że usuniemy ten komentarz w przyszłych commitach i nikt go nie zobaczy.
  * Klasa sama w sobie działa dobrze, wywołanie można zobaczyć w StartController.
  *
- * Na razie po prostu bawiłem się javafx, żeby zobaczyć, jakie mamy możliwości, możesz wszystko wyrzucić, jeżeli chcesz.
- * tyle przecinkow bo mam plugin poprawiajacy bledy lol
- *
- * Notatka: Tamto na gorze jest stare ale moze warte przeczytania.
- * Teraz ta klasa robi lazy-loading scen i to jest spoko.
- * Byc może dobrym pomyslem jest polaczenie starych statow z nowymi scenami.
- * Głowny problem jest taki ze stare staty przyjmuja String[] args, a budowanie stringow tylko po to
- * zeby przekazac informacje do serwera jest bez sensu, kiedy mozna wywylac client.getSocket().join(1) i tyle,
- * to join() to przyklad, chodzi o komenda(argumenty od razu w wymaganych typach)
- * Wiec nie wiem czy to robic czy nie zostawiam wolna reke
  */
 public class SceneManager {
     private static Stage stage;

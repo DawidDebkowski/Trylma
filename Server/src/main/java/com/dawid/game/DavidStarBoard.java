@@ -104,7 +104,7 @@ public class DavidStarBoard implements Board {
             return Arrays.asList(1, 3, 5);
         }
         if(playerCount == 4) {
-            return Arrays.asList(1, 3, 4, 6);
+            return Arrays.asList(1, 4, 2, 5);
         }
         if(playerCount == 6) {
             return Arrays.asList(1, 2, 3, 4, 5, 6);
