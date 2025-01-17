@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawid.gui.LobbySceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dawid.gui.controllers.LobbySceneController">
    <children>
       <ComboBox fx:id="variants" layoutX="225.0" layoutY="175.0" onAction="#setVariant" prefWidth="150.0" promptText="Game mode" />
       <Button layoutX="280.0" layoutY="278.0" mnemonicParsing="false" onAction="#startGame" text="Start" />

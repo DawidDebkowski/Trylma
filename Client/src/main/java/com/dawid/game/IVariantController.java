@@ -3,7 +3,7 @@ package com.dawid.game;
 import java.util.Collection;
 import java.util.List;
 
-public interface IMoveController {
+public interface IVariantController {
     public List<Player> setupPlayers();
     public void setupPawns(List<Player> players);
 

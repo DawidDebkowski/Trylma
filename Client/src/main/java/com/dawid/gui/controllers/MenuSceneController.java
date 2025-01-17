@@ -1,8 +1,10 @@
-package com.dawid.gui;
+package com.dawid.gui.controllers;
 
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.states.States;
+import com.dawid.cli.states.States;
+import com.dawid.gui.SceneManager;
+import com.dawid.gui.components.LobbyBox;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
@@ -49,7 +51,7 @@ public class MenuSceneController extends BaseController{
     }
 
     public void startRefresh() {
-        client.getSocket().getLobbyInfo();
+        client.getServerCommunicator().getLobbyInfo();
         lobbyBoxes.clear();
         lobbyHolder.getChildren().clear();
     }
@@ -85,7 +87,7 @@ public class MenuSceneController extends BaseController{
     }
     @FXML
     protected void onNewGameClicked() {
-        client.getSocket().create();
+        client.getServerCommunicator().create();
         SceneManager.setScene(States.LOBBY);
     }
 

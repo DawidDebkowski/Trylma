@@ -1,4 +1,4 @@
-package com.dawid.states;
+package com.dawid.cli.states;
 
 /**
  * Class needed for creating EnumMaps.

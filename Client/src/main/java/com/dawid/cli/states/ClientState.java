@@ -1,4 +1,4 @@
-package com.dawid.states;
+package com.dawid.cli.states;
 
 /**
  * Interface for all States.

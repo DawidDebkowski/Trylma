@@ -1,6 +1,6 @@
-package com.dawid.states;
+package com.dawid.cli.states;
 
-import com.dawid.Commands;
+import com.dawid.cli.Commands;
 import com.dawid.IClient;
 
 public class LobbyState extends State {
@@ -13,10 +13,10 @@ public class LobbyState extends State {
     }
 
     public void start(String[] args) {
-        client.getSocket().startGame();
+        client.getServerCommunicator().startGame();
     }
 
     public void leave(String[] args) {
-        client.getSocket().leaveLobby();
+        client.getServerCommunicator().leaveLobby();
     }
 }

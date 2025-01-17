@@ -3,8 +3,9 @@ package com.dawid.gui;
 import com.dawid.IClient;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.*;
-import com.dawid.states.ClientState;
-import com.dawid.states.States;
+import com.dawid.cli.states.ClientState;
+import com.dawid.cli.states.States;
+import com.dawid.gui.controllers.IController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class GUI extends Application implements IClient {
+public class ClientGUI extends Application implements IClient {
     private ServerCommunicator communicator;
     private ClientState state;
     private IController controller;
@@ -72,7 +73,7 @@ public class GUI extends Application implements IClient {
     }
 
     @Override
-    public ServerCommunicator getSocket() {
+    public ServerCommunicator getServerCommunicator() {
         return communicator;
     }
 
@@ -93,10 +94,10 @@ public class GUI extends Application implements IClient {
 
     private void launchGame(int myID, Board board, Variant variant, int playerCount) {
         if(variant == Variant.NORMAL) {
-            gameEngine = new GameEngine(board, new NormalMoveController(board,playerCount), myID);
+            gameEngine = new GameEngine(board, new NormalVariantController(board,playerCount), myID);
         }
         else {
-            gameEngine = new GameEngine(board, new NormalMoveController(board, playerCount), myID);
+            gameEngine = new GameEngine(board, new NormalVariantController(board, playerCount), myID);
         }
         Platform.runLater(() -> {
             controller = SceneManager.setScene(States.PLAYING);

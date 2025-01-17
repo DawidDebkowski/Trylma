@@ -9,13 +9,13 @@ import java.util.List;
  * Assumptions: if there are only 3 players: players 1, 3 and 5 are present
  * Assumptions: if there are only 4 players: 1 vs 4 and 2 vs 5
  */
-public class NormalMoveController implements IMoveController {
+public class NormalVariantController implements IVariantController {
     int numberOfPlayers;
     Board board;
     private Field overField;
     List<Player> players;
 
-    public NormalMoveController(Board board, int numberOfPlayers) {
+    public NormalVariantController(Board board, int numberOfPlayers) {
         this.board = board;
         this.numberOfPlayers = numberOfPlayers;
     }

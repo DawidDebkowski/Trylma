@@ -4,8 +4,8 @@ import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.states.MenuState;
-import com.dawid.states.LobbyState;
+import com.dawid.cli.states.MenuState;
+import com.dawid.cli.states.LobbyState;
 import javafx.application.Platform;
 
 import java.io.BufferedReader;

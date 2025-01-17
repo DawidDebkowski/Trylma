@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class NormalMoveControllerTest extends TestCase {
     Board board;
-    NormalMoveController controller;
+    NormalVariantController controller;
 
     @Override
     protected void setUp() throws Exception {
         board = new DavidStarBoard();
-        controller = new NormalMoveController(board, 6);
+        controller = new NormalVariantController(board, 6);
         super.setUp();
     }
 

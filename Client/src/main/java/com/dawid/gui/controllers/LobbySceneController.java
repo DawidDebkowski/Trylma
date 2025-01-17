@@ -1,4 +1,4 @@
-package com.dawid.gui;
+package com.dawid.gui.controllers;
 
 import com.dawid.game.Variant;
 import javafx.fxml.FXML;
@@ -24,7 +24,7 @@ public class LobbySceneController extends BaseController {
 
     @FXML
     private void setVariant() {
-        client.getSocket().setVariant(variants.getValue());
+        client.getServerCommunicator().setVariant(variants.getValue());
     }
 
 }

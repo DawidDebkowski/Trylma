@@ -1,4 +1,4 @@
-package com.dawid;
+package com.dawid.cli;
 
 public enum Commands {
     help(

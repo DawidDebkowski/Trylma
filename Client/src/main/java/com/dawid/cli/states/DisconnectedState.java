@@ -1,6 +1,6 @@
-package com.dawid.states;
+package com.dawid.cli.states;
 
-import com.dawid.Commands;
+import com.dawid.cli.Commands;
 import com.dawid.IClient;
 
 public class DisconnectedState extends State {
@@ -13,6 +13,6 @@ public class DisconnectedState extends State {
 
     private void exit(String[] args) {
         client.exit();
-        client.getSocket().disconnect();
+        client.getServerCommunicator().disconnect();
     }
 }

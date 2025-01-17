@@ -45,19 +45,19 @@ public class GameEngine {
     // Board type
     Board board;
     // Game Variant
-    IMoveController moveController;
+    IVariantController variantController;
 
     boolean isMyTurn = false;
 
-    public GameEngine(Board board, IMoveController moveController, int playerNumber) {
+    public GameEngine(Board board, IVariantController variantController, int playerNumber) {
         this.board = board;
-        this.moveController = moveController;
+        this.variantController = variantController;
         this.playerID = playerNumber;
     }
 
     public void startGame() {
-        players = moveController.setupPlayers();
-        moveController.setupPawns(players);
+        players = variantController.setupPlayers();
+        variantController.setupPawns(players);
         board.printBoard();
     }
 
@@ -82,9 +82,9 @@ public class GameEngine {
             System.out.println("[GameEngine]:" + player + " skipped move");
             return;
         }
-        moveController.movePawn(player, sx, sy, fx, fy);
+        variantController.movePawn(player, sx, sy, fx, fy);
 
-        Player winner = moveController.checkWin();
+        Player winner = variantController.checkWin();
         if(winner != null) {
             System.out.println("[GameEngine]:" + player + " won");
         }
@@ -115,7 +115,7 @@ public class GameEngine {
     public boolean isMovePossible(Coordinates from, Coordinates to) {
         Field startField = board.getField(from.getRow(), from.getColumn());
         Field finishField = board.getField(to.getRow(), to.getColumn());
-        return moveController.getPossibleMoves(startField).contains(finishField);
+        return variantController.getPossibleMoves(startField).contains(finishField);
     }
 
     /**
@@ -126,7 +126,7 @@ public class GameEngine {
      */
     public Collection<Coordinates> getPossibleMoves(Coordinates c) {
         Field field = board.getField(c.getRow(), c.getColumn());
-        Collection<Field> possibleMoves = moveController.getPossibleMoves(field);
+        Collection<Field> possibleMoves = variantController.getPossibleMoves(field);
         Collection<Coordinates> possibleMovesList = new ArrayList<>();
         for(Field possibleMove : possibleMoves) {
             possibleMovesList.add(board.getCoordinates(possibleMove));
@@ -139,7 +139,7 @@ public class GameEngine {
      */
     public void showPossibleMoves(Coordinates c) {
         Field field = board.getField(c.getRow(), c.getColumn());
-        Collection<Field> possibleMoves = moveController.getPossibleMoves(field);
+        Collection<Field> possibleMoves = variantController.getPossibleMoves(field);
         for (Field f : possibleMoves) {
             f.setPawn(9);
         }
@@ -148,7 +148,7 @@ public class GameEngine {
     // ludzki test getPossibleMoves()
     public static void main(String[] args) {
         DavidStarBoard board = new DavidStarBoard();
-        GameEngine gameEngine = new GameEngine(board, new NormalMoveController(board, 6), 0);
+        GameEngine gameEngine = new GameEngine(board, new NormalVariantController(board, 6), 0);
         gameEngine.startGame();
         board.debugPrint();
         board.getField(6, 10).setPawn(7);

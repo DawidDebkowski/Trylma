@@ -1,17 +1,19 @@
-package com.dawid;
+package com.dawid.cli;
 
+import com.dawid.IClient;
+import com.dawid.ServerCommunicator;
 import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.states.ClientState;
-import com.dawid.states.CommandException;
+import com.dawid.cli.states.ClientState;
+import com.dawid.cli.states.CommandException;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
-public class CLI implements IClient {
+public class ClientCLI implements IClient {
     private ClientState clientState;
     private final ServerCommunicator socket;
     private final Scanner scanner;
@@ -19,7 +21,7 @@ public class CLI implements IClient {
 
     boolean isRunning = true;
 
-    public CLI(ServerCommunicator server) {
+    public ClientCLI(ServerCommunicator server) {
         scanner = new Scanner(System.in);
         this.socket = server;
         socket.setClient(this);
@@ -81,7 +83,7 @@ public class CLI implements IClient {
     }
 
     @Override
-    public ServerCommunicator getSocket() {
+    public ServerCommunicator getServerCommunicator() {
         return socket;
     }
 

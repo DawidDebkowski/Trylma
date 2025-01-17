@@ -1,11 +1,11 @@
-package com.dawid.gui;
+package com.dawid.gui.controllers;
 
 import com.dawid.game.Board;
 import com.dawid.game.Coordinates;
 import com.dawid.game.GameEngine;
+import com.dawid.gui.components.GUIField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -34,7 +34,7 @@ public class GameSceneController extends BaseController {
     private GUIField[][] fields;
     private Collection<GUIField> lastHightlited;
 
-    static Map<Integer, Color> playerColors;
+    public static Map<Integer, Color> playerColors;
 
     private GameEngine gameEngine;
 
@@ -124,8 +124,8 @@ public class GameSceneController extends BaseController {
         }
     }
 
-    void issueMove(int sx, int sy, int fx, int fy) {
-        client.getSocket().move(sx, sy, fx, fy);
+    public void issueMove(int sx, int sy, int fx, int fy) {
+        client.getServerCommunicator().move(sx, sy, fx, fy);
         getGameEngine().setMyTurn(false);
         refresh();
     }

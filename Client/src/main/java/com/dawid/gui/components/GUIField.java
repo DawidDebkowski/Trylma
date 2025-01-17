@@ -1,12 +1,12 @@
-package com.dawid.gui;
+package com.dawid.gui.components;
 
 import com.dawid.game.Coordinates;
 import com.dawid.game.Field;
+import com.dawid.gui.controllers.GameSceneController;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;

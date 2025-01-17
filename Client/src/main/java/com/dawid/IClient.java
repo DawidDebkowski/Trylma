@@ -3,17 +3,27 @@ package com.dawid;
 import com.dawid.game.Board;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.states.ClientState;
+import com.dawid.cli.states.ClientState;
 
 import java.util.Collection;
 
 public interface IClient {
+
+    /**
+     * Makes a move on the internal board.
+     * Should be called by the server.
+     * Doesn't perform any checks except that the fields must exist.
+     * -1 -1 -1 -1 means skip turn
+     * @param player moving player
+     * @param x from (in format x_y)
+     * @param y to (in format x_y)
+     */
     void moveOnBoard(int player, String x, String y);
 
-    Board getBoard();
-
-    ServerCommunicator getSocket();
-
+    /**
+     * Changes the state of the client.
+     * @param newState
+     */
     void changeState(ClientState newState);
 
     void exit();
@@ -27,7 +37,9 @@ public interface IClient {
 
     void updateLobbies(Collection<LobbyInfo> lobbies);
 
-    public void myTurn();
+    void myTurn();
 
     Collection<LobbyInfo> getLobbies();
+    Board getBoard();
+    ServerCommunicator getServerCommunicator();
 }

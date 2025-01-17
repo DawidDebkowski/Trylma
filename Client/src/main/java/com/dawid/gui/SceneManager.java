@@ -1,6 +1,7 @@
 package com.dawid.gui;
 
-import com.dawid.states.States;
+import com.dawid.cli.states.States;
+import com.dawid.gui.controllers.IController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,9 +21,9 @@ import java.util.Map;
 public class SceneManager {
     private static Stage stage;
     private static final Map<States, String> scenes = new HashMap<>();
-    private static GUI client;
+    private static ClientGUI client;
 
-    public static void initialize(Stage primaryStage, GUI client) {
+    public static void initialize(Stage primaryStage, ClientGUI client) {
         SceneManager.client = client;
         stage = primaryStage;
 

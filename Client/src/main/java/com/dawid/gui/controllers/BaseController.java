@@ -1,12 +1,13 @@
-package com.dawid.gui;
+package com.dawid.gui.controllers;
 
+import com.dawid.gui.ClientGUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class BaseController implements IController {
     @FXML
     protected Label logLabel;
-    protected GUI client;
+    protected ClientGUI client;
 
     @Override
     public void print(String message) {
@@ -15,7 +16,7 @@ public class BaseController implements IController {
     }
 
     @Override
-    public void setClient(GUI client) {
+    public void setClient(ClientGUI client) {
         this.client = client;
     }
 

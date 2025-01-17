@@ -1,6 +1,6 @@
-package com.dawid.states;
+package com.dawid.cli.states;
 
-import com.dawid.Commands;
+import com.dawid.cli.Commands;
 import com.dawid.IClient;
 
 import java.util.EnumMap;
