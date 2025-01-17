@@ -3,7 +3,7 @@ package com.dawid;
 import com.dawid.game.Board;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.cli.states.ClientState;
+import com.dawid.cli.states.CliClientState;
 
 import java.util.Collection;
 
@@ -22,10 +22,14 @@ public interface IClient {
 
     /**
      * Changes the state of the client.
-     * @param newState
+     * In case of GUI it changes the scene.
+     * @param newState new state
      */
-    void changeState(ClientState newState);
+    void changeState(States newState);
 
+    /**
+     * Exits the app
+     */
     void exit();
 
     public void startGame(int myID, Board board, Variant variant, int playerCount);

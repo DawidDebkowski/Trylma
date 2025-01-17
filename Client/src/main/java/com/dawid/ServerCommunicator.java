@@ -4,8 +4,8 @@ import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.cli.states.MenuState;
-import com.dawid.cli.states.LobbyState;
+import com.dawid.cli.states.MenuStateCli;
+import com.dawid.cli.states.LobbyStateCli;
 import javafx.application.Platform;
 
 import java.io.BufferedReader;
@@ -74,9 +74,9 @@ public class ServerCommunicator{
         ObserverCommunicator() {
             protocol = new HashMap<>();
 
-            protocol.put("Created", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
-            protocol.put("Joined", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
-            protocol.put("Left", (IResponse) (message) -> {client.changeState(new MenuState(client));});
+            protocol.put("Created", (IResponse) (message) -> {client.changeState(States.LOBBY);});
+            protocol.put("Joined", (IResponse) (message) -> {client.changeState(States.LOBBY);});
+            protocol.put("Left", (IResponse) (message) -> {client.changeState(States.MENU);});
             protocol.put("Started", this::receiveStart);
             protocol.put("Moved:", this::receiveMove);
             protocol.put("Lobbies:", this::receiveLobbies);

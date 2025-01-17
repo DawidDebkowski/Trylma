@@ -1,7 +1,7 @@
 package com.dawid;
 
 import com.dawid.cli.ClientCLI;
-import com.dawid.cli.states.MenuState;
+import com.dawid.cli.states.MenuStateCli;
 import junit.framework.TestCase;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class ClientCLITest extends TestCase {
     }
 
     public void testParse() {
-        clientCli.changeState(new MenuState(clientCli));
+        clientCli.changeState(States.MENU);
         String[] args = clientCli.parseInput("move 1 2 abc");
         assertEquals("move", args[0]);
         assertEquals("1", args[1]);

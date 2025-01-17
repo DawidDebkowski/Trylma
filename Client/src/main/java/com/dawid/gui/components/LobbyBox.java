@@ -2,7 +2,7 @@ package com.dawid.gui.components;
 
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.cli.states.States;
+import com.dawid.States;
 import com.dawid.gui.ClientGUI;
 import com.dawid.gui.SceneManager;
 import javafx.geometry.Insets;

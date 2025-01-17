@@ -1,6 +1,6 @@
 package com.dawid.gui;
 
-import com.dawid.cli.states.States;
+import com.dawid.States;
 import com.dawid.gui.controllers.IController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

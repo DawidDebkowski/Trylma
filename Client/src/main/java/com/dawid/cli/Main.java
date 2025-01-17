@@ -1,7 +1,8 @@
 package com.dawid.cli;
 
 import com.dawid.ServerCommunicator;
-import com.dawid.cli.states.MenuState;
+import com.dawid.States;
+import com.dawid.cli.states.MenuStateCli;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ public class Main {
         ClientCLI clientCli;
         try {
             clientCli = new ClientCLI(new ServerCommunicator("localhost", 5005));
-            clientCli.changeState(new MenuState(clientCli));
+            clientCli.changeState(States.MENU);
             clientCli.mainLoop();
         } catch (IOException e) {
             System.err.println("Could not connect to server!");

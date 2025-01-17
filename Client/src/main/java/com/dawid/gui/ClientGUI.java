@@ -3,8 +3,8 @@ package com.dawid.gui;
 import com.dawid.IClient;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.*;
-import com.dawid.cli.states.ClientState;
-import com.dawid.cli.states.States;
+import com.dawid.cli.states.CliClientState;
+import com.dawid.States;
 import com.dawid.gui.controllers.IController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -16,7 +16,7 @@ import java.util.Collection;
 
 public class ClientGUI extends Application implements IClient {
     private ServerCommunicator communicator;
-    private ClientState state;
+    private CliClientState state;
     private IController controller;
     private Collection<LobbyInfo> lobbies;
     private GameEngine gameEngine;
@@ -78,8 +78,8 @@ public class ClientGUI extends Application implements IClient {
     }
 
     @Override
-    public void changeState(ClientState newState) {
-//        SceneManager.setScene(newState.getState());
+    public void changeState(States newState) {
+        SceneManager.setScene(newState);
     }
 
     @Override

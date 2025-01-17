@@ -2,11 +2,12 @@ package com.dawid.cli;
 
 import com.dawid.IClient;
 import com.dawid.ServerCommunicator;
+import com.dawid.States;
 import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.cli.states.ClientState;
+import com.dawid.cli.states.CliClientState;
 import com.dawid.cli.states.CommandException;
 
 import java.util.Collection;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ClientCLI implements IClient {
-    private ClientState clientState;
+    private CliClientState cliClientState;
     private final ServerCommunicator socket;
     private final Scanner scanner;
     private final Board board;
@@ -36,7 +37,7 @@ public class ClientCLI implements IClient {
             prompt();
             final String[] args = parseInput(scanner.nextLine());
             try {
-                clientState.executeCommand(args);
+                cliClientState.executeCommand(args);
             } catch (CommandException e) {
                 println(e.getMessage());
                 continue;
@@ -48,7 +49,7 @@ public class ClientCLI implements IClient {
      * Used to reset the prompt after server message.
      */
     public void prompt() {
-        System.out.printf("[%s]>", clientState.getState());
+        System.out.printf("[%s]>", cliClientState.getState());
     }
 
     @Override
@@ -102,8 +103,10 @@ public class ClientCLI implements IClient {
     }
 
     @Override
-    public void changeState(ClientState newState) {
-        clientState = newState;
+    public void changeState(States state) {
+        // it doesnt work anyway after the refactor but
+        // to make it work we would need to create a new CliClientState
+        // here based on state variable
     }
 
     public String[] parseInput(String in) {
