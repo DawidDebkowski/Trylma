@@ -51,7 +51,7 @@ public class MenuSceneController extends BaseController{
     }
 
     public void startRefresh() {
-        client.getServerCommunicator().getLobbyInfo();
+        client.getServerCommands().getLobbyInfo();
         lobbyBoxes.clear();
         lobbyHolder.getChildren().clear();
     }
@@ -87,7 +87,7 @@ public class MenuSceneController extends BaseController{
     }
     @FXML
     protected void onNewGameClicked() {
-        client.getServerCommunicator().create();
+        client.getServerCommands().create();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.dawid.gui.components;
 
+import com.dawid.IClient;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
 import com.dawid.States;
@@ -14,20 +15,20 @@ import javafx.scene.control.Button;
  * This represents one of the lobbies the player can join on menu scene.
  */
 public class LobbyBox extends HBox {
-    private final ClientGUI client;
+    private final IClient client;
     private final int id;
     private final int currentPlayers;
     private final int maxPlayers;
     private final Variant variant;
 
-    public LobbyBox(ClientGUI client, int id, int currentPlayers, int maxPlayers, Variant variant) {
+    public LobbyBox(IClient client, int id, int currentPlayers, int maxPlayers, Variant variant) {
         this.client = client;
         this.id = id;
         this.currentPlayers = currentPlayers;
         this.maxPlayers = maxPlayers;
         this.variant = variant;
     }
-    public LobbyBox(LobbyInfo lobbyInfo, ClientGUI client) {
+    public LobbyBox(LobbyInfo lobbyInfo, IClient client) {
         this(client, lobbyInfo.getId(), lobbyInfo.getCurrentPlayers(), lobbyInfo.getMaxPlayers(), lobbyInfo.getVariant());
     }
 
@@ -41,7 +42,7 @@ public class LobbyBox extends HBox {
 
         Button joinButton = new Button("Join");
         joinButton.setOnAction(event -> {
-            client.getServerCommunicator().join(id);
+            client.getServerCommands().join(id);
         });
 
         getChildren().addAll(name, playersLabel, variantLabel, joinButton);

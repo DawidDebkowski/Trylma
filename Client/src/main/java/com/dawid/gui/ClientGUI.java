@@ -1,11 +1,7 @@
 package com.dawid.gui;
 
-import com.dawid.IServerClient;
-import com.dawid.IServerCommands;
-import com.dawid.ServerCommunicator;
+import com.dawid.*;
 import com.dawid.game.*;
-import com.dawid.cli.states.CliClientState;
-import com.dawid.States;
 import com.dawid.gui.controllers.IController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -15,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ClientGUI extends Application implements IServerClient {
+public class ClientGUI extends Application implements IServerClient, IClient {
     private IServerCommands communicator;
     private IController controller;
     private Collection<LobbyInfo> lobbies;
@@ -60,12 +56,8 @@ public class ClientGUI extends Application implements IServerClient {
         return gameEngine.getBoard();
     }
 
-    public GameEngine getGameController() {
-        return gameEngine;
-    }
-
     @Override
-    public IServerCommands getServerCommunicator() {
+    public IServerCommands getServerCommands() {
         return communicator;
     }
 
@@ -133,11 +125,7 @@ public class ClientGUI extends Application implements IServerClient {
         return lobbies;
     }
 
-    public void sendStartGameRequest() {
-        communicator.startGame();
-    }
-
-    public void stageToScene() {
-        stage.sizeToScene();
+    public GameEngine getGameController() {
+        return gameEngine;
     }
 }

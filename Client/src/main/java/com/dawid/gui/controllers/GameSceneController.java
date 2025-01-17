@@ -58,8 +58,6 @@ public class GameSceneController extends BaseController {
         mainGrid.setAlignment(Pos.CENTER);
         mainGrid.setHgap(0);
         mainGrid.setVgap(10);
-        client.stageToScene();
-
     }
 
     public void initialiseBoard(Board board) {
@@ -125,7 +123,7 @@ public class GameSceneController extends BaseController {
     }
 
     public void issueMove(int sx, int sy, int fx, int fy) {
-        client.getServerCommunicator().move(sx, sy, fx, fy);
+        client.getServerCommands().move(sx, sy, fx, fy);
         getGameEngine().setMyTurn(false);
         refresh();
     }

@@ -60,8 +60,4 @@ public interface IServerClient {
      * Sends a signal that it's this Client's turn to play
      */
     void setMyTurn();
-
-    Collection<LobbyInfo> getLobbies();
-    Board getBoard();
-    IServerCommands getServerCommunicator();
 }

@@ -19,12 +19,12 @@ public class LobbySceneController extends BaseController {
 
     @FXML
     private void startGame() {
-        client.sendStartGameRequest();
+        client.getServerCommands().startGame();
     }
 
     @FXML
     private void setVariant() {
-        client.getServerCommunicator().setVariant(variants.getValue());
+        client.getServerCommands().setVariant(variants.getValue());
     }
 
 }
