@@ -52,9 +52,11 @@ public class Server {
         public void run() {
             System.out.println("Connected: " + socket);
             try {
-                final CommandHandler clientInputHandler = CommandHandler.create(new Player(socket.getOutputStream()));
+                final Player player = new Player(socket.getOutputStream());
+                final CommandHandler clientInputHandler = CommandHandler.create(player);
                 Scanner in = new Scanner(socket.getInputStream());
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                player.sendMessage("Connected to " + socket.getInetAddress().getHostAddress());
                 while (in.hasNextLine()) {
                     clientInputHandler.exec(in.nextLine());
                 }
@@ -62,8 +64,8 @@ public class Server {
                 System.out.println("Error:" + socket);
             } finally {
                 try {
-                        socket.close();
-                        System.out.println("Closed: " + socket);
+                    socket.close();
+                    System.out.println("Closed: " + socket);
                 } catch (IOException e) {
                     System.out.println("Error closing socket: " + socket);
                 }
