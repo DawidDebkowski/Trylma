@@ -1,6 +1,7 @@
 package com.dawid.cli;
 
 import com.dawid.IServerClient;
+import com.dawid.IServerCommands;
 import com.dawid.ServerCommunicator;
 import com.dawid.States;
 import com.dawid.game.Board;
@@ -91,7 +92,7 @@ public class ClientCLI implements IServerClient, ICLIClient {
     }
 
     @Override
-    public ServerCommunicator getServerCommunicator() {
+    public IServerCommands getServerCommunicator() {
         return socket;
     }
 

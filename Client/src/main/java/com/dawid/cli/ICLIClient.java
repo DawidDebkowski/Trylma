@@ -1,6 +1,6 @@
 package com.dawid.cli;
 
-import com.dawid.ServerCommunicator;
+import com.dawid.IServerCommands;
 import com.dawid.States;
 import com.dawid.game.Board;
 import com.dawid.game.LobbyInfo;
@@ -23,7 +23,7 @@ public interface ICLIClient {
 
     Board getBoard();
 
-    ServerCommunicator getServerCommunicator();
+    IServerCommands getServerCommunicator();
 
     void exit();
 

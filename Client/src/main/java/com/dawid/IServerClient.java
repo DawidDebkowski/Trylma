@@ -6,6 +6,9 @@ import com.dawid.game.Variant;
 
 import java.util.Collection;
 
+/**
+ * Specifies commands that the server sends to the player.
+ */
 public interface IServerClient {
 
     /**
@@ -60,5 +63,5 @@ public interface IServerClient {
 
     Collection<LobbyInfo> getLobbies();
     Board getBoard();
-    ServerCommunicator getServerCommunicator();
+    IServerCommands getServerCommunicator();
 }

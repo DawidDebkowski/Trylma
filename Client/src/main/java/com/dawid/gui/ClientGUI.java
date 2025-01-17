@@ -1,6 +1,7 @@
 package com.dawid.gui;
 
 import com.dawid.IServerClient;
+import com.dawid.IServerCommands;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.*;
 import com.dawid.cli.states.CliClientState;
@@ -15,8 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class ClientGUI extends Application implements IServerClient {
-    private ServerCommunicator communicator;
-    private CliClientState state;
+    private IServerCommands communicator;
     private IController controller;
     private Collection<LobbyInfo> lobbies;
     private GameEngine gameEngine;
@@ -28,16 +28,8 @@ public class ClientGUI extends Application implements IServerClient {
         SceneManager.initialize(stage, this);
         SceneManager.setScene(States.DISCONNECTED);
 
-//        startGame(1, new DavidStarBoard(), Variant.NORMAL, 6);
-        communicator = new ServerCommunicator();
-//        communicator = new MockServer();
+        communicator = new ServerCommunicator(this);
         lobbies = new ArrayList<>();
-
-        communicator.setClient(this);
-
-//        communicator.join(0);
-//        communicator.startGame();
-//        moveOnBoard(1, "0_12", "7_13");
     }
 
     public static void main(String[] args) {
@@ -73,7 +65,7 @@ public class ClientGUI extends Application implements IServerClient {
     }
 
     @Override
-    public ServerCommunicator getServerCommunicator() {
+    public IServerCommands getServerCommunicator() {
         return communicator;
     }
 

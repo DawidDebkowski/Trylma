@@ -14,7 +14,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ServerCommunicator{
+public class ServerCommunicator implements IServerCommands {
     private  Socket socket;
     private  BufferedReader in;
     private  PrintWriter out;
@@ -25,6 +25,9 @@ public class ServerCommunicator{
         connect(serverAdress, port);
         initObserver();
     }
+    public ServerCommunicator(IServerClient client) throws IOException {
+        setClient(client);
+    }
     public ServerCommunicator() {}
     protected void setInputOutput(BufferedReader in, PrintWriter out) {
         this.in = in;
@@ -33,6 +36,7 @@ public class ServerCommunicator{
     public void setClient(IServerClient client) {
         this.client = client;
     }
+    @Override
     public void connect(String serverAdress, int port) throws IOException {
         socket = new Socket(serverAdress, port);
         setInputOutput(new BufferedReader(new InputStreamReader(socket.getInputStream())),
@@ -49,6 +53,7 @@ public class ServerCommunicator{
     /**
      * Right now the thread throws connection error. I don't know how to fix it.
      */
+    @Override
     public void disconnect() {
         connected = false;
         try {
@@ -140,33 +145,36 @@ public class ServerCommunicator{
         }
     }
 
-    public boolean move(int sx, int sy, int fx, int fy) {
+    @Override
+    public void move(int sx, int sy, int fx, int fy) {
         out.println("MOVE" + " " + sx + "_" + sy + " " + fx + "_" + fy);
-        return true;
     }
 
-    public boolean join(int lobbyID) {
+    @Override
+    public void join(int lobbyID) {
         out.println("JOIN" + " " + lobbyID);
-        return true;
     }
 
+    @Override
     public void leaveLobby() {
         out.println("LEAVE");
     }
 
-    public boolean startGame() {
+    @Override
+    public void startGame() {
         out.println("START");
-        return true;
     }
 
-    public boolean create() {
+    @Override
+    public void create() {
         out.println("CREATE");
-        return true;
     }
 
+    @Override
     public void getLobbyInfo() {
         out.println("LOBBYINFO");
     }
+    @Override
     public void setVariant(String variant) {
         out.println("VARIANT " + variant);
     }
