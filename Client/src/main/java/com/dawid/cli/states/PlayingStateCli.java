@@ -2,11 +2,11 @@ package com.dawid.cli.states;
 
 import com.dawid.States;
 import com.dawid.cli.Commands;
-import com.dawid.IClient;
+import com.dawid.cli.ICLIClient;
 
 public class PlayingStateCli extends StateCli {
 
-    public PlayingStateCli(IClient cli) {
+    public PlayingStateCli(ICLIClient cli) {
         super(cli);
         name = States.PLAYING;
 

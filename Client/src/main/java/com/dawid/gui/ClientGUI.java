@@ -1,6 +1,6 @@
 package com.dawid.gui;
 
-import com.dawid.IClient;
+import com.dawid.IServerClient;
 import com.dawid.ServerCommunicator;
 import com.dawid.game.*;
 import com.dawid.cli.states.CliClientState;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ClientGUI extends Application implements IClient {
+public class ClientGUI extends Application implements IServerClient {
     private ServerCommunicator communicator;
     private CliClientState state;
     private IController controller;
@@ -86,7 +86,8 @@ public class ClientGUI extends Application implements IClient {
 
     @Override
     public void exit() {
-
+        communicator.disconnect();
+        Platform.exit();
     }
 
     @Override
@@ -116,11 +117,6 @@ public class ClientGUI extends Application implements IClient {
     }
 
     @Override
-    public void prompt() {
-        return;
-    }
-
-    @Override
     public void updateLobbies(Collection<LobbyInfo> lobbies) {
         this.lobbies = lobbies;
         Platform.runLater(() -> {
@@ -131,7 +127,7 @@ public class ClientGUI extends Application implements IClient {
     }
 
     @Override
-    public void myTurn() {
+    public void setMyTurn() {
         gameEngine.setMyTurn(true);
         Platform.runLater(() -> {
             if(controller != null)

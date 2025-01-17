@@ -4,8 +4,6 @@ import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.cli.states.MenuStateCli;
-import com.dawid.cli.states.LobbyStateCli;
 import javafx.application.Platform;
 
 import java.io.BufferedReader;
@@ -20,7 +18,7 @@ public class ServerCommunicator{
     private  Socket socket;
     private  BufferedReader in;
     private  PrintWriter out;
-    private IClient client;
+    private IServerClient client;
     protected boolean connected;
 
     public ServerCommunicator(String serverAdress, int port) throws IOException {
@@ -32,7 +30,7 @@ public class ServerCommunicator{
         this.in = in;
         this.out = out;
     }
-    public void setClient(IClient client) {
+    public void setClient(IServerClient client) {
         this.client = client;
     }
     public void connect(String serverAdress, int port) throws IOException {
@@ -94,7 +92,7 @@ public class ServerCommunicator{
         }
 
         private void receiveTurn(String[] args) {
-            client.myTurn();
+            client.setMyTurn();
         }
 
         private void receiveMove(String[] args) {
@@ -135,7 +133,6 @@ public class ServerCommunicator{
                     if(protocol.containsKey(args[0])){
                         protocol.get(args[0]).execute(args);
                     }
-                    client.prompt();
                 } catch (IOException e) {
                     System.out.println("Connection error");
                 }

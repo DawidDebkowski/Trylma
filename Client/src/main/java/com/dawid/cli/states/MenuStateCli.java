@@ -2,10 +2,10 @@ package com.dawid.cli.states;
 
 import com.dawid.States;
 import com.dawid.cli.Commands;
-import com.dawid.IClient;
+import com.dawid.cli.ICLIClient;
 
 public class MenuStateCli extends StateCli {
-    public MenuStateCli(IClient cli) {
+    public MenuStateCli(ICLIClient cli) {
         super(cli);
         name = States.MENU;
 

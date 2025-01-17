@@ -1,6 +1,6 @@
 package com.dawid.cli;
 
-import com.dawid.IClient;
+import com.dawid.IServerClient;
 import com.dawid.ServerCommunicator;
 import com.dawid.States;
 import com.dawid.game.Board;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
-public class ClientCLI implements IClient {
+public class ClientCLI implements IServerClient, ICLIClient {
     private CliClientState cliClientState;
     private final ServerCommunicator socket;
     private final Scanner scanner;
@@ -30,6 +30,7 @@ public class ClientCLI implements IClient {
         board = new DavidStarBoard();
     }
 
+    @Override
     public void mainLoop() {
         println("Welcome to the Trylma game!");
         println("Type \"help\" for a list of commands or just connect and start playing!");
@@ -48,6 +49,7 @@ public class ClientCLI implements IClient {
     /**
      * Used to reset the prompt after server message.
      */
+    @Override
     public void prompt() {
         System.out.printf("[%s]>", cliClientState.getState());
     }
@@ -60,6 +62,11 @@ public class ClientCLI implements IClient {
 
     @Override
     public void myTurn() {
+
+    }
+
+    @Override
+    public void setMyTurn() {
 
     }
 
@@ -88,6 +95,7 @@ public class ClientCLI implements IClient {
         return socket;
     }
 
+    @Override
     public void exit() {
         isRunning = false;
     }
@@ -109,6 +117,7 @@ public class ClientCLI implements IClient {
         // here based on state variable
     }
 
+    @Override
     public String[] parseInput(String in) {
         if (in.isEmpty()) {
             return new String[0];
@@ -116,6 +125,7 @@ public class ClientCLI implements IClient {
         return in.split(" ");
     }
 
+    @Override
     public void println(String message) {
         System.out.println(message);
     }

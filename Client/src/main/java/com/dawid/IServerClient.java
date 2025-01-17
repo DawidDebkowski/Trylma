@@ -3,11 +3,20 @@ package com.dawid;
 import com.dawid.game.Board;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.cli.states.CliClientState;
 
 import java.util.Collection;
 
-public interface IClient {
+public interface IServerClient {
+
+    /**
+     * Starts the game. It should only be called by the server.
+     * Sets up all required classes and GUI to play a game.
+     * @param myID this clients id
+     * @param board board to play
+     * @param variant variant
+     * @param playerCount this game's player count
+     */
+    void startGame(int myID, Board board, Variant variant, int playerCount);
 
     /**
      * Makes a move on the internal board.
@@ -32,16 +41,22 @@ public interface IClient {
      */
     void exit();
 
-    public void startGame(int myID, Board board, Variant variant, int playerCount);
-
+    /**
+     * Displays a message
+     * @param message msg to be displayed
+     */
     void message(String message);
 
-    //TODO refactor ServerCommunicator to remove this method
-    void prompt();
-
+    /**
+     * Updates the list of lobbies
+     * @param lobbies new list
+     */
     void updateLobbies(Collection<LobbyInfo> lobbies);
 
-    void myTurn();
+    /**
+     * Sends a signal that it's this Client's turn to play
+     */
+    void setMyTurn();
 
     Collection<LobbyInfo> getLobbies();
     Board getBoard();

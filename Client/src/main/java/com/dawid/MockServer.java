@@ -14,7 +14,7 @@ public class MockServer extends ServerCommunicator {
     }
 
     @Override
-    public void setClient(IClient client) {
+    public void setClient(IServerClient client) {
         super.setClient(client);
     }
 
