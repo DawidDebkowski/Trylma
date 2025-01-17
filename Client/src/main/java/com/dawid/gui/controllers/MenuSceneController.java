@@ -88,7 +88,6 @@ public class MenuSceneController extends BaseController{
     @FXML
     protected void onNewGameClicked() {
         client.getServerCommunicator().create();
-        SceneManager.setScene(States.LOBBY);
     }
 
 }

@@ -74,6 +74,7 @@ public class ServerCommunicator{
         ObserverCommunicator() {
             protocol = new HashMap<>();
 
+            protocol.put("Connected", (IResponse) (message) -> {client.changeState(States.MENU);});
             protocol.put("Created", (IResponse) (message) -> {client.changeState(States.LOBBY);});
             protocol.put("Joined", (IResponse) (message) -> {client.changeState(States.LOBBY);});
             protocol.put("Left", (IResponse) (message) -> {client.changeState(States.MENU);});

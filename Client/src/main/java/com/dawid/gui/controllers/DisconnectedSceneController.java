@@ -12,7 +12,6 @@ public class DisconnectedSceneController extends BaseController{
     protected void onConnectButtonClick() {
         try {
             client.connect("localhost", 5005);
-            SceneManager.setScene(States.MENU);
         } catch (IOException e) {
             print("Failed to connect to the server");
         }

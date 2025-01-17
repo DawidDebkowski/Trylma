@@ -42,7 +42,6 @@ public class LobbyBox extends HBox {
         Button joinButton = new Button("Join");
         joinButton.setOnAction(event -> {
             client.getServerCommunicator().join(id);
-            SceneManager.setScene(States.LOBBY);
         });
 
         getChildren().addAll(name, playersLabel, variantLabel, joinButton);

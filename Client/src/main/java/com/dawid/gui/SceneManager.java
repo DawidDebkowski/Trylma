@@ -37,9 +37,16 @@ public class SceneManager {
         stage.show();
     }
 
-    public static IController setScene(States name) {
+    /**
+     * Changing client states (main scenes) should only be done by
+     * the server and the client. Don't call this in the controllers.
+     * Changes the scene based on the state.
+     * @param state state that has a scene
+     * @return controller of the new scene
+     */
+    public static IController setScene(States state) {
         try {
-            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(scenes.get(name)));
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(scenes.get(state)));
             Scene scene = new Scene(loader.load());
             IController controller = loader.getController();
             controller.setClient(client);

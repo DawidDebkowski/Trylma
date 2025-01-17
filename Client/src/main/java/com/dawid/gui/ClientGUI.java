@@ -79,7 +79,9 @@ public class ClientGUI extends Application implements IClient {
 
     @Override
     public void changeState(States newState) {
-        SceneManager.setScene(newState);
+        Platform.runLater(() -> {
+            SceneManager.setScene(newState);
+        });
     }
 
     @Override
