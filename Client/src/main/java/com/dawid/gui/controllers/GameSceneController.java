@@ -117,6 +117,7 @@ public class GameSceneController extends BaseController {
     @FXML
     public void onSkipButtonClicked(ActionEvent event) {
         gameEngine.sendMoveToServer(new Coordinates(-1,-1), new Coordinates(-1,-1));
+        event.consume();
     }
 
     public GameEngine getGameEngine() {

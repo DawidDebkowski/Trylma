@@ -18,8 +18,6 @@ public class GameEngine {
     int playerID;
     // List of currently playing playerIDs
     List<Player> players;
-    // Index of the player that is currently moving in the players list
-    int movingPlayerIndex = 0;
     // Board type
     Board board;
     // Game Variant

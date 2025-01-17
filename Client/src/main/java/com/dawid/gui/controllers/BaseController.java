@@ -1,7 +1,6 @@
 package com.dawid.gui.controllers;
 
 import com.dawid.IClient;
-import com.dawid.gui.ClientGUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 

@@ -3,9 +3,7 @@ package com.dawid.gui.components;
 import com.dawid.IClient;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.States;
-import com.dawid.gui.ClientGUI;
-import com.dawid.gui.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -41,7 +39,7 @@ public class LobbyBox extends HBox {
         Label variantLabel = new Label("Variant: " + variant.toString());
 
         Button joinButton = new Button("Join");
-        joinButton.setOnAction(event -> {
+        joinButton.setOnAction((ActionEvent event) -> {
             client.getServerCommands().join(id);
         });
 

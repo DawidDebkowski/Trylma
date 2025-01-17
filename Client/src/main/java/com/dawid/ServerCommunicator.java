@@ -25,7 +25,7 @@ public class ServerCommunicator implements IServerCommands {
         connect(serverAdress, port);
         initObserver();
     }
-    public ServerCommunicator(IServerClient client) throws IOException {
+    public ServerCommunicator(IServerClient client) {
         setClient(client);
     }
     public ServerCommunicator() {}
@@ -48,7 +48,7 @@ public class ServerCommunicator implements IServerCommands {
         ObserverCommunicator observer = new ObserverCommunicator();
         Thread observerThread = new Thread(observer);
         observerThread.start();
-        System.out.printf("Connected and listening\n");
+        System.out.print("Connected and listening\n");
     }
     /**
      * Right now the thread throws connection error. I don't know how to fix it.
@@ -77,10 +77,10 @@ public class ServerCommunicator implements IServerCommands {
         ObserverCommunicator() {
             protocol = new HashMap<>();
 
-            protocol.put("Connected", (IResponse) (message) -> {client.changeState(States.MENU);});
-            protocol.put("Created", (IResponse) (message) -> {client.changeState(States.LOBBY);});
-            protocol.put("Joined", (IResponse) (message) -> {client.changeState(States.LOBBY);});
-            protocol.put("Left", (IResponse) (message) -> {client.changeState(States.MENU);});
+            protocol.put("Connected", (message) -> client.changeState(States.MENU));
+            protocol.put("Created", (message) -> client.changeState(States.LOBBY));
+            protocol.put("Joined", (message) -> client.changeState(States.LOBBY));
+            protocol.put("Left", (message) -> client.changeState(States.MENU));
             protocol.put("Started", this::receiveStart);
             protocol.put("Moved:", this::receiveMove);
             protocol.put("Lobbies:", this::receiveLobbies);
@@ -128,7 +128,7 @@ public class ServerCommunicator implements IServerCommands {
                 try {
                     String message = in.readLine();
                     if(message == null){continue;}
-                    Platform.runLater(() -> {System.out.println("Received: " + message);});
+                    Platform.runLater(() -> System.out.println("Received: " + message));
                     String[] args = message.split(" ");
                     if(args.length == 0){
                         return;
