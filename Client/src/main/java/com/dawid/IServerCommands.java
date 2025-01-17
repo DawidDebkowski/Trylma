@@ -2,6 +2,9 @@ package com.dawid;
 
 import java.io.IOException;
 
+/**
+ * Client / Frontend to Server communication
+ */
 public interface IServerCommands {
     /**
      * Connect to the server

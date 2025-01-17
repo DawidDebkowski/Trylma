@@ -7,6 +7,7 @@ import com.dawid.game.Variant;
 import java.util.Collection;
 
 /**
+ * Server to Client communication.
  * Specifies commands that the server sends to the player.
  */
 public interface IServerClient {

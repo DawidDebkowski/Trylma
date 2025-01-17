@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 /**
+ * Fronted to client communication.
  * It should be used by frontend components.
  * So you do not call server-only methods.
  */

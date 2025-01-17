@@ -10,13 +10,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/*** TODO: read this
- * Singleton (not yet, to be refactored) to change scenes.
- *
- * Klasa powstała, żeby zmieniać pliki .fxml w jakiś sensowy i zorganizowany sposób.
- * Napisana w połowie przez gpt, mam nadzieje, że usuniemy ten komentarz w przyszłych commitach i nikt go nie zobaczy.
- * Klasa sama w sobie działa dobrze, wywołanie można zobaczyć w StartController.
- *
+/**
+ * Class to change scenes.
+ * It is mostly based on the States enum.
  */
 public class SceneManager {
     private static Stage stage;
@@ -52,6 +48,7 @@ public class SceneManager {
             controller.setClient(client);
             controller.lateInitialize();
             stage.setScene(scene);
+//            controller.refresh();
 //            stage.sizeToScene();
             return controller;
         } catch (IOException e) {
