@@ -45,7 +45,7 @@ public class ClientGUI extends Application implements IServerClient, IClient {
         sy = Integer.parseInt(fromCoordinates[1]);
         fx = Integer.parseInt(toCoordinates[0]);
         fy = Integer.parseInt(toCoordinates[1]);
-        gameEngine.makeMove(player, sx, sy, fx, fy);
+        gameEngine.makeMoveFromServer(player, sx, sy, fx, fy);
         if(controller != null)
             controller.refresh();
         System.out.println("Moved on client " + from + " to " + to);
@@ -80,12 +80,14 @@ public class ClientGUI extends Application implements IServerClient, IClient {
     }
 
     private void launchGame(int myID, Board board, Variant variant, int playerCount) {
+        IVariantController vc = null;
         if(variant == Variant.NORMAL) {
-            gameEngine = new GameEngine(board, new NormalVariantController(board,playerCount), myID);
+            vc = new NormalVariantController(board,playerCount);
         }
         else {
-            gameEngine = new GameEngine(board, new NormalVariantController(board, playerCount), myID);
+            vc = new NormalVariantController(board,playerCount);
         }
+        gameEngine = new GameEngine(board, vc, myID, this);
         Platform.runLater(() -> {
             controller = SceneManager.setScene(States.PLAYING);
             assert controller != null;

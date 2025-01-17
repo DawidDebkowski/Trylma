@@ -32,7 +32,7 @@ public class GameSceneController extends BaseController {
 
     private GridPane mainGrid;
     private GUIField[][] fields;
-    private Collection<GUIField> lastHightlited;
+    private Collection<GUIField> lastHighlighted;
 
     public static Map<Integer, Color> playerColors;
 
@@ -54,7 +54,6 @@ public class GameSceneController extends BaseController {
         playerColors.put(6, Color.PINK);
         initialiseBoard(client.getBoard());
         mainBorderPane.setCenter(mainGrid);
-//        mainBorderPane.setPadding(new Insets(0));
         mainGrid.setAlignment(Pos.CENTER);
         mainGrid.setHgap(0);
         mainGrid.setVgap(10);
@@ -100,32 +99,24 @@ public class GameSceneController extends BaseController {
     }
 
     public void highlight(Collection<Coordinates> coordinates) {
-        if(lastHightlited != null) {
-            for (GUIField guiField : lastHightlited) {
+        if(lastHighlighted != null) {
+            for (GUIField guiField : lastHighlighted) {
                 guiField.refresh();
             }
         }
-        lastHightlited = new ArrayList<>();
+        lastHighlighted = new ArrayList<>();
         for (Coordinates c : coordinates) {
             GUIField guiField = fields[c.getRow()][c.getColumn()];
             if(guiField != null) {
                 guiField.setFill(Color.BLUEVIOLET.brighter());
-                lastHightlited.add(guiField);
+                lastHighlighted.add(guiField);
             }
         }
     }
 
     @FXML
     public void onSkipButtonClicked(ActionEvent event) {
-        if(gameEngine.isYourTurn()) {
-            issueMove(-1, -1,-1, -1);
-        }
-    }
-
-    public void issueMove(int sx, int sy, int fx, int fy) {
-        client.getServerCommands().move(sx, sy, fx, fy);
-        getGameEngine().setMyTurn(false);
-        refresh();
+        gameEngine.sendMoveToServer(new Coordinates(-1,-1), new Coordinates(-1,-1));
     }
 
     public GameEngine getGameEngine() {

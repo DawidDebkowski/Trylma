@@ -94,7 +94,7 @@ public class GUIField extends Circle {
                 System.out.println("Moved from field " + sourceFieldId + " to field " + row + "-" + column);
                 boolean canMove = controller.getGameEngine().tryMove(Coordinates.fromString(sourceFieldId), new Coordinates(row, column));
                 if(canMove) {
-                    controller.issueMove(c.getRow(), c.getColumn(), row, column);
+                    controller.getGameEngine().sendMoveToServer(c, new Coordinates(row, column));
                 }
                 success = true;
             }
