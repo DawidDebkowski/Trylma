@@ -1,11 +1,11 @@
-package com.dawid.gui;
+package com.dawid.gui.controllers;
 
 import com.dawid.game.Board;
 import com.dawid.game.Coordinates;
 import com.dawid.game.GameEngine;
+import com.dawid.gui.components.GUIField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -32,9 +32,9 @@ public class GameSceneController extends BaseController {
 
     private GridPane mainGrid;
     private GUIField[][] fields;
-    private Collection<GUIField> lastHightlited;
+    private Collection<GUIField> lastHighlighted;
 
-    static Map<Integer, Color> playerColors;
+    public static Map<Integer, Color> playerColors;
 
     private GameEngine gameEngine;
 
@@ -54,12 +54,9 @@ public class GameSceneController extends BaseController {
         playerColors.put(6, Color.PINK);
         initialiseBoard(client.getBoard());
         mainBorderPane.setCenter(mainGrid);
-//        mainBorderPane.setPadding(new Insets(0));
         mainGrid.setAlignment(Pos.CENTER);
         mainGrid.setHgap(0);
         mainGrid.setVgap(10);
-        client.stageToScene();
-
     }
 
     public void initialiseBoard(Board board) {
@@ -102,32 +99,25 @@ public class GameSceneController extends BaseController {
     }
 
     public void highlight(Collection<Coordinates> coordinates) {
-        if(lastHightlited != null) {
-            for (GUIField guiField : lastHightlited) {
+        if(lastHighlighted != null) {
+            for (GUIField guiField : lastHighlighted) {
                 guiField.refresh();
             }
         }
-        lastHightlited = new ArrayList<>();
+        lastHighlighted = new ArrayList<>();
         for (Coordinates c : coordinates) {
             GUIField guiField = fields[c.getRow()][c.getColumn()];
             if(guiField != null) {
                 guiField.setFill(Color.BLUEVIOLET.brighter());
-                lastHightlited.add(guiField);
+                lastHighlighted.add(guiField);
             }
         }
     }
 
     @FXML
     public void onSkipButtonClicked(ActionEvent event) {
-        if(gameEngine.isYourTurn()) {
-            issueMove(-1, -1,-1, -1);
-        }
-    }
-
-    void issueMove(int sx, int sy, int fx, int fy) {
-        client.getSocket().move(sx, sy, fx, fy);
-        getGameEngine().setMyTurn(false);
-        refresh();
+        gameEngine.sendMoveToServer(new Coordinates(-1,-1), new Coordinates(-1,-1));
+        event.consume();
     }
 
     public GameEngine getGameEngine() {

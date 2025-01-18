@@ -1,7 +1,8 @@
-package com.dawid.states;
+package com.dawid.cli.states;
 
-import com.dawid.Commands;
-import com.dawid.IClient;
+import com.dawid.States;
+import com.dawid.cli.Commands;
+import com.dawid.cli.ICLIClient;
 
 import java.util.EnumMap;
 
@@ -9,12 +10,12 @@ import java.util.EnumMap;
  * All States inherit from state. It implements basic commands like help.
  * It also handles executing the command.
  */
-public class State implements ClientState {
+public class StateCli implements CliClientState {
     protected States name;
     EnumMap<Commands, ICommand> commands;
-    IClient client;
+    ICLIClient client;
 
-    public State(IClient cli){
+    public StateCli(ICLIClient cli){
         client = cli;
         commands = new EnumMap<>(Commands.class);
 

@@ -1,12 +1,12 @@
-package com.dawid.gui;
+package com.dawid.gui.components;
 
 import com.dawid.game.Coordinates;
 import com.dawid.game.Field;
+import com.dawid.gui.controllers.GameSceneController;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -94,7 +94,7 @@ public class GUIField extends Circle {
                 System.out.println("Moved from field " + sourceFieldId + " to field " + row + "-" + column);
                 boolean canMove = controller.getGameEngine().tryMove(Coordinates.fromString(sourceFieldId), new Coordinates(row, column));
                 if(canMove) {
-                    controller.issueMove(c.getRow(), c.getColumn(), row, column);
+                    controller.getGameEngine().sendMoveToServer(c, new Coordinates(row, column));
                 }
                 success = true;
             }

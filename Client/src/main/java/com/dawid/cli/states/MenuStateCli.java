@@ -1,10 +1,11 @@
-package com.dawid.states;
+package com.dawid.cli.states;
 
-import com.dawid.Commands;
-import com.dawid.IClient;
+import com.dawid.States;
+import com.dawid.cli.Commands;
+import com.dawid.cli.ICLIClient;
 
-public class MenuState extends State {
-    public MenuState(IClient cli) {
+public class MenuStateCli extends StateCli {
+    public MenuStateCli(ICLIClient cli) {
         super(cli);
         name = States.MENU;
 
@@ -14,17 +15,17 @@ public class MenuState extends State {
     }
 
     private void join(String[] args) {
-        client.getSocket().join(Integer.parseInt(args[1]));
+        client.getServerCommunicator().join(Integer.parseInt(args[1]));
 //        client.changeState(new PlayingState(client));
     }
 
     private void create(String[] args) {
-        client.getSocket().create();
+        client.getServerCommunicator().create();
 //        client.changeState(new PlayingState(client));
     }
 
     private void exit(String[] args) {
         client.exit();
-        client.getSocket().disconnect();
+        client.getServerCommunicator().disconnect();
     }
 }

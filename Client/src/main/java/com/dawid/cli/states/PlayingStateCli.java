@@ -1,11 +1,12 @@
-package com.dawid.states;
+package com.dawid.cli.states;
 
-import com.dawid.Commands;
-import com.dawid.IClient;
+import com.dawid.States;
+import com.dawid.cli.Commands;
+import com.dawid.cli.ICLIClient;
 
-public class PlayingState extends State{
+public class PlayingStateCli extends StateCli {
 
-    public PlayingState(IClient cli) {
+    public PlayingStateCli(ICLIClient cli) {
         super(cli);
         name = States.PLAYING;
 
@@ -25,6 +26,6 @@ public class PlayingState extends State{
 
 
     private void disconnect(String[] args) {
-        client.getSocket().leaveLobby();
+        client.getServerCommunicator().leaveLobby();
     }
 }

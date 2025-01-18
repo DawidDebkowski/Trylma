@@ -1,6 +1,7 @@
 package com.dawid.gui;
 
-import com.dawid.states.States;
+import com.dawid.States;
+import com.dawid.gui.controllers.IController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -9,20 +10,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/*** TODO: read this
- * Singleton (not yet, to be refactored) to change scenes.
- *
- * Klasa powstała, żeby zmieniać pliki .fxml w jakiś sensowy i zorganizowany sposób.
- * Napisana w połowie przez gpt, mam nadzieje, że usuniemy ten komentarz w przyszłych commitach i nikt go nie zobaczy.
- * Klasa sama w sobie działa dobrze, wywołanie można zobaczyć w StartController.
- *
+/**
+ * Class to change scenes.
+ * It is mostly based on the States enum.
  */
 public class SceneManager {
     private static Stage stage;
     private static final Map<States, String> scenes = new HashMap<>();
-    private static GUI client;
+    private static ClientGUI client;
 
-    public static void initialize(Stage primaryStage, GUI client) {
+    public static void initialize(Stage primaryStage, ClientGUI client) {
         SceneManager.client = client;
         stage = primaryStage;
 
@@ -36,14 +33,22 @@ public class SceneManager {
         stage.show();
     }
 
-    public static IController setScene(States name) {
+    /**
+     * Changing client states (main scenes) should only be done by
+     * the server and the client. Don't call this in the controllers.
+     * Changes the scene based on the state.
+     * @param state state that has a scene
+     * @return controller of the new scene
+     */
+    public static IController setScene(States state) {
         try {
-            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(scenes.get(name)));
+            FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(scenes.get(state)));
             Scene scene = new Scene(loader.load());
             IController controller = loader.getController();
             controller.setClient(client);
             controller.lateInitialize();
             stage.setScene(scene);
+//            controller.refresh();
 //            stage.sizeToScene();
             return controller;
         } catch (IOException e) {

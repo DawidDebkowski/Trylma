@@ -1,5 +1,8 @@
 package com.dawid.game;
 
+import com.dawid.IClient;
+import com.dawid.gui.ClientGUI;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,57 +10,32 @@ import java.util.List;
 /**
  * This class will control how the game is played.
  * It combines a board and a variant to make a game.
- *
- * Notatka: Licze ze ta klasa wyjasnia sama siebie komentarzami
- * ale zalozenie bylo takie ze bedzie kontrolowac przebieg gry
- *
- * niestety przez moje niezrouzmienie DavidStarBoard wyszlo glupio z koordynatami ale wedlug mnie
- * mozemy z tym pracowac, bo wiekszosc kodu jest na Field, wiec nic nie szkodzi
- *
- * Jak sobie to odpalisz to zobaczysz rozne boardy wyprintowane, jak poczytasz kod to zobaczysz o co chodzi
- *
- * Ogolnie do zrobienia jest jakiegos rodzaju mainLoop() gry, zeby no po prostu sie toczyla xd
- * tryMove() i getPossibleMoves() trzeba podlaczyc do planszy, ktorej nie ma na razie
- * ale tez ja trzeba zmienic
- * no i wtedy te metody powinny operowac na tych samych rodzajach koordynatow
- *
- * Na serwerze sa chyba jakies zmiany ale juz nie pamietam, ale raczej nieznaczace
- *
- * Notatka: a no i jest w fieldzie .visited, ktore jest czyms w stylu tablicy visited[] w
- * cudownych algorytmach grafowych zeby sie nie zapetlic bo mozna duzo razy trafic
- * na to samo pole
- * uznalem ze jak bedzie w fieldzie to bedzie to duze uproszczenie, bo nie wiedzialem do konca gdzie
- * trzymac informacje w tym czy pole zostalo odwiedzone czy nie
- * i mysle ze to jest okej pozdrawiam cieplutko z rodzina i powodzenia jutro
- *
- * sorry za chaos i wgl ale jakos programowanie obiektowe mnie czasami przytłacza
  */
 public class GameEngine {
     /**
      * ID of player that is using this controller
-      */
-
+    */
     int playerID;
     // List of currently playing playerIDs
     List<Player> players;
-    // Index of the player that is currently moving in the players list
-    int movingPlayerIndex = 0;
     // Board type
     Board board;
     // Game Variant
-    IMoveController moveController;
+    IVariantController variantController;
+    IClient client;
 
     boolean isMyTurn = false;
 
-    public GameEngine(Board board, IMoveController moveController, int playerNumber) {
+    public GameEngine(Board board, IVariantController variantController, int playerNumber, IClient client) {
         this.board = board;
-        this.moveController = moveController;
+        this.variantController = variantController;
         this.playerID = playerNumber;
+        this.client = client;
     }
 
     public void startGame() {
-        players = moveController.setupPlayers();
-        moveController.setupPawns(players);
+        players = variantController.setupPlayers();
+        variantController.setupPawns(players);
         board.printBoard();
     }
 
@@ -68,38 +46,64 @@ public class GameEngine {
         return isMyTurn;
     }
 
+    /**
+     * Sets turn
+     * @param myTurn new value
+     */
     public void setMyTurn(boolean myTurn) {
         isMyTurn = myTurn;
     }
 
     /**
      * It will just (without checking anything) make that move.
-     * Should only be used if the server tells you to move, not for local moves.
-     * Increments movingPlayerIndex
+     * -1 -1 means turn skip.
+     * The board Fields must exist.
+     * Checks for win
      */
-    public void makeMove(int player, int sx, int sy, int fx, int fy)  {
-        if(sx == -1 && sy == -1) {
+    public void makeMoveFromServer(int player, int sx, int sy, int fx, int fy)  {
+        if(isSkipMove(new Coordinates(sx, sy), new Coordinates(fx, fy))) {
             System.out.println("[GameEngine]:" + player + " skipped move");
             return;
         }
-        moveController.movePawn(player, sx, sy, fx, fy);
+        variantController.movePawn(player, sx, sy, fx, fy);
 
-        Player winner = moveController.checkWin();
+        Player winner = variantController.checkWin();
         if(winner != null) {
             System.out.println("[GameEngine]:" + player + " won");
         }
+    }
+
+    /**
+     * Sends a move request to the server if the move is valid.
+     * Validates beforehand.
+     * @param from start
+     * @param to end
+     */
+    public void sendMoveToServer(Coordinates from, Coordinates to) {
+        if(!isYourTurn()) {return;}
+        if(!isSkipMove(from, to)) {
+            if(!tryMove(from, to)) {return;}
+        }
+        // if it is my turn AND (it is a skip move OR (it isn't a skip move AND it is valid))
+        setMyTurn(false);
+        client.getServerCommands().move(from.getRow(), from.getColumn(), to.getRow(), to.getColumn());
     }
 
     public int getMyPlayerID() {
         return playerID;
     }
 
+    private boolean isSkipMove(Coordinates from, Coordinates to) {
+        return from.getRow() == -1 && to.getRow() == -1;
+    }
 
     /**
      * Validate local moves before sending them to the server.
      * It should be called when a player selects a place to move their pawn to.
      * It shouldn't be used to move the pawn - only the server's response should do that.
-     * @return
+     * @param from start
+     * @param to end
+     * @return is this move possible
      */
     public boolean tryMove(Coordinates from, Coordinates to) {
         if(!isYourTurn()) return false;
@@ -108,25 +112,24 @@ public class GameEngine {
 
     /**
      * Function for the GUI to know if the move can be made regardless of turn order
-     * @param from
-     * @param to
-     * @return
+     * @param from start
+     * @param to end
+     * @return is this move possible
      */
     public boolean isMovePossible(Coordinates from, Coordinates to) {
         Field startField = board.getField(from.getRow(), from.getColumn());
         Field finishField = board.getField(to.getRow(), to.getColumn());
-        return moveController.getPossibleMoves(startField).contains(finishField);
+        return variantController.getPossibleMoves(startField).contains(finishField);
     }
 
     /**
-     * To be finished and integrated with GUI using a good coordinate system.
      * Returns a collection of all the possible moves from a given field.
-     * @param c
-     * @return
+     * @param c start coordinates
+     * @return collection of possible move coordinates
      */
     public Collection<Coordinates> getPossibleMoves(Coordinates c) {
         Field field = board.getField(c.getRow(), c.getColumn());
-        Collection<Field> possibleMoves = moveController.getPossibleMoves(field);
+        Collection<Field> possibleMoves = variantController.getPossibleMoves(field);
         Collection<Coordinates> possibleMovesList = new ArrayList<>();
         for(Field possibleMove : possibleMoves) {
             possibleMovesList.add(board.getCoordinates(possibleMove));
@@ -139,7 +142,7 @@ public class GameEngine {
      */
     public void showPossibleMoves(Coordinates c) {
         Field field = board.getField(c.getRow(), c.getColumn());
-        Collection<Field> possibleMoves = moveController.getPossibleMoves(field);
+        Collection<Field> possibleMoves = variantController.getPossibleMoves(field);
         for (Field f : possibleMoves) {
             f.setPawn(9);
         }
@@ -148,7 +151,7 @@ public class GameEngine {
     // ludzki test getPossibleMoves()
     public static void main(String[] args) {
         DavidStarBoard board = new DavidStarBoard();
-        GameEngine gameEngine = new GameEngine(board, new NormalMoveController(board, 6), 0);
+        GameEngine gameEngine = new GameEngine(board, new NormalVariantController(board, 6), 0, new ClientGUI());
         gameEngine.startGame();
         board.debugPrint();
         board.getField(6, 10).setPawn(7);

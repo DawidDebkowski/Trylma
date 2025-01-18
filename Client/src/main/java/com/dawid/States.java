@@ -1,4 +1,4 @@
-package com.dawid.states;
+package com.dawid;
 
 public enum States {
     DISCONNECTED, LOBBY, PLAYING, MENU

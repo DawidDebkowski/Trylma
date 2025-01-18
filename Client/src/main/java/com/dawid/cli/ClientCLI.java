@@ -1,25 +1,29 @@
-package com.dawid;
+package com.dawid.cli;
 
+import com.dawid.IServerClient;
+import com.dawid.IServerCommands;
+import com.dawid.ServerCommunicator;
+import com.dawid.States;
 import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.states.ClientState;
-import com.dawid.states.CommandException;
+import com.dawid.cli.states.CliClientState;
+import com.dawid.cli.states.CommandException;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
-public class CLI implements IClient {
-    private ClientState clientState;
+public class ClientCLI implements IServerClient, ICLIClient {
+    private CliClientState cliClientState;
     private final ServerCommunicator socket;
     private final Scanner scanner;
     private final Board board;
 
     boolean isRunning = true;
 
-    public CLI(ServerCommunicator server) {
+    public ClientCLI(ServerCommunicator server) {
         scanner = new Scanner(System.in);
         this.socket = server;
         socket.setClient(this);
@@ -27,6 +31,7 @@ public class CLI implements IClient {
         board = new DavidStarBoard();
     }
 
+    @Override
     public void mainLoop() {
         println("Welcome to the Trylma game!");
         println("Type \"help\" for a list of commands or just connect and start playing!");
@@ -34,7 +39,7 @@ public class CLI implements IClient {
             prompt();
             final String[] args = parseInput(scanner.nextLine());
             try {
-                clientState.executeCommand(args);
+                cliClientState.executeCommand(args);
             } catch (CommandException e) {
                 println(e.getMessage());
                 continue;
@@ -45,8 +50,9 @@ public class CLI implements IClient {
     /**
      * Used to reset the prompt after server message.
      */
+    @Override
     public void prompt() {
-        System.out.printf("[%s]>", clientState.getState());
+        System.out.printf("[%s]>", cliClientState.getState());
     }
 
     @Override
@@ -57,6 +63,11 @@ public class CLI implements IClient {
 
     @Override
     public void myTurn() {
+
+    }
+
+    @Override
+    public void setMyTurn() {
 
     }
 
@@ -81,10 +92,11 @@ public class CLI implements IClient {
     }
 
     @Override
-    public ServerCommunicator getSocket() {
+    public IServerCommands getServerCommunicator() {
         return socket;
     }
 
+    @Override
     public void exit() {
         isRunning = false;
     }
@@ -100,10 +112,13 @@ public class CLI implements IClient {
     }
 
     @Override
-    public void changeState(ClientState newState) {
-        clientState = newState;
+    public void changeState(States state) {
+        // it doesnt work anyway after the refactor but
+        // to make it work we would need to create a new CliClientState
+        // here based on state variable
     }
 
+    @Override
     public String[] parseInput(String in) {
         if (in.isEmpty()) {
             return new String[0];
@@ -111,6 +126,7 @@ public class CLI implements IClient {
         return in.split(" ");
     }
 
+    @Override
     public void println(String message) {
         System.out.println(message);
     }

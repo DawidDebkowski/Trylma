@@ -1,6 +1,7 @@
-package com.dawid.gui;
+package com.dawid.gui.controllers;
 
-import com.dawid.states.States;
+import com.dawid.States;
+import com.dawid.gui.SceneManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 
@@ -11,7 +12,6 @@ public class DisconnectedSceneController extends BaseController{
     protected void onConnectButtonClick() {
         try {
             client.connect("localhost", 5005);
-            SceneManager.setScene(States.MENU);
         } catch (IOException e) {
             print("Failed to connect to the server");
         }

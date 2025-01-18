@@ -1,4 +1,4 @@
-package com.dawid.states;
+package com.dawid.cli.states;
 
 public class CommandException extends Exception {
     public CommandException(String message) {

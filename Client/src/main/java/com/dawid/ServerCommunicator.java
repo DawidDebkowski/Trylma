@@ -4,8 +4,6 @@ import com.dawid.game.Board;
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.LobbyInfo;
 import com.dawid.game.Variant;
-import com.dawid.states.MenuState;
-import com.dawid.states.LobbyState;
 import javafx.application.Platform;
 
 import java.io.BufferedReader;
@@ -16,25 +14,29 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ServerCommunicator{
+public class ServerCommunicator implements IServerCommands {
     private  Socket socket;
     private  BufferedReader in;
     private  PrintWriter out;
-    private IClient client;
+    private IServerClient client;
     protected boolean connected;
 
     public ServerCommunicator(String serverAdress, int port) throws IOException {
         connect(serverAdress, port);
         initObserver();
     }
+    public ServerCommunicator(IServerClient client) {
+        setClient(client);
+    }
     public ServerCommunicator() {}
     protected void setInputOutput(BufferedReader in, PrintWriter out) {
         this.in = in;
         this.out = out;
     }
-    public void setClient(IClient client) {
+    public void setClient(IServerClient client) {
         this.client = client;
     }
+    @Override
     public void connect(String serverAdress, int port) throws IOException {
         socket = new Socket(serverAdress, port);
         setInputOutput(new BufferedReader(new InputStreamReader(socket.getInputStream())),
@@ -46,11 +48,12 @@ public class ServerCommunicator{
         ObserverCommunicator observer = new ObserverCommunicator();
         Thread observerThread = new Thread(observer);
         observerThread.start();
-        System.out.printf("Connected and listening\n");
+        System.out.print("Connected and listening\n");
     }
     /**
      * Right now the thread throws connection error. I don't know how to fix it.
      */
+    @Override
     public void disconnect() {
         connected = false;
         try {
@@ -74,9 +77,10 @@ public class ServerCommunicator{
         ObserverCommunicator() {
             protocol = new HashMap<>();
 
-            protocol.put("Created", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
-            protocol.put("Joined", (IResponse) (message) -> {client.changeState(new LobbyState(client));});
-            protocol.put("Left", (IResponse) (message) -> {client.changeState(new MenuState(client));});
+            protocol.put("Connected", (message) -> client.changeState(States.MENU));
+            protocol.put("Created", (message) -> client.changeState(States.LOBBY));
+            protocol.put("Joined", (message) -> client.changeState(States.LOBBY));
+            protocol.put("Left", (message) -> client.changeState(States.MENU));
             protocol.put("Started", this::receiveStart);
             protocol.put("Moved:", this::receiveMove);
             protocol.put("Lobbies:", this::receiveLobbies);
@@ -93,7 +97,7 @@ public class ServerCommunicator{
         }
 
         private void receiveTurn(String[] args) {
-            client.myTurn();
+            client.setMyTurn();
         }
 
         private void receiveMove(String[] args) {
@@ -124,7 +128,7 @@ public class ServerCommunicator{
                 try {
                     String message = in.readLine();
                     if(message == null){continue;}
-                    Platform.runLater(() -> {System.out.println("Received: " + message);});
+                    Platform.runLater(() -> System.out.println("Received: " + message));
                     String[] args = message.split(" ");
                     if(args.length == 0){
                         return;
@@ -134,7 +138,6 @@ public class ServerCommunicator{
                     if(protocol.containsKey(args[0])){
                         protocol.get(args[0]).execute(args);
                     }
-                    client.prompt();
                 } catch (IOException e) {
                     System.out.println("Connection error");
                 }
@@ -142,33 +145,36 @@ public class ServerCommunicator{
         }
     }
 
-    public boolean move(int sx, int sy, int fx, int fy) {
+    @Override
+    public void move(int sx, int sy, int fx, int fy) {
         out.println("MOVE" + " " + sx + "_" + sy + " " + fx + "_" + fy);
-        return true;
     }
 
-    public boolean join(int lobbyID) {
+    @Override
+    public void join(int lobbyID) {
         out.println("JOIN" + " " + lobbyID);
-        return true;
     }
 
+    @Override
     public void leaveLobby() {
         out.println("LEAVE");
     }
 
-    public boolean startGame() {
+    @Override
+    public void startGame() {
         out.println("START");
-        return true;
     }
 
-    public boolean create() {
+    @Override
+    public void create() {
         out.println("CREATE");
-        return true;
     }
 
+    @Override
     public void getLobbyInfo() {
         out.println("LOBBYINFO");
     }
+    @Override
     public void setVariant(String variant) {
         out.println("VARIANT " + variant);
     }
