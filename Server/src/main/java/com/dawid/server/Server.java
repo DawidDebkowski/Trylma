@@ -55,7 +55,6 @@ public class Server {
                 final Player player = new Player(socket.getOutputStream());
                 final CommandHandler clientInputHandler = CommandHandler.create(player);
                 Scanner in = new Scanner(socket.getInputStream());
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 player.sendMessage("Connected to " + socket.getInetAddress().getHostAddress());
                 while (in.hasNextLine()) {
                     clientInputHandler.exec(in.nextLine());
