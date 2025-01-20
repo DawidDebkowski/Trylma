@@ -21,6 +21,8 @@ public class CommandExecutor implements CommandHandler {
         commands.put("START", this::startGame);
         commands.put("LOBBYINFO", this::sendLobbyInfo);
         commands.put("VARIANT", this::setVariant);
+        //TODO: add this command on client side
+        commands.put("MAX_PLAYERS", this::setMaxPlayers);
     }
 
 
@@ -95,6 +97,10 @@ public class CommandExecutor implements CommandHandler {
     private void setVariant(String[] args) {
         System.out.println("Setting variant");
         player.getLobby().setVariant(Variant.getVariantByName(args[1]));
+    }
+    private void setMaxPlayers(String[] args) {
+        System.out.println("Setting max players");
+        player.getLobby().setMaxPlayers(Integer.parseInt(args[1]));
     }
 
 }
