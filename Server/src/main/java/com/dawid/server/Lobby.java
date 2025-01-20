@@ -13,7 +13,7 @@ public class Lobby {
     private Board board;
     private TurnController turnController;
     private final List<Player> players;
-    private int maxPlayers; //TODO: add to lobbyinfo
+    private int maxPlayers;
     private GameVariant variant;
 
     public Lobby(List<Player> players) {
@@ -158,5 +158,8 @@ public class Lobby {
      */
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+    public int getMaxPlayers() {
+        return maxPlayers;
     }
 }

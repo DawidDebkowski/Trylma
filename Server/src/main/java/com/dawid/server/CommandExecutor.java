@@ -48,8 +48,10 @@ public class CommandExecutor implements CommandHandler {
         player.sendMessage("Lobbies:");
         for (Lobby lobby : lobbies) {
             //Format "Number players variant"
-            player.sendMessage(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant().getName());
-            System.out.println(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant().getName());
+            player.sendMessage(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant().getName()
+                    + " " + lobby.getMaxPlayers());
+            System.out.println(GamesManager.getInstance().getLobbyId(lobby) + " " + lobby.getPlayerCount() + " " + lobby.getVariant().getName()
+                    + " " + lobby.getMaxPlayers());
         }
         player.sendMessage("END");
         System.out.println("End of lobbies");

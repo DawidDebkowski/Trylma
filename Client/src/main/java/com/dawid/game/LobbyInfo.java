@@ -1,15 +1,15 @@
 package com.dawid.game;
 
 public class LobbyInfo {
-    private int id;
-    private int currentPlayers;
-    private int maxPlayers;
-    private Variant variant;
+    final private int id;
+    final private int currentPlayers;
+    final private int maxPlayers;
+    final private Variant variant;
 
-    public LobbyInfo(int id, int currentPlayers, Variant variant) {
+    public LobbyInfo(int id, int currentPlayers, Variant variant, int maxPlayers) {
         this.id = id;
         this.currentPlayers = currentPlayers;
-        this.maxPlayers = 6;
+        this.maxPlayers = maxPlayers;
         this.variant = variant;
     }
 

@@ -85,6 +85,7 @@ public class ServerCommunicator implements IServerCommands {
             protocol.put("Moved:", this::receiveMove);
             protocol.put("Lobbies:", this::receiveLobbies);
             protocol.put("TURN", this::receiveTurn);
+
         }
 
         // "started" myID maxPlayers Variant
@@ -112,7 +113,7 @@ public class ServerCommunicator implements IServerCommands {
                     String line = in.readLine();
                     if(line.equals("END")) break;
                     var lobbyInfo = line.split(" ");
-                    lobbies.add(new LobbyInfo(Integer.parseInt(lobbyInfo[0]), Integer.parseInt(lobbyInfo[1]), Variant.getVariantByName(lobbyInfo[2])));
+                    lobbies.add(new LobbyInfo(Integer.parseInt(lobbyInfo[0]), Integer.parseInt(lobbyInfo[1]), Variant.getVariantByName(lobbyInfo[2]), Integer.parseInt(lobbyInfo[3])));
                     System.out.println("Received: " + line);
                 }
             } catch (IOException e) {
@@ -177,5 +178,9 @@ public class ServerCommunicator implements IServerCommands {
     @Override
     public void setVariant(String variant) {
         out.println("VARIANT " + variant);
+    }
+    @Override
+    public void setMaxPlayers(int maxPlayers) {
+        out.println("MAX_PLAYERS " + maxPlayers);
     }
 }

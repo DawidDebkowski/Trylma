@@ -58,4 +58,10 @@ public interface IServerCommands {
      * Sends current lobby's new variant
      */
     void setVariant(String variant);
+
+    /**
+     * Sets maximum number of players in the lobby
+     * @param maxPlayers max players
+     */
+    void setMaxPlayers(int maxPlayers);
 }
