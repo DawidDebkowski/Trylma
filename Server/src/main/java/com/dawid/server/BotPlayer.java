@@ -11,4 +11,9 @@ public class BotPlayer extends Player{
     public BotPlayer(OutputStream out) {
         super(out);
     }
+    @Override
+    public void makeTurn() {
+        String[] args = {"MOVE", "-1_-1", "-1_-1"};
+        getLobby().makeMove(this, args);
+    }
 }

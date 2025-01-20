@@ -2,8 +2,6 @@ package com.dawid.server;
 
 import com.dawid.game.*;
 
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -66,7 +64,6 @@ public class Lobby {
         // make bots to the desired number of players
         for(int i=0;i<maxPlayers-getPlayerCount();i++) {
             BotPlayer bot = new BotPlayer(System.out);
-            CommandHandler.create(bot);
 //            Scanner in = new Scanner(socket.getInputStream());
 //            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 //            while (in.hasNextLine()) {
@@ -85,7 +82,7 @@ public class Lobby {
                 player.sendMessage("Started " + player.getNumber() + " " + getPlayerCount() + " " + getVariant());
             }
             variant.initializeGame(this);
-            turnController.getCurrrentPlayer().sendMessage("TURN");
+            turnController.getCurrrentPlayer().makeTurn();
         }
         else {
             notifyAll("ERROR: Incorrect number of players");
@@ -113,7 +110,7 @@ public class Lobby {
         }
         player.getLobby().notifyAll("Moved: Player " + player.getNumber() + " " + String.join(" ", args));
         turnController.nextTurn();
-        turnController.getCurrrentPlayer().sendMessage("TURN");
+        turnController.getCurrrentPlayer().makeTurn();
     }
     /**
      * Returns the variant of the game.

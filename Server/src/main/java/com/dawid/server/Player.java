@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 public class Player {
     private Lobby lobby;
     private Integer number;
-    private PrintWriter out;
+    protected final  PrintWriter out;
     /**
      * Creates a new player.
      * @param out The output stream to send messages to the player.
@@ -32,5 +32,8 @@ public class Player {
     }
     public Lobby getLobby() {
         return lobby;
+    }
+    public void makeTurn() {
+        sendMessage("TURN");
     }
 }
