@@ -208,5 +208,10 @@ public class DavidStarBoard implements Board {
         }
         return null;
     }
+
+    public Collection<Integer> getPossiblePlayerCounts() {
+        return correct_no_of_players;
+    }
+
 }
 

@@ -45,4 +45,6 @@ public interface Board {
     public boolean correctPlayerCount(int playerCount);
 
     public Collection<Integer> getPlayerNumbers(int playerCount);
+
+    Collection<Integer> getPossiblePlayerCounts();
 }
