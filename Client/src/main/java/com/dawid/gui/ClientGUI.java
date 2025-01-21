@@ -21,6 +21,10 @@ public class ClientGUI extends Application implements IServerClient, IClient {
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
+        stage.setOnCloseRequest((event) -> {
+            communicator.disconnect();
+            Platform.exit();
+        });
         SceneManager.initialize(stage, this);
         SceneManager.setScene(States.DISCONNECTED);
 
