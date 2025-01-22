@@ -76,9 +76,11 @@ public class Lobby {
     public void startGame() {
         // make bots to the desired number of players
         int toAdd = maxPlayers - getPlayerCount();
+        List<BotPlayer> bots = new ArrayList<>();
         for (int i = 0; i < toAdd; i++) {
             BotPlayer bot = new BotPlayer(System.out);
             addPlayer(bot);
+            bots.add(bot);
 //            Scanner in = new Scanner(socket.getInputStream());
 //            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 //            while (in.hasNextLine()) {
@@ -88,6 +90,10 @@ public class Lobby {
 
         gameEngine = new GameEngine(board, new NormalVariantController(board, maxPlayers), -1);
         gameEngine.startGame();
+
+        for(BotPlayer bot: bots) {
+            bot.setupBoard(board);
+        }
 
         if (board.correctPlayerCount(this.getPlayerCount())) {
             inGame = true;

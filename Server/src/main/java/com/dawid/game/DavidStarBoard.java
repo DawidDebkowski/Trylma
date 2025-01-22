@@ -194,6 +194,11 @@ public class DavidStarBoard implements Board {
         return height;
     }
 
+    @Override
+    public Field[][] getBoardStateCopy() {
+        return board.clone();
+    }
+
     //for testing purpose
     Map<Field, Coordinates> getCoordinatesMap() {
         return coordinates;

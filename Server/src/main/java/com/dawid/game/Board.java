@@ -40,6 +40,8 @@ public interface Board {
     public int getWidth();
     public int getHeight();
 
+    public Field[][] getBoardStateCopy();
+
     public Coordinates getCoordinates(Field field);
     /**
      * Check if the given player count is correct for this board
