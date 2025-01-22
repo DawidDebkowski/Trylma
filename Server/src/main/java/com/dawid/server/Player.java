@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 public class Player {
     private Lobby lobby;
     private Integer number;
+    private int winFieldID;
     protected final  PrintWriter out;
     /**
      * Creates a new player.
@@ -35,5 +36,13 @@ public class Player {
     }
     public void makeTurn() {
         sendMessage("TURN");
+    }
+
+    public int getWinFieldID() {
+        return winFieldID;
+    }
+
+    public void setWinFieldID(int winFieldID) {
+        this.winFieldID = winFieldID;
     }
 }

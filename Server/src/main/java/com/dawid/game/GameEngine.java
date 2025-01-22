@@ -16,7 +16,7 @@ public class GameEngine {
     */
     int playerID;
     // List of currently playing playerIDs
-    List<Player> players;
+    private List<Player> players;
     // Board type
     Board board;
     // Game Variant
@@ -139,4 +139,6 @@ public class GameEngine {
     public boolean isMyPawn(int pawn) {
         return pawn == playerID;
     }
+
+    public List<Player> getPlayers() {return players;};
 }

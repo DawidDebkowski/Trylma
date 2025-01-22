@@ -10,4 +10,8 @@ public class Player {
         homeField = id;
         this.winField = winField;
     }
+
+    public int getId() {return id;}
+    public int getWinField() {return winField;}
+    public int getHomeField() {return homeField;}
 }

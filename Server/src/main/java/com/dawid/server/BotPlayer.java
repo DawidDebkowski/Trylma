@@ -39,19 +39,52 @@ public class BotPlayer extends Player{
                     field.setHomeDistance(100000);
                     field.setWinDistance(100000);
                     boardOverlay[i][j] = field;
-                    System.out.println("Adding field " + i + " " + j);
+//                    System.out.println("Adding field " + i + " " + j);
                 }
             }
         }
 
-        calculateDistance(board, board.getField(0,12), 0, BotField::setHomeDistance, (bot, disc) -> {return  bot.getHomeDistance();});
-        calculateDistance(board, board.getField(0,12), 0, BotField::setWinDistance, (bot, disc) -> {return  bot.getWinDistance();});
+        System.out.println("start home fields");
 
-        for(int i = 0; i < fields.length; i++) {
-            for(int j = 0; j < fields[i].length; j++) {
-                if(boardOverlay[i][j] == null) {System.out.print("   ");}
-                else {
-                    System.out.print(boardOverlay[i][j].getHomeDistance() + " " + boardOverlay[i][j].getWinDistance());
+        Collection<Field> homeFields = board.getHomeFields(getNumber());
+        Collection<Field> winFields = board.getHomeFields(getWinFieldID());
+
+        System.out.println("start home fields");
+        Field f1 = calculateFirstHomeField(board, homeFields);
+        Field f2 = calculateFirstHomeField(board, winFields);
+        System.out.println("end home fields " + board.getCoordinates(f1) + ", " + board.getCoordinates(f2));
+
+        calculateDistance(board, f1, 0, BotField::setHomeDistance, (bot, disc) -> {return  bot.getHomeDistance();});
+        calculateDistance(board, f2, 0, BotField::setWinDistance, (bot, disc) -> {return  bot.getWinDistance();});
+
+        printDistances();
+    }
+
+    private Field calculateFirstHomeField(Board board, Collection<Field> homeFields) {
+        Field out = null;
+        int min = 1000;
+        for(Field field : homeFields) {
+            int count = 0;
+            Collection<Field> neighbors = board.getNeighboringFields(field);
+            for(Field neighbor : neighbors) {
+                if(neighbor != null) {count++;}
+            }
+            if(count < min) {
+                out = field;
+                min = count;
+            }
+        }
+
+        return out;
+    }
+
+    private void printDistances() {
+        for (BotField[] botFields : boardOverlay) {
+            for (BotField botField : botFields) {
+                if (botField == null) {
+                    System.out.print("   ");
+                } else {
+                    System.out.print(botField.getHomeDistance() + " " + botField.getWinDistance());
                 }
             }
             System.out.println();

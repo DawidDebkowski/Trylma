@@ -88,11 +88,21 @@ public class Lobby {
 //            }
         }
 
+        // zaczynamy gre zeby GameEngine ustawil pionki itp
         gameEngine = new GameEngine(board, new NormalVariantController(board, maxPlayers), -1);
         gameEngine.startGame();
 
+        // ta część kodu odpowiada za przypisanie oponenta botom, bo chce
+        // zeby wiedzialy w ktora strone sie maja ruszac
+        List<com.dawid.game.Player> gameEnginePlayers = new ArrayList<>();
+
         for(BotPlayer bot: bots) {
             bot.setupBoard(board);
+            for (com.dawid.game.Player player : gameEnginePlayers) {
+                if(bot.getNumber() == player.getHomeField()) {
+                    bot.setWinFieldID(player.getWinField());
+                }
+            }
         }
 
         if (board.correctPlayerCount(this.getPlayerCount())) {
