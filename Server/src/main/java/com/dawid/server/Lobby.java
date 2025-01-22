@@ -15,6 +15,7 @@ public class Lobby {
     private final List<Player> players;
     private int maxPlayers;
     private GameVariant variant;
+    private GameEngine gameEngine;
 
     public Lobby(List<Player> players) {
         this.players = players;
@@ -84,6 +85,10 @@ public class Lobby {
 //                clientInputHandler.exec(in.nextLine());
 //            }
         }
+
+        gameEngine = new GameEngine(board, new NormalVariantController(board, maxPlayers), -1);
+        gameEngine.startGame();
+
         if (board.correctPlayerCount(this.getPlayerCount())) {
             inGame = true;
 //            notifyAll("Started game");
@@ -124,8 +129,18 @@ public class Lobby {
             return;
         }
         player.getLobby().notifyAll("Moved: Player " + player.getNumber() + " " + String.join(" ", args));
+        //for now, we assume that this won't fail
+        movePawnOnBoard(player.getNumber(), Coordinates.fromString(args[1]), Coordinates.fromString(args[2]));
         turnController.nextTurn();
         turnController.getCurrrentPlayer().makeTurn();
+    }
+
+    private void movePawnOnBoard(int pawn, Coordinates from, Coordinates to) {
+        gameEngine.makeMoveFromServer(pawn, from.getRow(), from.getColumn(), to.getRow(), to.getColumn());
+//
+//        board.getField(from.getRow(), from.getColumn()).setPawn(0);
+//        board.getField(to.getRow(), to.getColumn()).setPawn(pawn);
+        board.printBoard();
     }
 
     /**

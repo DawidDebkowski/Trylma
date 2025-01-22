@@ -7,6 +7,8 @@ import java.util.List;
 /**
  * This class will control how the game is played.
  * It combines a board and a variant to make a game.
+ *
+ * On Server it's without the client dependency
  */
 public class GameEngine {
     /**
