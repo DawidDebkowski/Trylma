@@ -1,7 +1,5 @@
 package com.dawid.game;
-/**
- * Represents the coordinates of a field on the board.
- */
+
 public class Coordinates {
     private int row;
     private int column;
@@ -28,9 +26,6 @@ public class Coordinates {
     public String toString() {
         return row + "_" + column;
     }
-    /*
-        * Returns the coordinates from their string representation.
-     */
     public static Coordinates fromString(String s) {
         String[] split = s.split("_");
         return new Coordinates(Integer.parseInt(split[0]), Integer.parseInt(split[1]));

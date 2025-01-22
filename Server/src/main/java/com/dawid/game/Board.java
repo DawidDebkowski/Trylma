@@ -34,7 +34,13 @@ public interface Board {
      * @throws IllegalArgumentException if the fields are not neighbors or do not exist
      */
     public Field getJumpField(Field start, Field across) throws IllegalArgumentException;
+    public void printBoard();
+    public void debugPrint();
 
+    public int getWidth();
+    public int getHeight();
+
+    public Coordinates getCoordinates(Field field);
     /**
      * Check if the given player count is correct for this board
      * @param playerCount the player count to check
@@ -48,4 +54,6 @@ public interface Board {
      * @return the numbers of the players
      */
     public Collection<Integer> getPlayerNumbers(int playerCount);
+
+    Collection<Integer> getPossiblePlayerCounts();
 }

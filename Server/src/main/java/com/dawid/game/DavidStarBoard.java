@@ -22,21 +22,19 @@ public class DavidStarBoard implements Board {
     }
     @Override
     public Field getField(int row, int column) throws IllegalArgumentException {
-        if(row <= 0 || row > height) {
-            throw new IllegalArgumentException("Invalid row");
+        if(row < 0 || row > height) {
+            throw new IllegalArgumentException("Invalid row " + row);
         }
-        int counter = 0;
-        for(int i = 0; i < width; i++) {
-            if(board[row][i] != null) {
-                counter++;
-            }
-            if(counter == column) {
-                return board[row-1][i];
-            }
+        if(column < 0 || column > width) {
+            throw new IllegalArgumentException("Invalid column " + column);
         }
-        throw new IllegalArgumentException("Invalid column");
-
+        return board[row][column];
     }
+
+    public Coordinates getCoordinates(Field field) {
+        return coordinates.get(field);
+    }
+
     @Override
     public Collection<Field> getNeighboringFields(Field field) {
         Coordinates c = coordinates.get(field);
@@ -90,50 +88,7 @@ public class DavidStarBoard implements Board {
         }
         throw new IllegalArgumentException("The fields are not neighbors");
     }
-    @Override
-    public boolean correctPlayerCount(int playerCount) {
-        return correct_no_of_players.contains(playerCount);
-    }
 
-    @Override
-    public Collection<Integer> getPlayerNumbers(int playerCount) {
-        if(playerCount == 2) {
-            return Arrays.asList(1, 4);
-        }
-        if(playerCount == 3) {
-            return Arrays.asList(1, 3, 5);
-        }
-        if(playerCount == 4) {
-            return Arrays.asList(1, 4, 2, 5);
-        }
-        if(playerCount == 6) {
-            return Arrays.asList(1, 2, 3, 4, 5, 6);
-        }
-        return null;
-    }
-    /*
-        * Returns the fields that are not home fields
-        * @return the fields that are not home fields
-        * @see OrderOfChaosVariant
-     */
-    public List<Field> getNonHomeFields() {
-        List<Field> nonHomeFields = new ArrayList<>();
-        for (Field[] row : board) {
-            for (Field field : row) {
-                if (field != null && field.getHome() == -1) {
-                    nonHomeFields.add(field);
-                }
-            }
-        }
-        return nonHomeFields;
-    }
-    /*
-        * Get coordinateas of the field
-        * @return   the coordinates of the field
-     */
-    public Coordinates getCoordinates(Field field) {
-        return coordinates.get(field);
-    }
 
     private void initializeCoordinates() {
         coordinates = new HashMap<>();
@@ -196,11 +151,67 @@ public class DavidStarBoard implements Board {
                 if (board[i][j] == null) {
                     System.out.print(" ");
                 } else {
-                    System.out.print(board[i][j].getHome());
+                    System.out.print(board[i][j].getPawn());
                 }
             }
             System.out.println();
         }
     }
+    //Dev purposes
+    public void debugPrint() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (board[i][j] == null) {
+                    System.out.print("   ");
+                } else {
+                    System.out.print(board[i][j].getPawn() + " " + coordinates.get(board[i][j]).getRow() + " " + coordinates.get(board[i][j]).getColumn());
+//                    System.out.print(getField(coordinates.get(board[i][j]).getRow(), coordinates.get(board[i][j]).getColumn()));
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    //for testing purpose
+    Map<Field, Coordinates> getCoordinatesMap() {
+        return coordinates;
+    }
+
+    @Override
+    public boolean correctPlayerCount(int playerCount) {
+        return correct_no_of_players.contains(playerCount);
+    }
+
+    @Override
+    public Collection<Integer> getPlayerNumbers(int playerCount) {
+        if(playerCount == 2) {
+            return Arrays.asList(1, 4);
+        }
+        if(playerCount == 3) {
+            return Arrays.asList(1, 3, 5);
+        }
+        if(playerCount == 4) {
+            return Arrays.asList(1, 3, 4, 6);
+        }
+        if(playerCount == 6) {
+            return Arrays.asList(1, 2, 3, 4, 5, 6);
+        }
+        return null;
+    }
+
+    public Collection<Integer> getPossiblePlayerCounts() {
+        return correct_no_of_players;
+    }
+
 }
 
