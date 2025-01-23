@@ -9,6 +9,7 @@ public class DistanceBotStrategy implements IBotStrategy {
     private BotPlayer botPlayer;
     private Board board;
     private GameEngine gameEngine;
+    private Coordinates lastTargetMove;
 
     @Override
     public Coordinates[] calculateMove() {
@@ -41,13 +42,29 @@ public class DistanceBotStrategy implements IBotStrategy {
             finalMove[1] = new Coordinates(-1, -1);
         }
 
+        lastTargetMove = finalMove[0];
         return finalMove;
     }
 
     private int getMoveValue(Field startField, Field targetField) {
         BotField startBot = botPlayer.getBotField(startField);
         BotField targetBot = botPlayer.getBotField(targetField);
-        return (targetBot.getHomeDistance() - startBot.getHomeDistance())* 2 - (targetBot.getWinDistance() - startBot.getWinDistance());
+        int homeDistanceDelta = targetBot.getHomeDistance() - startBot.getHomeDistance();
+        int winDistanceDelta = targetBot.getWinDistance() - startBot.getWinDistance();
+        int foreignHomePenalty = 0;
+        int sameMovePenalty = 0;
+        if(targetField.getHome() != 0) {
+            if(targetField.getHome() != botPlayer.getWinFieldID() && targetField.getHome() != botPlayer.getNumber()) {
+                foreignHomePenalty = 10;
+            }
+        }
+        if(lastTargetMove != null) {
+            if(lastTargetMove.getRow() == board.getCoordinates(targetField).getRow() && lastTargetMove.getColumn() == board.getCoordinates(targetField).getColumn()) {
+                sameMovePenalty = 150;
+                System.out.println("sameMovePenalty: " + sameMovePenalty);
+            }
+        }
+        return homeDistanceDelta * 2 - winDistanceDelta - foreignHomePenalty - sameMovePenalty;
     }
 
     @Override
