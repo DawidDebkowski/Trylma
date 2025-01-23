@@ -31,6 +31,10 @@ public class DavidStarBoard implements Board {
         return board[row][column];
     }
 
+    public Field getField(Coordinates coordinates) {
+        return getField(coordinates.getRow(), coordinates.getColumn());
+    }
+
     public List<Field> getNonHomeFields() {
         List<Field> nonHomeFields = new ArrayList<>();
         for (Field[] row : board) {

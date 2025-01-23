@@ -30,4 +30,7 @@ public class Coordinates {
         String[] split = s.split("_");
         return new Coordinates(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
     }
+    public static boolean isEqual(Coordinates c1, Coordinates c2) {
+        return c1.getRow() == c2.getRow() && c1.getColumn() == c2.getColumn();
+    }
 }

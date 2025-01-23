@@ -16,6 +16,21 @@ public class DistanceBotStrategy implements IBotStrategy {
         Coordinates[] finalMove = new Coordinates[2];
 
         Collection<Field> startFields = board.getPlayerFields(botPlayer.getNumber());
+
+        finalMove = bestFromFields(startFields);
+
+        if(finalMove[0] == null || finalMove[1] == null) {
+            finalMove[0] = new Coordinates(-1, -1);
+            finalMove[1] = new Coordinates(-1, -1);
+        }
+
+        lastTargetMove = finalMove[0];
+        return finalMove;
+    }
+
+    private Coordinates[] bestFromFields(Collection<Field> startFields) {
+        Coordinates[] finalMove = new Coordinates[2];
+
         int bestScore = 0;
         for (Field startField : startFields) {
             if(startField == null) {continue;}
@@ -37,12 +52,6 @@ public class DistanceBotStrategy implements IBotStrategy {
                 }
             }
         }
-        if(finalMove[0] == null || finalMove[1] == null) {
-            finalMove[0] = new Coordinates(-1, -1);
-            finalMove[1] = new Coordinates(-1, -1);
-        }
-
-        lastTargetMove = finalMove[0];
         return finalMove;
     }
 

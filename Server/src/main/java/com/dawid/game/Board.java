@@ -11,6 +11,7 @@ public interface Board {
      * @throws IllegalArgumentException If the row or column is invalid.
      */
     public Field getField(int row, int column) throws IllegalArgumentException;
+    public Field getField(Coordinates coordinates) throws IllegalArgumentException;
 
     /**
      * Returns the neighboring fields of the given field.

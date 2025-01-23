@@ -3,7 +3,7 @@ package com.dawid.server;
 import com.dawid.game.*;
 import com.dawid.server.bot.BotPlayer;
 import com.dawid.server.bot.DistanceBotStrategy;
-import com.dawid.server.bot.MediumDistanceBotStrategy;
+import com.dawid.server.bot.DeepDistanceBotStrategy;
 
 import java.util.*;
 
@@ -84,8 +84,8 @@ public class Lobby {
         List<BotPlayer> bots = new ArrayList<>();
         for (int i = 0; i < toAdd; i++) {
             BotPlayer bot = null;
-            if(i == 1) {
-                 bot = new BotPlayer(System.out, gameEngine, new MediumDistanceBotStrategy());
+            if(i < 10) {
+                 bot = new BotPlayer(System.out, gameEngine, new DeepDistanceBotStrategy());
             } else {
                  bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());
             }
