@@ -1,7 +1,10 @@
 package com.dawid.server.bot;
 
-import com.dawid.game.Field;
+import com.dawid.game.Board;
+import com.dawid.game.Coordinates;
+import com.dawid.game.GameEngine;
 
 public interface IBotStrategy {
-    Field calculateMove();
+    Coordinates[] calculateMove();
+    void setup(BotPlayer player, GameEngine gameEngine, Board board);
 }

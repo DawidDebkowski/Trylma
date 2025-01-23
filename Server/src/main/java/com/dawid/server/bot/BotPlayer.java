@@ -1,9 +1,6 @@
 package com.dawid.server.bot;
 
-import com.dawid.game.Board;
-import com.dawid.game.BotField;
-import com.dawid.game.Coordinates;
-import com.dawid.game.Field;
+import com.dawid.game.*;
 import com.dawid.server.Player;
 
 import java.io.OutputStream;
@@ -13,14 +10,18 @@ import java.util.function.BiFunction;
 
 public class BotPlayer extends Player {
     private BotField[][] boardOverlay;
+    private GameEngine gameEngine;
     private IBotStrategy botStrategy;
+    private Board board;
     /**
      * Creates a new player.
      *
      * @param out The output stream to send messages to the player.
      */
-    public BotPlayer(OutputStream out) {
+    public BotPlayer(OutputStream out, GameEngine gameEngine, IBotStrategy strategy)  {
         super(out);
+        this.botStrategy = strategy;
+        this.gameEngine = gameEngine;
     }
 
 
@@ -29,6 +30,9 @@ public class BotPlayer extends Player {
      * czy po prostu tak to musiało być zrobione
      */
     public void setupBoard(Board board) {
+        this.board = board;
+        botStrategy.setup(this, gameEngine, board);
+
         System.out.println("Setup board");
         Field[][] fields = board.getBoardStateCopy();
         boardOverlay = new BotField[board.getHeight()][board.getWidth()];
@@ -51,17 +55,17 @@ public class BotPlayer extends Player {
         Collection<Field> winFields = board.getHomeFields(getWinFieldID());
 
 //        System.out.println("start home fields");
-        Field f1 = calculateFirstHomeField(board, homeFields);
-        Field f2 = calculateFirstHomeField(board, winFields);
+        Field f1 = calculateFirstHomeField(homeFields);
+        Field f2 = calculateFirstHomeField(winFields);
 //        System.out.println("end home fields " + board.getCoordinates(f1) + ", " + board.getCoordinates(f2));
 
-        calculateDistance(board, f1, 0, BotField::setHomeDistance, (bot, disc) -> {return  bot.getHomeDistance();});
-        calculateDistance(board, f2, 0, BotField::setWinDistance, (bot, disc) -> {return  bot.getWinDistance();});
+        calculateDistance(f1, 0, BotField::setHomeDistance, (bot, disc) -> {return  bot.getHomeDistance();});
+        calculateDistance(f2, 0, BotField::setWinDistance, (bot, disc) -> {return  bot.getWinDistance();});
 
         printDistances();
     }
 
-    private Field calculateFirstHomeField(Board board, Collection<Field> homeFields) {
+    private Field calculateFirstHomeField(Collection<Field> homeFields) {
         Field out = null;
         int min = 1000;
         for(Field field : homeFields) {
@@ -92,7 +96,7 @@ public class BotPlayer extends Player {
         }
     }
 
-    private void calculateDistance(Board board, Field start, int distance, BiConsumer<BotField, Integer> distanceSetter, BiFunction<BotField, Integer, Integer> distanceGetter) {
+    private void calculateDistance(Field start, int distance, BiConsumer<BotField, Integer> distanceSetter, BiFunction<BotField, Integer, Integer> distanceGetter) {
         Coordinates startC = board.getCoordinates(start);
         distanceSetter.accept(boardOverlay[startC.getRow()][startC.getColumn()], distance);
 //            System.out.println("Calculated distance " + distance + " for " + startC);
@@ -103,17 +107,21 @@ public class BotPlayer extends Player {
                 int newDistance = distanceGetter.apply(boardOverlay[fieldC.getRow()][fieldC.getColumn()], -1);
 //                    System.out.println("Calculated new distance " + newDistance + " for " + fieldC);
                 if(newDistance <= distance) {continue;}
-                calculateDistance(board, field, distance+1, distanceSetter, distanceGetter);
+                calculateDistance(field, distance+1, distanceSetter, distanceGetter);
             }
         }
     }
 
     @Override
     public void makeTurn() {
-        String[] args = {"MOVE", "-1_-1", "-1_-1"};
-
+        Coordinates[] moveField = botStrategy.calculateMove();
+        String[] args = {"MOVE", moveField[0].toString(), moveField[1].toString()};
         getLobby().makeMove(this, args);
     }
 
+    BotField[][] getBoardOverlay() {return boardOverlay;}
 
+    BotField getBotField(Field field) {
+        return boardOverlay[board.getCoordinates(field).getRow()][board.getCoordinates(field).getColumn()];
+    }
 }

@@ -230,5 +230,20 @@ public class DavidStarBoard implements Board {
         return correct_no_of_players;
     }
 
+    @Override
+    public Collection<Field> getPlayerFields(int player) {
+        Collection<Field> out = new ArrayList<>();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (board[i][j] != null) {
+                    if(board[i][j].getPawn() == player) {
+                        out.add(board[i][j]);
+                    }
+                }
+            }
+        }
+        return out;
+    }
+
 }
 

@@ -61,6 +61,7 @@ public class Server {
                 }
             } catch (Exception e) {
                 System.out.println("Error:" + socket);
+                e.printStackTrace();
             } finally {
                 try {
                     socket.close();

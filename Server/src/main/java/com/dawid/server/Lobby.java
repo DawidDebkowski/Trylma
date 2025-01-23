@@ -2,6 +2,7 @@ package com.dawid.server;
 
 import com.dawid.game.*;
 import com.dawid.server.bot.BotPlayer;
+import com.dawid.server.bot.DistanceBotStrategy;
 
 import java.util.*;
 
@@ -75,11 +76,13 @@ public class Lobby {
      * Starts the game.
      */
     public void startGame() {
+        //make game engine
+        gameEngine = new GameEngine(board, new NormalVariantController(board, maxPlayers), -1);
         // make bots to the desired number of players
         int toAdd = maxPlayers - getPlayerCount();
         List<BotPlayer> bots = new ArrayList<>();
         for (int i = 0; i < toAdd; i++) {
-            BotPlayer bot = new BotPlayer(System.out);
+            BotPlayer bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());
             addPlayer(bot);
             bots.add(bot);
 //            Scanner in = new Scanner(socket.getInputStream());
@@ -90,7 +93,6 @@ public class Lobby {
         }
 
         // zaczynamy gre zeby GameEngine ustawil pionki itp
-        gameEngine = new GameEngine(board, new NormalVariantController(board, maxPlayers), -1);
         gameEngine.startGame();
 
 

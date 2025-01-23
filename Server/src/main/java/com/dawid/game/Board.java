@@ -58,4 +58,6 @@ public interface Board {
     public Collection<Integer> getPlayerNumbers(int playerCount);
 
     Collection<Integer> getPossiblePlayerCounts();
+
+    Collection<Field> getPlayerFields(int player);
 }
