@@ -1,6 +1,7 @@
 package com.dawid.server;
 
 import com.dawid.game.*;
+import com.dawid.server.bot.BotPlayer;
 
 import java.util.*;
 
@@ -92,31 +93,27 @@ public class Lobby {
         gameEngine = new GameEngine(board, new NormalVariantController(board, maxPlayers), -1);
         gameEngine.startGame();
 
-        // ta część kodu odpowiada za przypisanie oponenta botom, bo chce
-        // zeby wiedzialy w ktora strone sie maja ruszac
-        List<com.dawid.game.Player> gameEnginePlayers = new ArrayList<>();
 
-        for(BotPlayer bot: bots) {
-            bot.setupBoard(board);
-            for (com.dawid.game.Player player : gameEnginePlayers) {
-                if(bot.getNumber() == player.getHomeField()) {
-                    bot.setWinFieldID(player.getWinField());
-                }
-            }
-        }
 
         if (board.correctPlayerCount(this.getPlayerCount())) {
             inGame = true;
 //            notifyAll("Started game");
             // players must know their numbers
             turnController = new TurnController(players);
-            Collection<Integer> playerNumbers = board.getPlayerNumbers(this.getPlayerCount());
-            Iterator<Integer> iterator = playerNumbers.iterator();
+            Collection<com.dawid.game.Player> playerNumbers = gameEngine.getPlayers();
+            Iterator<com.dawid.game.Player> iterator = playerNumbers.iterator();
             for (Player player : players) {
-                player.setNumber(iterator.next());
+                com.dawid.game.Player gamePlayer = iterator.next();
+                player.setNumber(gamePlayer.getHomeField());
+                player.setWinFieldID(gamePlayer.getWinField());
                 player.sendMessage("Started " + player.getNumber() + " " + getPlayerCount() + " " + getVariant());
             }
             variant.initializeGame(this);
+
+            for(BotPlayer botPlayer : bots) {
+                botPlayer.setupBoard(board);
+            }
+
             turnController.getCurrrentPlayer().makeTurn();
         } else {
             notifyAll("ERROR: Incorrect number of players");

@@ -19,7 +19,7 @@ public class ClientGUI extends Application implements IServerClient, IClient {
     private Stage stage;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, InterruptedException {
         this.stage = stage;
         stage.setOnCloseRequest((event) -> {
             communicator.disconnect();
@@ -30,6 +30,13 @@ public class ClientGUI extends Application implements IServerClient, IClient {
 
         communicator = new ServerCommunicator(this);
         lobbies = new ArrayList<>();
+
+        //test
+        connect("localhost", 5005);
+        communicator.create();
+        Thread.sleep(1000);
+        communicator.setMaxPlayers(2);
+        communicator.startGame();
     }
 
     public static void main(String[] args) {

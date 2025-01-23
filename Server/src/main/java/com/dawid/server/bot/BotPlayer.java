@@ -1,18 +1,19 @@
-package com.dawid.server;
+package com.dawid.server.bot;
 
 import com.dawid.game.Board;
 import com.dawid.game.BotField;
 import com.dawid.game.Coordinates;
 import com.dawid.game.Field;
+import com.dawid.server.Player;
 
 import java.io.OutputStream;
-import java.net.Socket;
 import java.util.Collection;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
-public class BotPlayer extends Player{
+public class BotPlayer extends Player {
     private BotField[][] boardOverlay;
+    private IBotStrategy botStrategy;
     /**
      * Creates a new player.
      *
@@ -44,15 +45,15 @@ public class BotPlayer extends Player{
             }
         }
 
-        System.out.println("start home fields");
+//        System.out.println("start home fields");
 
         Collection<Field> homeFields = board.getHomeFields(getNumber());
         Collection<Field> winFields = board.getHomeFields(getWinFieldID());
 
-        System.out.println("start home fields");
+//        System.out.println("start home fields");
         Field f1 = calculateFirstHomeField(board, homeFields);
         Field f2 = calculateFirstHomeField(board, winFields);
-        System.out.println("end home fields " + board.getCoordinates(f1) + ", " + board.getCoordinates(f2));
+//        System.out.println("end home fields " + board.getCoordinates(f1) + ", " + board.getCoordinates(f2));
 
         calculateDistance(board, f1, 0, BotField::setHomeDistance, (bot, disc) -> {return  bot.getHomeDistance();});
         calculateDistance(board, f2, 0, BotField::setWinDistance, (bot, disc) -> {return  bot.getWinDistance();});
@@ -92,22 +93,18 @@ public class BotPlayer extends Player{
     }
 
     private void calculateDistance(Board board, Field start, int distance, BiConsumer<BotField, Integer> distanceSetter, BiFunction<BotField, Integer, Integer> distanceGetter) {
-        try {
-            Coordinates startC = board.getCoordinates(start);
-            distanceSetter.accept(boardOverlay[startC.getRow()][startC.getColumn()], distance);
+        Coordinates startC = board.getCoordinates(start);
+        distanceSetter.accept(boardOverlay[startC.getRow()][startC.getColumn()], distance);
 //            System.out.println("Calculated distance " + distance + " for " + startC);
-            Collection<Field> neighbours = board.getNeighboringFields(start);
-            for(Field field : neighbours) {
-                if(field != null) {
-                    Coordinates fieldC = board.getCoordinates(field);
-                    int newDistance = distanceGetter.apply(boardOverlay[fieldC.getRow()][fieldC.getColumn()], -1);
+        Collection<Field> neighbours = board.getNeighboringFields(start);
+        for(Field field : neighbours) {
+            if(field != null) {
+                Coordinates fieldC = board.getCoordinates(field);
+                int newDistance = distanceGetter.apply(boardOverlay[fieldC.getRow()][fieldC.getColumn()], -1);
 //                    System.out.println("Calculated new distance " + newDistance + " for " + fieldC);
-                    if(newDistance <= distance) {continue;}
-                    calculateDistance(board, field, distance+1, distanceSetter, distanceGetter);
-                }
+                if(newDistance <= distance) {continue;}
+                calculateDistance(board, field, distance+1, distanceSetter, distanceGetter);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -118,8 +115,5 @@ public class BotPlayer extends Player{
         getLobby().makeMove(this, args);
     }
 
-    private void createBoardOverlay(Board board) {
-
-    }
 
 }
