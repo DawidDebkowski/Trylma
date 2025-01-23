@@ -3,6 +3,7 @@ package com.dawid.server;
 import com.dawid.game.*;
 import com.dawid.server.bot.BotPlayer;
 import com.dawid.server.bot.DistanceBotStrategy;
+import com.dawid.server.bot.MediumDistanceBotStrategy;
 
 import java.util.*;
 
@@ -82,7 +83,12 @@ public class Lobby {
         int toAdd = maxPlayers - getPlayerCount();
         List<BotPlayer> bots = new ArrayList<>();
         for (int i = 0; i < toAdd; i++) {
-            BotPlayer bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());
+            BotPlayer bot = null;
+            if(i == 1) {
+                 bot = new BotPlayer(System.out, gameEngine, new MediumDistanceBotStrategy());
+            } else {
+                 bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());
+            }
             addPlayer(bot);
             bots.add(bot);
 //            Scanner in = new Scanner(socket.getInputStream());
