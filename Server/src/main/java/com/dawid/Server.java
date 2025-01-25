@@ -2,7 +2,7 @@ package com.dawid;
 
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.Player;
-import com.dawid.services.SaveGameService;
+import com.dawid.services.GameService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
 public class Server {
     public static void main(String[] args) throws Exception {
         ApplicationContext context = SpringApplication.run(Server.class, args);
-        SaveGameService game = context.getBean(SaveGameService.class);
+        GameService game = context.getBean(GameService.class);
         DavidStarBoard board = new DavidStarBoard();
         for(int i = 1; i <= 6; i++) {
             System.out.println(board.getHomeFields(i));

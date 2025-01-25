@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SaveGameService {
+public class GameService {
     private GameRepository gameRepository;
 
     @Autowired
-    public SaveGameService(GameRepository gameRepository) {
+    public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
 
+   // public void saveGame()
 
 }

@@ -1,6 +1,5 @@
 package com.dawid.services;
 
-import com.dawid.services.SaveGameService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +10,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class SaveGameServiceIT {
+public class GameServiceIT {
 
     @Autowired
-    private SaveGameService saveGameService;
+    private GameService gameService;
 
     @Test
     public void serviceShouldNotBeNull() {
-        assertNotNull(saveGameService);
+        assertNotNull(gameService);
+    }
+    @Test
+    public void shouldSaveGameWithMoves() {
+
     }
 
 }
