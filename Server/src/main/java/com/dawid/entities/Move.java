@@ -4,7 +4,7 @@ package com.dawid.entities;
 import jakarta.persistence.*;
 
 @Entity(name = "Move")
-@Table(name = "move")
+@Table(name = "moves")
 public class Move implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)

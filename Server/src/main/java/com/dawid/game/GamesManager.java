@@ -1,5 +1,7 @@
 package com.dawid.game;
 
+import com.dawid.services.GameService;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -10,6 +12,7 @@ import java.util.List;
 public class GamesManager {
     private static volatile GamesManager instance;
     private final List<Lobby> lobbies;
+    private GameService gameService;
     private GamesManager () {
         lobbies = new ArrayList<>();
     }
@@ -82,4 +85,8 @@ public class GamesManager {
      * @return The list of lobbies.
      */
     public List<Lobby> getLobbies() {return lobbies;}
+
+    public void setGameService(GameService gameService) {
+        this.gameService = gameService;
+    }
 }

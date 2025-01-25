@@ -1,6 +1,7 @@
 package com.dawid;
 
 import com.dawid.game.DavidStarBoard;
+import com.dawid.game.GamesManager;
 import com.dawid.game.Player;
 import com.dawid.services.GameService;
 import org.springframework.boot.SpringApplication;
@@ -25,9 +26,10 @@ import java.util.concurrent.Executors;
  */
 @SpringBootApplication
 public class Server {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(Server.class, args);
-        GameService game = context.getBean(GameService.class);
+        GameService gameService = context.getBean(GameService.class);
+        GamesManager.getInstance().setGameService(gameService);
         DavidStarBoard board = new DavidStarBoard();
         for(int i = 1; i <= 6; i++) {
             System.out.println(board.getHomeFields(i));
@@ -47,6 +49,9 @@ public class Server {
                     pool.execute(new Capitalizer(listener.accept()));
                 }
             }
+        catch (IOException e) {
+            System.out.println("Error starting the server");
+        }
         }
 
     private static class Capitalizer implements Runnable {

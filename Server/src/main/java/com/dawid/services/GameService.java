@@ -1,4 +1,6 @@
 package com.dawid.services;
+import com.dawid.entities.GameInformation;
+import com.dawid.game.Lobby;
 import com.dawid.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-   // public void saveGame()
+   public void saveGame(Lobby lobby) {
+        //TODO: Implement
+   }
 
 }
