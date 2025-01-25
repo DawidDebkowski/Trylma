@@ -1,7 +1,7 @@
 package com.dawid.server;
 
-import com.dawid.game.GameInformation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,11 +11,7 @@ import java.util.List;
  * Singleton.
  * @see Lobby
  */
-@Service
 public class GamesManager {
-
-    @Autowired
-    private GameRepository gameRepository;
     private static volatile GamesManager instance;
     private final List<Lobby> lobbies;
     private GamesManager () {

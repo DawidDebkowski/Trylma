@@ -1,9 +1,9 @@
 package com.dawid.server;
 
 import com.dawid.game.DavidStarBoard;
-import com.dawid.game.Variant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,9 +22,10 @@ import java.util.concurrent.Executors;
  * The server uses the Lobby class to manage the game state.
  */
 @SpringBootApplication
-public class Application {
+public class Server {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
+        ApplicationContext context = SpringApplication.run(Server.class, args);
+        SaveGameService game = context.getBean(SaveGameService.class);
         DavidStarBoard board = new DavidStarBoard();
         for(int i = 1; i <= 6; i++) {
             System.out.println(board.getHomeFields(i));
