@@ -1,4 +1,6 @@
-package com.dawid.server;
+package com.dawid;
+
+import com.dawid.game.Player;
 
 public interface CommandHandler {
     /**

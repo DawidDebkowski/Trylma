@@ -1,6 +1,6 @@
-package com.dawid.server;
+package com.dawid.game;
 
-import com.dawid.game.*;
+import com.dawid.CommandHandler;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package com.dawid.server;
+package com.dawid.entities;
 
 
 import jakarta.persistence.*;

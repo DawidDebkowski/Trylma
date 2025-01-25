@@ -1,6 +1,8 @@
-package com.dawid.server;
+package com.dawid;
 
 import com.dawid.game.DavidStarBoard;
+import com.dawid.game.Player;
+import com.dawid.services.SaveGameService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

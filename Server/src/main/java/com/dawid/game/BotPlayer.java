@@ -1,8 +1,8 @@
-package com.dawid.server;
+package com.dawid.game;
 
 import java.io.OutputStream;
 
-public class BotPlayer extends Player{
+public class BotPlayer extends Player {
     /**
      * Creates a new player.
      *

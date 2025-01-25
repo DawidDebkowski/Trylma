@@ -1,8 +1,4 @@
-package com.dawid.server;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+package com.dawid.game;
 
 import java.util.ArrayList;
 import java.util.List;

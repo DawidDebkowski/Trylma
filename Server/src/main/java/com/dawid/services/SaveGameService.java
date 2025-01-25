@@ -1,4 +1,5 @@
-package com.dawid.server;
+package com.dawid.services;
+import com.dawid.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
