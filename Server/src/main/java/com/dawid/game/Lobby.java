@@ -1,5 +1,6 @@
 package com.dawid.game;
 
+import com.dawid.CommandHandler;
 import lombok.Getter;
 
 import java.util.*;
@@ -13,13 +14,9 @@ public class Lobby {
     /**
      * -- GETTER --
      *  Returns the board of the game.
-     * -- GETTER --
-     *  Returns the board of the game.
-
      */
     @Getter
-    @Getter
-    private Board board;
+    private final Board board;
     private TurnController turnController;
 
     @Getter
@@ -29,7 +26,7 @@ public class Lobby {
     private int maxPlayers;
     private GameVariant variant;
 
-    public Lobby(List<Player> players) {
+    public Lobby(List<Player> players, Variant variant) {
         this.players = players;
         board = new DavidStarBoard();
         this.variant = Variant.getGameVariant(Variant.NORMAL);
@@ -45,7 +42,6 @@ public class Lobby {
 
     /**
      * Notifies all players in the lobby.
-     *
      * @param message The message to send.
      */
     public void notifyAll(String message) {
@@ -57,7 +53,6 @@ public class Lobby {
 
     /**
      * Returns the number of players in the lobby.
-     *
      * @return The number of players in the lobby.
      */
     public int getPlayerCount() {
@@ -66,17 +61,14 @@ public class Lobby {
 
     /**
      * Adds a player to the lobby.
-     *
      * @param player The player to add.
      */
     public void addPlayer(Player player) {
         players.add(player);
         player.setLobby(this);
     }
-
     /**
      * Removes a player from the lobby.
-     *
      * @param player The player to remove.
      */
     public void removePlayer(Player player) {
@@ -111,6 +103,7 @@ public class Lobby {
             }
             variant.initializeGame(this);
             turnController.getCurrrentPlayer().makeTurn();
+            GamesManager.getInstance().removeLobby(this);
         } else {
             notifyAll("ERROR: Incorrect number of players");
         }
@@ -125,7 +118,6 @@ public class Lobby {
 
     /**
      * Makes a move in the game.
-     *
      * @param player The player making the move.
      * @param args   The arguments of the move.
      */
@@ -163,4 +155,13 @@ public class Lobby {
         return moveHistory;
     }
 
+    public Integer getNumberOfHumanPlayers() {
+        int pl = 0;
+        for(Player player : players) {
+            if(!(player instanceof BotPlayer)) {
+                pl++;
+            }
+        }
+        return pl;
+    }
 }
