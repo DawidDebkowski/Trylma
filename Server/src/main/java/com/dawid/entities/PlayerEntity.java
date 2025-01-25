@@ -2,13 +2,15 @@ package com.dawid.entities;
 
 
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
 
 @Entity(name = "Player")
 @Table(name = "players")
 @Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PlayerEntity {
-
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private Long id;
@@ -19,20 +21,11 @@ public class PlayerEntity {
     @Column(name = "is_bot")
     private boolean isBot;
 
-
     @Column(name="number")
     private int numberOnBoard;
 
     @ManyToOne
     private GameInformation gameInformation;
-
-
-    public PlayerEntity() {
-    }
-
-    public Long getId() {
-        return id;
-    }
 
 
     // Can be added

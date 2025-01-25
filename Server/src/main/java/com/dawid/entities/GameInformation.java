@@ -3,7 +3,7 @@ package com.dawid.entities;
 
 import com.dawid.game.Variant;
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,9 @@ import java.util.List;
 @Entity(name = "GameInformation")
 @Table(name = "games")
 @Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class GameInformation {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
@@ -27,7 +30,4 @@ public class GameInformation {
     @JoinColumn(name = "game_id")
     private List<PlayerEntity> players;
 
-    public GameInformation() {
-
-    }
 }
