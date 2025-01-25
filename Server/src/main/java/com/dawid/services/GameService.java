@@ -44,5 +44,8 @@ public class GameService {
         gameRepository.save(gameInformation);
         return gameInformation.getId();
    }
+   public GameInformation getGame(Long id) {
+        return gameRepository.findById(id).orElse(null);
+   }
 
 }
