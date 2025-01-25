@@ -31,9 +31,6 @@ public class Server {
         GameService gameService = context.getBean(GameService.class);
         GamesManager.getInstance().setGameService(gameService);
         DavidStarBoard board = new DavidStarBoard();
-        for(int i = 1; i <= 6; i++) {
-            System.out.println(board.getHomeFields(i));
-        }
         final int port = 5005;
         int maxThreads;
         try {

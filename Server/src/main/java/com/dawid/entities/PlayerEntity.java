@@ -2,9 +2,11 @@ package com.dawid.entities;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity(name = "Player")
 @Table(name = "players")
+@Builder
 public class PlayerEntity {
 
     @Id

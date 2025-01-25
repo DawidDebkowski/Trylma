@@ -1,6 +1,9 @@
 package com.dawid.game;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
@@ -8,7 +11,10 @@ import java.io.PrintWriter;
  * Represents a player in the game.
  */
 public class Player {
+    @Setter
+    @Getter
     private Lobby lobby;
+    @Getter
     private Integer number;
     protected final  PrintWriter out;
     /**
@@ -21,18 +27,11 @@ public class Player {
     public void setNumber(int number) {
         this.number = number;
     }
-    public Integer getNumber() {
-        return number;
-    }
+
     public void sendMessage(String message) {
         out.println(message);
     }
-    public void setLobby(Lobby lobby) {
-        this.lobby = lobby;
-    }
-    public Lobby getLobby() {
-        return lobby;
-    }
+
     public void makeTurn() {
         sendMessage("TURN");
     }

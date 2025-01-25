@@ -1,6 +1,6 @@
 package com.dawid.game;
 
-import com.dawid.CommandHandler;
+import lombok.Getter;
 
 import java.util.*;
 
@@ -10,9 +10,22 @@ import java.util.*;
 public class Lobby {
     // We could use state pattern, but it's not necessary if only 2 states are possible
     private boolean inGame = false;
+    /**
+     * -- GETTER --
+     *  Returns the board of the game.
+     * -- GETTER --
+     *  Returns the board of the game.
+
+     */
+    @Getter
+    @Getter
     private Board board;
     private TurnController turnController;
+
+    @Getter
     private final List<Player> players;
+    private final List<String> moveHistory = new ArrayList<>();
+    @Getter
     private int maxPlayers;
     private GameVariant variant;
 
@@ -39,6 +52,7 @@ public class Lobby {
         for (Player player : players) {
             player.sendMessage(message);
         }
+        moveHistory.add(message);
     }
 
     /**
@@ -135,12 +149,6 @@ public class Lobby {
         return variant.getVariant();
     }
 
-    /**
-     * Returns the board of the game.
-     */
-    public Board getBoard() {
-        return board;
-    }
 
     /**
      * Sets the variant of the game.
@@ -151,15 +159,8 @@ public class Lobby {
         this.variant = Variant.getGameVariant(variant);
     }
 
-    /**
-     * Set the maximum number of players in the lobby.
-     *
-     * @param maxPlayers The maximum number of players in the lobby.
-     */
-    public void setMaxPlayers(int maxPlayers) {
-        this.maxPlayers = maxPlayers;
+    public List<String> getMoves() {
+        return moveHistory;
     }
-    public int getMaxPlayers() {
-        return maxPlayers;
-    }
+
 }
