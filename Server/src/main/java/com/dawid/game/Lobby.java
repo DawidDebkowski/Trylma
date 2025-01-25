@@ -10,22 +10,20 @@ import java.util.*;
  */
 public class Lobby {
     // We could use state pattern, but it's not necessary if only 2 states are possible
-    private boolean inGame = false;
+    protected boolean inGame = false;
     /**
      * -- GETTER --
      *  Returns the board of the game.
      */
     @Getter
-    private final Board board;
-    private TurnController turnController;
+    protected final Board board;
+    protected TurnController turnController;
 
     @Getter
-    private final List<Player> players;
-    private final List<String> moveHistory = new ArrayList<>();
-    @Getter
-    private int maxPlayers;
-    private GameVariant variant;
-
+    protected final List<Player> players;
+    protected int maxPlayers;
+    protected final List<String> moveHistory = new ArrayList<>();
+    protected GameVariant variant;
     public Lobby(List<Player> players, Variant variant) {
         this.players = players;
         board = new DavidStarBoard();
@@ -39,7 +37,12 @@ public class Lobby {
         this.variant = Variant.getGameVariant(variant);
         maxPlayers = 6;
     }
-
+    public Lobby() {
+        this.players = new ArrayList<>();
+        //only DavidStarBoard is implemented
+        board = new DavidStarBoard();
+        this.variant = Variant.getGameVariant(Variant.NORMAL);
+    }
     /**
      * Notifies all players in the lobby.
      * @param message The message to send.
@@ -75,6 +78,13 @@ public class Lobby {
         players.remove(player);
     }
 
+    protected void assignPlayerNumbers() {
+        Collection<Integer> playerNumbers = board.getPlayerNumbers(this.getPlayerCount());
+        Iterator<Integer> iterator = playerNumbers.iterator();
+        players.forEach(player -> player.setNumber(iterator.next()));
+    }
+
+
     /**
      * Starts the game.
      */
@@ -95,12 +105,8 @@ public class Lobby {
 //            notifyAll("Started game");
             // players must know their numbers
             turnController = new TurnController(players);
-            Collection<Integer> playerNumbers = board.getPlayerNumbers(this.getPlayerCount());
-            Iterator<Integer> iterator = playerNumbers.iterator();
-            for (Player player : players) {
-                player.setNumber(iterator.next());
-                player.sendMessage("Started " + player.getNumber() + " " + getPlayerCount() + " " + getVariant());
-            }
+            assignPlayerNumbers();
+            players.forEach(player -> player.sendMessage("Started " + player.getNumber() + " " + getPlayerCount() + " " + getVariant()));
             variant.initializeGame(this);
             turnController.getCurrrentPlayer().makeTurn();
             GamesManager.getInstance().removeLobby(this);
@@ -144,7 +150,6 @@ public class Lobby {
 
     /**
      * Sets the variant of the game.
-     *
      * @param variant The variant of the game.
      */
     public void setVariant(Variant variant) {
@@ -163,5 +168,9 @@ public class Lobby {
             }
         }
         return pl;
+    }
+
+    public int getCurrentPlayerNumber() {
+        return turnController.getCurrrentPlayer().getNumber();
     }
 }

@@ -11,6 +11,10 @@ public class TurnController {
         this.players = players;
         currentPlayer = 0;
     }
+    public TurnController(List<Player> players, int startingPlayer) {
+        this.players = players;
+        this.currentPlayer = startingPlayer;
+    }
     /**
      * Returns the player whose turn it is.
      * @return The player whose turn it is.

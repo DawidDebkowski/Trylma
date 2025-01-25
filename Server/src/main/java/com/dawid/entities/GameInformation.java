@@ -26,6 +26,9 @@ public class GameInformation {
     @Column(name = "variant")
     private Variant variant;
 
+    @Column(name = "current_player")
+    private int currentPlayer;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "game_id")
     private List<PlayerEntity> players;

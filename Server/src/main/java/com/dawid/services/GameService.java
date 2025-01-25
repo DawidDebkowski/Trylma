@@ -5,6 +5,7 @@ import com.dawid.entities.PlayerEntity;
 import com.dawid.game.BotPlayer;
 import com.dawid.game.Lobby;
 import com.dawid.game.Player;
+import com.dawid.game.SavedLobby;
 import com.dawid.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,13 +40,18 @@ public class GameService {
                 variant(lobby.getVariant()).
                 moves(moves).
                 players(players).
+                currentPlayer(lobby.getCurrentPlayerNumber()).
                 build();
 
         gameRepository.save(gameInformation);
         return gameInformation.getId();
    }
-   public GameInformation getGame(Long id) {
-        return gameRepository.findById(id).orElse(null);
+   public Lobby getLobby(Long id) {
+        GameInformation info = gameRepository.findById(id).orElse(null);
+        if (info == null) {
+            return null;
+        }
+        return new SavedLobby(info);
    }
 
 }
