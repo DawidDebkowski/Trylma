@@ -4,12 +4,6 @@ import com.dawid.CommandHandler;
 import com.dawid.entities.GameInformation;
 import com.dawid.entities.Move;
 import com.dawid.entities.PlayerEntity;
-import lombok.Builder;
-import lombok.experimental.SuperBuilder;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 /**

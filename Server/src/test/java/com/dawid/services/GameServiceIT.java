@@ -36,6 +36,7 @@ public class GameServiceIT {
         lobby = new Lobby(Variant.NORMAL);
         lobby.addPlayer(mock(Player.class));
         lobby.addPlayer(mock(BotPlayer.class));
+        lobby.startGame();
     }
 
     @Test
@@ -51,9 +52,9 @@ public class GameServiceIT {
     @Test
     public void gameShouldHavePlayers() {
         Long id = gameService.saveGame(lobby);
-        GameInformation retrievedLobby = gameService.getGame(id);
-        List<Player> players = lobby.getPlayers();
-        assertEquals(lobby.getPlayerCount(), players.size());
+        Lobby retrievedLobby = gameService.getLobby(id);
+        List<Player> players = retrievedLobby.getPlayers();
+        assertEquals(1, players.size());
 
     }
 

@@ -19,7 +19,7 @@ public class GameInformation {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
     private List<Move> moves = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class GameInformation {
     @Column(name = "current_player")
     private int currentPlayer;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
     private List<PlayerEntity> players;
 
