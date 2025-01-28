@@ -106,4 +106,11 @@ public class GamesManager {
      * @param id The id of the game.
      * @return The lobby
      */
+    public Lobby restoreGame(Long id) {
+        Lobby lobby = gameService.getLobby(id);
+        if (lobby != null) {
+            addLobby(lobby);
+        }
+        return lobby;
+    }
 }

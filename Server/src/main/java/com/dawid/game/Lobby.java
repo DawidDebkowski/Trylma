@@ -57,6 +57,11 @@ public class Lobby {
         }
         moveHistory.add(message);
     }
+    public void notifyAllNoHistory(String message) {
+        for (Player player : players) {
+            player.sendMessage(message);
+        }
+    }
 
     /**
      * Returns the number of players in the lobby.

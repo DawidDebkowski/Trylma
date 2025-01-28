@@ -76,10 +76,7 @@ public class MenuSceneController extends BaseController{
         dialog.setTitle("Load saved game");
         dialog.setHeaderText("Enter the id of the game you want to load");
         dialog.showAndWait();
-        //TODO: handle
-        System.out.println(dialog.getEditor().getText());
-        ClientGUI c = (ClientGUI)client;
-        c.changeState(States.SAVED_LOBBY);
+        client.getServerCommands().loadSavedGame(dialog.getEditor().getText());
     }
 
 }

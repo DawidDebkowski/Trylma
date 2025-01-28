@@ -24,8 +24,9 @@ public class CommandExecutor implements CommandHandler {
         commands.put("START", this::startGame);
         commands.put("LOBBYINFO", this::sendLobbyInfo);
         commands.put("VARIANT", this::setVariant);
-        //TODO: add this command on client side
         commands.put("MAX_PLAYERS", this::setMaxPlayers);
+        commands.put("SAVE", this::saveGame);
+        commands.put("LOAD", this::loadSaved);
     }
 
 
@@ -96,7 +97,10 @@ public class CommandExecutor implements CommandHandler {
     }
     private void startGame(String[] args) {
         System.out.println("Some game has started");
-        player.getLobby().startGame();
+        synchronized (player.getLobby()) {
+            player.getLobby().startGame();
+        }
+
 
     }
     private void setVariant(String[] args) {
@@ -106,6 +110,24 @@ public class CommandExecutor implements CommandHandler {
     private void setMaxPlayers(String[] args) {
         System.out.println("Setting max players");
         player.getLobby().setMaxPlayers(Integer.parseInt(args[1]));
+    }
+
+    private void loadSaved(String[] args) {
+        System.out.println("Loading saved game with id " + args[1]);
+        Lobby lobby  = GamesManager.getInstance().restoreGame(Long.parseLong(args[1]));
+        if(lobby == null) {
+            player.sendMessage("ERROR: Game not found");
+            return;
+        }
+        lobby.addPlayer(player);
+        player.sendMessage("Loaded: " + args[1]);
+
+    }
+
+    private void saveGame(String[] args) {
+        System.out.println("Saving game");
+        Long id = GamesManager.getInstance().saveGame(player.getLobby());
+        player.sendMessage("Saved: " + id);
     }
 
 }

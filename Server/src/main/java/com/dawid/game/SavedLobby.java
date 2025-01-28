@@ -22,7 +22,7 @@ public class SavedLobby extends Lobby {
             if (player.isBot()) {
                 BotPlayer bot = new BotPlayer(System.out);
                 CommandHandler.create(bot);
-                this.players.add(bot);
+                this.addPlayer(bot);
             }
         }
         for (Move move : info.getMoves()) {
@@ -56,7 +56,7 @@ public class SavedLobby extends Lobby {
             variant.initializeGame(this);
             GamesManager.getInstance().removeLobby(this);
             for(String move : moveHistory) {
-                notifyAll(move);
+                notifyAllNoHistory(move);
             }
             turnController.getCurrrentPlayer().sendMessage("TURN");
         }

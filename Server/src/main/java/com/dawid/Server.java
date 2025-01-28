@@ -69,7 +69,8 @@ public class Server {
                     clientInputHandler.exec(in.nextLine());
                 }
             } catch (Exception e) {
-                System.out.println("Error:" + socket);
+                e.printStackTrace();
+                //System.out.println("Error:" + socket);
             } finally {
                 try {
                     socket.close();

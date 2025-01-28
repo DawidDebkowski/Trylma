@@ -125,6 +125,7 @@ public class GameSceneController extends BaseController {
     }
 
     @FXML
-    //TODO: implement
-    protected void onSaveClicked() {}
+    protected void onSaveClicked() {
+        client.getServerCommands().saveGame();
+    }
 }
