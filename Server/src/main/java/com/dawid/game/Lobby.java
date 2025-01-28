@@ -1,7 +1,9 @@
 package com.dawid.game;
 
 import com.dawid.CommandHandler;
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.*;
 
@@ -21,6 +23,8 @@ public class Lobby {
 
     @Getter
     protected final List<Player> players;
+    @Getter
+    @Setter
     protected int maxPlayers;
     protected final List<String> moveHistory = new ArrayList<>();
     protected GameVariant variant;

@@ -28,6 +28,7 @@ public class SceneManager {
         scenes.put(States.MENU, "menuScene.fxml");
         scenes.put(States.PLAYING, "gameScene.fxml");
         scenes.put(States.LOBBY, "lobbyScene.fxml");
+        scenes.put(States.SAVED_LOBBY, "savedLobbyScene.fxml");
 
         stage.setTitle("Trylma Chinese Checkers by Ćmolud (TM)");
         stage.show();

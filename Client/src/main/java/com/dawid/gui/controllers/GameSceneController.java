@@ -123,4 +123,8 @@ public class GameSceneController extends BaseController {
     public GameEngine getGameEngine() {
         return gameEngine;
     }
+
+    @FXML
+    //TODO: implement
+    protected void onSaveClicked() {}
 }
