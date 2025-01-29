@@ -15,7 +15,7 @@ public class DeepDistanceBotStrategy implements IBotStrategy {
     private BotPlayer botPlayer;
     private Board board;
     private GameEngine gameEngine;
-    private Coordinates lastTargetMove;
+    private Coordinates[] lastTargetMove;
 
     /**
      * BAD STRATEGY - CANT WIN
@@ -71,12 +71,12 @@ public class DeepDistanceBotStrategy implements IBotStrategy {
 
         finalMove = finalMoves[bestMoveIndex];
 
-        if(lastTargetMove != null && Coordinates.isEqual(lastTargetMove, finalMove[0])) {
+        if(lastTargetMove != null && Coordinates.isEqual(lastTargetMove[0], finalMove[0]) && Coordinates.isEqual(lastTargetMove[1], finalMove[1])) {
             skipLimit++;
         } else {
             skipLimit = 0;
         }
-        lastTargetMove = finalMove[0];
+        lastTargetMove = finalMove;
         return finalMove;
     }
 
@@ -129,6 +129,12 @@ public class DeepDistanceBotStrategy implements IBotStrategy {
                 foreignHomePenalty += 50;
             }
         }
+        //enter win
+        if(startField.getHome() == 0) {
+            if(targetField.getHome() == botPlayer.getWinFieldID()) {
+                foreignHomePenalty += -50;
+            }
+        }
 
         // foreign home penalty
         if(targetField.getHome() != 0) {
@@ -139,7 +145,7 @@ public class DeepDistanceBotStrategy implements IBotStrategy {
 
         // repeating moves penalty
         if(lastTargetMove != null) {
-            if(Coordinates.isEqual(lastTargetMove, board.getCoordinates(targetField))) {
+            if(Coordinates.isEqual(lastTargetMove[0], board.getCoordinates(targetField)) && Coordinates.isEqual(lastTargetMove[1], board.getCoordinates(startField))) {
                 sameMovePenalty = 100;
 //                System.out.println("sameMovePenalty: " + sameMovePenalty);
             }

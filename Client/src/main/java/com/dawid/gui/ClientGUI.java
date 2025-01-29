@@ -35,8 +35,8 @@ public class ClientGUI extends Application implements IServerClient, IClient {
         connect("localhost", 5005);
         communicator.create();
         Thread.sleep(1000);
-        communicator.setMaxPlayers(4);
-        communicator.startGame();
+        communicator.setMaxPlayers(6);
+//        communicator.startGame();
     }
 
     public static void main(String[] args) {

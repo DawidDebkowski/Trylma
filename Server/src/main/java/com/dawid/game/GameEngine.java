@@ -3,6 +3,7 @@ package com.dawid.game;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * This class will control how the game is played.
@@ -21,6 +22,8 @@ public class GameEngine {
     Board board;
     // Game Variant
     IVariantController variantController;
+    ArrayList<Player> winners = new ArrayList<>();
+
 
     boolean isMyTurn = false;
 
@@ -66,7 +69,9 @@ public class GameEngine {
 
         Player winner = variantController.checkWin();
         if(winner != null) {
-            System.out.println("[GameEngine]:" + player + " won");
+            if(winners.contains(winner)) { return;}
+            winners.add(winner);
+            System.out.println("[GameEngine]:" + winner.id + " won");
         }
     }
 
@@ -124,6 +129,14 @@ public class GameEngine {
      * @return collection of possible move coordinates
      */
     public Collection<Coordinates> getPossibleMoves(Coordinates c) {
+        boolean didWin = false;
+        for(Player player : winners) {
+            if(player.id == playerID) {
+                didWin = true;
+                break;
+            }
+        }
+        if(didWin) {return null;}
         Field field = board.getField(c.getRow(), c.getColumn());
         Collection<Field> possibleMoves = variantController.getPossibleMoves(field);
         Collection<Coordinates> possibleMovesList = new ArrayList<>();

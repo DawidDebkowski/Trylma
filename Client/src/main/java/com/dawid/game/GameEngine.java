@@ -3,9 +3,9 @@ package com.dawid.game;
 import com.dawid.IClient;
 import com.dawid.gui.ClientGUI;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * This class will control how the game is played.
@@ -23,6 +23,9 @@ public class GameEngine {
     // Game Variant
     IVariantController variantController;
     IClient client;
+    List<Function<Integer, String>> listeners;
+
+    ArrayList<Player> winners = new ArrayList<>();
 
     boolean isMyTurn = false;
 
@@ -31,6 +34,7 @@ public class GameEngine {
         this.variantController = variantController;
         this.playerID = playerNumber;
         this.client = client;
+        listeners = new ArrayList<>();
     }
 
     public void startGame() {
@@ -69,8 +73,17 @@ public class GameEngine {
 
         Player winner = variantController.checkWin();
         if(winner != null) {
-            System.out.println("[GameEngine]:" + player + " won");
+            if(winners.contains(winner)) { return;}
+            winners.add(winner);
+            System.out.println("[GameEngine]:" + winner.id + " won");
+            for(Function<Integer, String> listener : listeners) {
+                listener.apply(winner.id);
+            }
         }
+    }
+
+    public void addListener(Function<Integer, String> listener) {
+        listeners.add(listener);
     }
 
     /**
@@ -128,6 +141,16 @@ public class GameEngine {
      * @return collection of possible move coordinates
      */
     public Collection<Coordinates> getPossibleMoves(Coordinates c) {
+        //if you won you can't move
+        boolean didWin = false;
+        for(Player player : winners) {
+            if(player.id == playerID) {
+                didWin = true;
+                break;
+            }
+        }
+        if(didWin) {return null;}
+
         Field field = board.getField(c.getRow(), c.getColumn());
         Collection<Field> possibleMoves = variantController.getPossibleMoves(field);
         Collection<Coordinates> possibleMovesList = new ArrayList<>();

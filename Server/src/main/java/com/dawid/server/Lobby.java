@@ -84,7 +84,7 @@ public class Lobby {
         List<BotPlayer> bots = new ArrayList<>();
         for (int i = 0; i < toAdd; i++) {
             BotPlayer bot = null;
-            if(i < 10) {
+            if(i < 2) {
                  bot = new BotPlayer(System.out, gameEngine, new DeepDistanceBotStrategy());
             } else {
                  bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());

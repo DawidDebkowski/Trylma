@@ -4,6 +4,7 @@ import com.dawid.game.Board;
 import com.dawid.game.Coordinates;
 import com.dawid.game.GameEngine;
 import com.dawid.gui.components.GUIField;
+import com.dawid.gui.components.WinAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -26,6 +27,8 @@ import java.util.Map;
 public class GameSceneController extends BaseController {
     @FXML
     private BorderPane mainBorderPane;
+
+    private WinAlert winAlert;
 
     @FXML
     protected Rectangle turnIndicator;
@@ -57,6 +60,10 @@ public class GameSceneController extends BaseController {
         mainGrid.setAlignment(Pos.CENTER);
         mainGrid.setHgap(0);
         mainGrid.setVgap(10);
+
+        WinAlert alert = new WinAlert(gameEngine.getMyPlayerID());
+        gameEngine.addListener(alert::showAlert);
+        winAlert = alert;
     }
 
     public void initialiseBoard(Board board) {
@@ -108,7 +115,7 @@ public class GameSceneController extends BaseController {
         for (Coordinates c : coordinates) {
             GUIField guiField = fields[c.getRow()][c.getColumn()];
             if(guiField != null) {
-                guiField.setFill(Color.BLUEVIOLET.brighter());
+//                guiField.setFill(Color.BLUEVIOLET.brighter());
                 lastHighlighted.add(guiField);
             }
         }
