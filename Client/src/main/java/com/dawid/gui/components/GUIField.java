@@ -109,5 +109,6 @@ public class GUIField extends Circle {
     public void refresh() {
         this.setFill(GameSceneController.playerColors.get(field.getPawn()));
         this.setStroke(GameSceneController.playerColors.get(field.getHome()));
+        this.setOpacity(1);
     }
 }
