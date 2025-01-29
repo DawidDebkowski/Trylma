@@ -117,11 +117,6 @@ public class Lobby {
             }
             addPlayer(bot);
             bots.add(bot);
-//            Scanner in = new Scanner(socket.getInputStream());
-//            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-//            while (in.hasNextLine()) {
-//                clientInputHandler.exec(in.nextLine());
-//            }
         }
 
         // zaczynamy gre zeby GameEngine ustawil pionki itp
@@ -158,7 +153,11 @@ public class Lobby {
             notifyAll("ERROR: Incorrect number of players");
         }
         for (String move : moveHistory) {
-            notifyAllNoHistory(move);
+            String[] args = move.split(" ");
+            args[0] = args[2];
+            args[1] = args[3];
+            args[2] = args[4];
+            forceMoveNoHistory(getPlayer(Integer.parseInt(move.split(" ")[1])), args);
         }
     }
     /**
