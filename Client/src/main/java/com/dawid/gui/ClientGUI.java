@@ -32,10 +32,10 @@ public class ClientGUI extends Application implements IServerClient, IClient {
         lobbies = new ArrayList<>();
 
         //test
-        connect("localhost", 5005);
-        communicator.create();
-        Thread.sleep(1000);
-        communicator.setMaxPlayers(6);
+//        connect("localhost", 5005);
+//        communicator.create();
+//        Thread.sleep(1000);
+//        communicator.setMaxPlayers(6);
 //        communicator.startGame();
     }
 

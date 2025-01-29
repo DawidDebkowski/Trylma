@@ -110,10 +110,10 @@ public class Lobby {
         List<BotPlayer> bots = new ArrayList<>();
         for (int i = 0; i < toAdd; i++) {
             BotPlayer bot = null;
-            if(i < 2) {
-                 bot = new BotPlayer(System.out, gameEngine, new DeepDistanceBotStrategy());
+            if (i < 2) {
+                bot = new BotPlayer(System.out, gameEngine, new DeepDistanceBotStrategy());
             } else {
-                 bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());
+                bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());
             }
             addPlayer(bot);
             bots.add(bot);
@@ -128,7 +128,6 @@ public class Lobby {
         gameEngine.startGame();
 
 
-
         if (board.correctPlayerCount(this.getPlayerCount())) {
             inGame = true;
 //            notifyAll("Started game");
@@ -140,12 +139,12 @@ public class Lobby {
                 com.dawid.game.Player gamePlayer = iterator.next();
                 player.setNumber(gamePlayer.getHomeField());
                 player.setWinFieldID(gamePlayer.getWinField());
-                if(variant.getVariant() == Variant.ORDER_CHAOS) {
+                if (variant.getVariant() == Variant.ORDER_CHAOS) {
                     player.setNumber(gamePlayer.getWinField());
                     player.setWinFieldID(gamePlayer.getHomeField());
                 }
             }
-            for(BotPlayer botPlayer : bots) {
+            for (BotPlayer botPlayer : bots) {
                 botPlayer.setupBoard(board);
             }
             //TODO: modify to use this method
@@ -158,8 +157,10 @@ public class Lobby {
         } else {
             notifyAll("ERROR: Incorrect number of players");
         }
+        for (String move : moveHistory) {
+            notifyAllNoHistory(move);
+        }
     }
-
     /**
      * Ends the game.
      */
@@ -192,6 +193,12 @@ public class Lobby {
         //for now, we assume that this won't fail
         movePawnOnBoard(player.getNumber(), Coordinates.fromString(args[1]), Coordinates.fromString(args[2]));
     }
+    public void forceMoveNoHistory(Player player, String[] args) {
+        player.getLobby().notifyAllNoHistory("Moved: Player " + player.getNumber() + " " + String.join(" ", args));
+        //for now, we assume that this won't fail
+        movePawnOnBoard(player.getNumber(), Coordinates.fromString(args[1]), Coordinates.fromString(args[2]));
+    }
+
 
     public Player getPlayer(int number) {
         for (Player player : players) {

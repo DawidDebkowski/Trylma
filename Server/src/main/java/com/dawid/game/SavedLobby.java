@@ -20,15 +20,15 @@ public class SavedLobby extends Lobby {
     public SavedLobby(GameInformation info) {
         super(info.getVariant());
         currentPlayer = info.getCurrentPlayer();
-        gameEngine = new GameEngine(board, new NormalVariantController(board, maxPlayers), -1);
-        List<PlayerEntity> players = info.getPlayers();
-        for (PlayerEntity player : players) {
-            if (player.isBot()) {
-                BotPlayer bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());
-                CommandHandler.create(bot);
-                this.addPlayer(bot);
-            }
-        }
+//        gameEngine = new GameEngine(board, new NormalVariantController(board, maxPlayers), -1);
+//        List<PlayerEntity> players = info.getPlayers();
+//        for (PlayerEntity player : players) {
+//            if (player.isBot()) {
+//                BotPlayer bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());
+//                CommandHandler.create(bot);
+//                this.addPlayer(bot);
+//            }
+//        }
         for (Move move : info.getMoves()) {
             moveHistory.add(move.getMove());
         }
