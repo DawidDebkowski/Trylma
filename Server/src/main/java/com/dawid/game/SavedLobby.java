@@ -20,6 +20,8 @@ public class SavedLobby extends Lobby {
     public SavedLobby(GameInformation info) {
         super(info.getVariant());
         currentPlayer = info.getCurrentPlayer();
+        maxPlayers = info.getPlayers().size();
+
 //        gameEngine = new GameEngine(board, new NormalVariantController(board, maxPlayers), -1);
 //        List<PlayerEntity> players = info.getPlayers();
 //        for (PlayerEntity player : players) {
