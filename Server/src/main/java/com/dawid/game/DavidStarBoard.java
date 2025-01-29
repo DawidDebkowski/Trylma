@@ -39,7 +39,7 @@ public class DavidStarBoard implements Board {
         List<Field> nonHomeFields = new ArrayList<>();
         for (Field[] row : board) {
             for (Field field : row) {
-                if (field != null && field.getHome() == -1) {
+                if (field != null && field.getHome() == 0) {
                     nonHomeFields.add(field);
                 }
             }

@@ -35,6 +35,7 @@ public class CommandExecutor implements CommandHandler {
                 commands.get(args[0]).exec(args);
             } catch (IllegalArgumentException e) {
                 player.sendMessage("ERROR: " + e.getMessage());
+                e.printStackTrace();
             }
         }
         else {

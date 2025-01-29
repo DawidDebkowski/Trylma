@@ -114,13 +114,17 @@ public class Lobby {
                 com.dawid.game.Player gamePlayer = iterator.next();
                 player.setNumber(gamePlayer.getHomeField());
                 player.setWinFieldID(gamePlayer.getWinField());
+                if(variant.getVariant() == Variant.ORDER_CHAOS) {
+                    player.setNumber(gamePlayer.getWinField());
+                    player.setWinFieldID(gamePlayer.getHomeField());
+                }
                 player.sendMessage("Started " + player.getNumber() + " " + getPlayerCount() + " " + getVariant());
             }
-            variant.initializeGame(this);
-
             for(BotPlayer botPlayer : bots) {
                 botPlayer.setupBoard(board);
             }
+
+            variant.initializeGame(this);
 
             turnController.getCurrrentPlayer().makeTurn();
         } else {
@@ -154,6 +158,21 @@ public class Lobby {
         movePawnOnBoard(player.getNumber(), Coordinates.fromString(args[1]), Coordinates.fromString(args[2]));
         turnController.nextTurn();
         turnController.getCurrrentPlayer().makeTurn();
+    }
+
+    public void forceMove(Player player, String[] args) {
+        player.getLobby().notifyAll("Moved: Player " + player.getNumber() + " " + String.join(" ", args));
+        //for now, we assume that this won't fail
+        movePawnOnBoard(player.getNumber(), Coordinates.fromString(args[1]), Coordinates.fromString(args[2]));
+    }
+
+    public Player getPlayer(int number) {
+        for (Player player : players) {
+            if (player.getNumber() == number) {
+                return player;
+            }
+        }
+        return null;
     }
 
     private void movePawnOnBoard(int pawn, Coordinates from, Coordinates to) {

@@ -31,8 +31,10 @@ public class OrderOfChaosVariant implements GameVariant {
         Random random = new Random();
         for(Field field: playerHomeFields) {
             Field field2 = nonHomeFields.get(random.nextInt(nonHomeFields.size()));
-            lobby.notifyAll("Moved: Player " + field.getHome() + " MOVE " + board.getCoordinates(field) + " " + board.getCoordinates(field2));
-            System.out.println("Moved: Player MOVE " + field.getHome() + " MOVE " + board.getCoordinates(field) + " " + board.getCoordinates(field2));
+            System.out.println("Moved: Player MOVE " + field.getHome() + " MOVE " + board.getCoordinates(field) + " " + board.getCoordinates(field2).toString());
+//            lobby.notifyAll("Moved: Player " + field.getHome() + " MOVE " + board.getCoordinates(field).toString() + " " + board.getCoordinates(field2).toString());
+            String[] args = {"MOVE", board.getCoordinates(field).toString(), board.getCoordinates(field2).toString()};
+            lobby.forceMove(lobby.getPlayer(field.getHome()), args);
             nonHomeFields.remove(field2);
         }
 
