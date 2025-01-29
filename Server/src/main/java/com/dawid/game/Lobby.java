@@ -154,10 +154,11 @@ public class Lobby {
         }
         for (String move : moveHistory) {
             String[] args = move.split(" ");
-            args[0] = args[2];
-            args[1] = args[3];
-            args[2] = args[4];
-            forceMoveNoHistory(getPlayer(Integer.parseInt(move.split(" ")[1])), args);
+            args[0] = args[3];
+            args[1] = args[4];
+            args[2] = args[5];
+            System.out.println(move);
+            forceMoveNoHistory(getPlayer(Integer.parseInt(move.split(" ")[2])), args);
         }
     }
     /**
