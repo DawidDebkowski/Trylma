@@ -1,8 +1,7 @@
-package com.dawid.server.bot;
+package com.dawid.bot;
 
 import com.dawid.game.Board;
 import com.dawid.game.Coordinates;
-import com.dawid.game.Field;
 import com.dawid.game.GameEngine;
 
 public class SkipBotStrategy implements IBotStrategy{

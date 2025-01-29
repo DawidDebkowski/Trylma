@@ -1,7 +1,14 @@
-package com.dawid.server;
+package com.dawid.game;
+
+import com.dawid.entities.GameInformation;
+import com.dawid.services.GameService;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 /**
  * Manages the lobbies.
  * Singleton.
@@ -9,7 +16,16 @@ import java.util.List;
  */
 public class GamesManager {
     private static volatile GamesManager instance;
+    /**
+     * -- GETTER --
+     *  Returns the list of lobbies.
+     *
+     * @return The list of lobbies.
+     */
+    @Getter
     private final List<Lobby> lobbies;
+    @Setter
+    private GameService gameService;
     private GamesManager () {
         lobbies = new ArrayList<>();
     }
@@ -43,11 +59,11 @@ public class GamesManager {
         return lobbies.get(id);
     }
     /**
-     * Removes the lobby with the given id.
-     * @param id The id of the lobby to remove.
+     * Removes the lobby from visible ones.
+     * @param lobby The lobby of the lobby to remove.
      */
-    public void removeLobby(int id) {
-        lobbies.remove(id);
+    public void removeLobby(Lobby lobby) {
+        lobbies.remove(lobby);
     }
     /**
      * Returns whether a lobby with the given id exists.
@@ -77,9 +93,24 @@ public class GamesManager {
         }
         return -1;
     }
-    /**
-     * Returns the list of lobbies.
-     * @return The list of lobbies.
+    /*
+        * Saves the game to the database.
+        * @param lobby The lobby to save.
+        * @return The id of the saved game.
      */
-    public List<Lobby> getLobbies() {return lobbies;}
+    public Long saveGame(Lobby lobby) {
+        return gameService.saveGame(lobby);
+    }
+    /**
+     * Restores the game from the database.
+     * @param id The id of the game.
+     * @return The lobby
+     */
+    public Lobby restoreGame(Long id) {
+        Lobby lobby = gameService.getLobby(id);
+        if (lobby != null) {
+            addLobby(lobby);
+        }
+        return lobby;
+    }
 }

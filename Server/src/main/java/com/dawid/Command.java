@@ -1,4 +1,4 @@
-package com.dawid.server;
+package com.dawid;
 /**
  * Represents a command that can be executed by the server.
  */

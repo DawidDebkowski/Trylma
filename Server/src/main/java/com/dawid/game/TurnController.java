@@ -1,6 +1,6 @@
 package com.dawid.game;
 
-import com.dawid.server.Player;
+import com.dawid.Player;
 
 import java.util.List;
 /**
@@ -12,6 +12,10 @@ public class TurnController {
     public TurnController(List<Player> players) {
         this.players = players;
         currentPlayer = 0;
+    }
+    public TurnController(List<Player> players, int startingPlayer) {
+        this.players = players;
+        this.currentPlayer = startingPlayer;
     }
     /**
      * Returns the player whose turn it is.

@@ -130,4 +130,9 @@ public class GameSceneController extends BaseController {
     public GameEngine getGameEngine() {
         return gameEngine;
     }
+
+    @FXML
+    protected void onSaveClicked() {
+        client.getServerCommands().saveGame();
+    }
 }

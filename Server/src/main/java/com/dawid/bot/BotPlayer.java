@@ -1,7 +1,7 @@
-package com.dawid.server.bot;
+package com.dawid.bot;
 
 import com.dawid.game.*;
-import com.dawid.server.Player;
+import com.dawid.Player;
 
 import java.io.OutputStream;
 import java.util.Collection;

@@ -64,4 +64,15 @@ public interface IServerCommands {
      * @param maxPlayers max players
      */
     void setMaxPlayers(int maxPlayers);
+
+    /**
+     * Sends a load saved game request.
+     * @param saveName name of the save
+     */
+    void loadSavedGame(String saveName);
+
+    /**
+     * Sends a save game request.
+     */
+    void saveGame();
 }

@@ -1,9 +1,11 @@
-package com.dawid.server;
+package com.dawid.game;
 
-import com.dawid.game.*;
-import com.dawid.server.bot.BotPlayer;
-import com.dawid.server.bot.DistanceBotStrategy;
-import com.dawid.server.bot.DeepDistanceBotStrategy;
+import com.dawid.Player;
+import lombok.Getter;
+import lombok.Setter;
+import com.dawid.bot.BotPlayer;
+import com.dawid.bot.DistanceBotStrategy;
+import com.dawid.bot.DeepDistanceBotStrategy;
 
 import java.util.*;
 
@@ -12,15 +14,26 @@ import java.util.*;
  */
 public class Lobby {
     // We could use state pattern, but it's not necessary if only 2 states are possible
-    private boolean inGame = false;
-    private Board board;
-    private TurnController turnController;
-    private final List<Player> players;
-    private int maxPlayers;
-    private GameVariant variant;
-    private GameEngine gameEngine;
+    protected boolean inGame = false;
+    /**
+     * -- GETTER --
+     *  Returns the board of the game.
+     */
+    @Getter
+    protected final Board board;
+    protected TurnController turnController;
 
-    public Lobby(List<Player> players) {
+    @Getter
+    protected final List<Player> players;
+    @Getter
+    @Setter
+    protected int maxPlayers;
+
+    protected GameEngine gameEngine;
+
+    protected final List<String> moveHistory = new ArrayList<>();
+    protected GameVariant variant;
+    public Lobby(List<Player> players, Variant variant) {
         this.players = players;
         board = new DavidStarBoard();
         this.variant = Variant.getGameVariant(Variant.NORMAL);
@@ -33,13 +46,23 @@ public class Lobby {
         this.variant = Variant.getGameVariant(variant);
         maxPlayers = 6;
     }
-
+    public Lobby() {
+        this.players = new ArrayList<>();
+        //only DavidStarBoard is implemented
+        board = new DavidStarBoard();
+        this.variant = Variant.getGameVariant(Variant.NORMAL);
+    }
     /**
      * Notifies all players in the lobby.
-     *
      * @param message The message to send.
      */
     public void notifyAll(String message) {
+        for (Player player : players) {
+            player.sendMessage(message);
+        }
+        moveHistory.add(message);
+    }
+    public void notifyAllNoHistory(String message) {
         for (Player player : players) {
             player.sendMessage(message);
         }
@@ -47,7 +70,6 @@ public class Lobby {
 
     /**
      * Returns the number of players in the lobby.
-     *
      * @return The number of players in the lobby.
      */
     public int getPlayerCount() {
@@ -56,22 +78,26 @@ public class Lobby {
 
     /**
      * Adds a player to the lobby.
-     *
      * @param player The player to add.
      */
     public void addPlayer(Player player) {
         players.add(player);
         player.setLobby(this);
     }
-
     /**
      * Removes a player from the lobby.
-     *
      * @param player The player to remove.
      */
     public void removePlayer(Player player) {
         players.remove(player);
     }
+
+    protected void assignPlayerNumbers() {
+        Collection<Integer> playerNumbers = board.getPlayerNumbers(this.getPlayerCount());
+        Iterator<Integer> iterator = playerNumbers.iterator();
+        players.forEach(player -> player.setNumber(iterator.next()));
+    }
+
 
     /**
      * Starts the game.
@@ -118,15 +144,17 @@ public class Lobby {
                     player.setNumber(gamePlayer.getWinField());
                     player.setWinFieldID(gamePlayer.getHomeField());
                 }
-                player.sendMessage("Started " + player.getNumber() + " " + getPlayerCount() + " " + getVariant());
             }
             for(BotPlayer botPlayer : bots) {
                 botPlayer.setupBoard(board);
             }
-
+            //TODO: modify to use this method
+            // assignPlayerNumbers();
+            players.forEach(player -> player.sendMessage("Started " + player.getNumber() + " " + getPlayerCount() + " " + getVariant()));
             variant.initializeGame(this);
 
             turnController.getCurrrentPlayer().makeTurn();
+            GamesManager.getInstance().removeLobby(this);
         } else {
             notifyAll("ERROR: Incorrect number of players");
         }
@@ -141,7 +169,6 @@ public class Lobby {
 
     /**
      * Makes a move in the game.
-     *
      * @param player The player making the move.
      * @param args   The arguments of the move.
      */
@@ -190,31 +217,30 @@ public class Lobby {
         return variant.getVariant();
     }
 
-    /**
-     * Returns the board of the game.
-     */
-    public Board getBoard() {
-        return board;
-    }
 
     /**
      * Sets the variant of the game.
-     *
      * @param variant The variant of the game.
      */
     public void setVariant(Variant variant) {
         this.variant = Variant.getGameVariant(variant);
     }
 
-    /**
-     * Set the maximum number of players in the lobby.
-     *
-     * @param maxPlayers The maximum number of players in the lobby.
-     */
-    public void setMaxPlayers(int maxPlayers) {
-        this.maxPlayers = maxPlayers;
+    public List<String> getMoves() {
+        return moveHistory;
     }
-    public int getMaxPlayers() {
-        return maxPlayers;
+
+    public Integer getNumberOfHumanPlayers() {
+        int pl = 0;
+        for(Player player : players) {
+            if(!(player instanceof BotPlayer)) {
+                pl++;
+            }
+        }
+        return pl;
+    }
+
+    public int getCurrentPlayerNumber() {
+        return turnController.getCurrrentPlayer().getNumber();
     }
 }

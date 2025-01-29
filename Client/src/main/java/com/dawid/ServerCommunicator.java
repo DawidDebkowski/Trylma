@@ -85,6 +85,8 @@ public class ServerCommunicator implements IServerCommands {
             protocol.put("Moved:", this::receiveMove);
             protocol.put("Lobbies:", this::receiveLobbies);
             protocol.put("TURN", this::receiveTurn);
+            protocol.put("Loaded:", (message) -> client.changeState(States.SAVED_LOBBY));
+            protocol.put("Saved:", this::receiveSave);
 
         }
 
@@ -95,6 +97,10 @@ public class ServerCommunicator implements IServerCommands {
             Board board = new DavidStarBoard();
             Variant variant = Variant.getVariantByName(args[3]);
             client.startGame(playerID, board, variant, maxPlayers);
+        }
+
+        private void receiveSave(String[] args) {
+            client.message("Game saved with ID " + args[1]);
         }
 
         private void receiveTurn(String[] args) {
@@ -182,5 +188,15 @@ public class ServerCommunicator implements IServerCommands {
     @Override
     public void setMaxPlayers(int maxPlayers) {
         out.println("MAX_PLAYERS " + maxPlayers);
+    }
+
+    @Override
+    public void loadSavedGame(String savedId) {
+        out.println("LOAD " + savedId);
+    }
+
+    @Override
+    public void saveGame() {
+        out.println("SAVE");
     }
 }

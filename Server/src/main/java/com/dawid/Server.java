@@ -1,10 +1,13 @@
-package com.dawid.server;
+package com.dawid;
 
 import com.dawid.game.DavidStarBoard;
-import com.dawid.game.Variant;
+import com.dawid.game.GamesManager;
+import com.dawid.services.GameService;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -19,12 +22,13 @@ import java.util.concurrent.Executors;
  * The server uses the Player class to send messages to clients.
  * The server uses the Lobby class to manage the game state.
  */
+@SpringBootApplication
 public class Server {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(Server.class, args);
+        GameService gameService = context.getBean(GameService.class);
+        GamesManager.getInstance().setGameService(gameService);
         DavidStarBoard board = new DavidStarBoard();
-        for(int i = 1; i <= 6; i++) {
-            System.out.println(board.getHomeFields(i));
-        }
         final int port = 5005;
         int maxThreads;
         try {
@@ -40,6 +44,9 @@ public class Server {
                     pool.execute(new Capitalizer(listener.accept()));
                 }
             }
+        catch (IOException e) {
+            System.out.println("Error starting the server");
+        }
         }
 
     private static class Capitalizer implements Runnable {
@@ -60,8 +67,8 @@ public class Server {
                     clientInputHandler.exec(in.nextLine());
                 }
             } catch (Exception e) {
-                System.out.println("Error:" + socket);
                 e.printStackTrace();
+                //System.out.println("Error:" + socket);
             } finally {
                 try {
                     socket.close();

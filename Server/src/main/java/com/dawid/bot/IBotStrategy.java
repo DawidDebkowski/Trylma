@@ -1,4 +1,4 @@
-package com.dawid.server.bot;
+package com.dawid.bot;
 
 import com.dawid.game.Board;
 import com.dawid.game.Coordinates;

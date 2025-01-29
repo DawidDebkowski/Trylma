@@ -44,6 +44,7 @@
    <top>
       <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="423.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
+            <Button mnemonicParsing="false" onAction="#onLoadSavedButtonClicked" text="Load saved" />
             <Button mnemonicParsing="false" onAction="#onNewGameClicked" text="New Game" />
             <Button mnemonicParsing="false" onAction="#onRefreshButtonClick" text="Refresh" />
          </children>

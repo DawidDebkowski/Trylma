@@ -1,6 +1,5 @@
 package com.dawid.game;
 
-import com.dawid.server.Lobby;
 /**
  * Represents a game variant.
  */
