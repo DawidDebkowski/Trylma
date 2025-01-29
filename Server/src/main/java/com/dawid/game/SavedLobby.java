@@ -1,6 +1,7 @@
 package com.dawid.game;
 
 import com.dawid.CommandHandler;
+import com.dawid.Player;
 import com.dawid.entities.GameInformation;
 import com.dawid.entities.Move;
 import com.dawid.entities.PlayerEntity;

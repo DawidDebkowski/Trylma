@@ -1,5 +1,7 @@
 package com.dawid.game;
 
+import com.dawid.Player;
+
 import java.io.OutputStream;
 
 public class BotPlayer extends Player {

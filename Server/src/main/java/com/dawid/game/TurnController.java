@@ -1,5 +1,7 @@
 package com.dawid.game;
 
+import com.dawid.Player;
+
 import java.util.List;
 /**
  * Keeps track of whose turn it is.

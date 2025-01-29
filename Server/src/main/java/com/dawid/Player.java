@@ -1,6 +1,7 @@
-package com.dawid.game;
+package com.dawid;
 
 
+import com.dawid.game.Lobby;
 import lombok.Getter;
 import lombok.Setter;
 

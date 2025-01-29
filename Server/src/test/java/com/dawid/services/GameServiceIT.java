@@ -1,9 +1,8 @@
 package com.dawid.services;
 
-import com.dawid.entities.GameInformation;
 import com.dawid.game.BotPlayer;
 import com.dawid.game.Lobby;
-import com.dawid.game.Player;
+import com.dawid.Player;
 import com.dawid.game.Variant;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -11,9 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;

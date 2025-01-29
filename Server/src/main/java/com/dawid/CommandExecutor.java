@@ -2,7 +2,6 @@ package com.dawid;
 
 import com.dawid.game.GamesManager;
 import com.dawid.game.Lobby;
-import com.dawid.game.Player;
 import com.dawid.game.Variant;
 
 import java.util.Collection;

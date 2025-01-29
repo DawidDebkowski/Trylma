@@ -2,14 +2,12 @@ package com.dawid;
 
 import com.dawid.game.DavidStarBoard;
 import com.dawid.game.GamesManager;
-import com.dawid.game.Player;
 import com.dawid.services.GameService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;

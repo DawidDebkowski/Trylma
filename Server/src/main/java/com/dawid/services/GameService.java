@@ -4,7 +4,7 @@ import com.dawid.entities.Move;
 import com.dawid.entities.PlayerEntity;
 import com.dawid.game.BotPlayer;
 import com.dawid.game.Lobby;
-import com.dawid.game.Player;
+import com.dawid.Player;
 import com.dawid.game.SavedLobby;
 import com.dawid.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;

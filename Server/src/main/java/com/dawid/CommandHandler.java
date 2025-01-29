@@ -1,7 +1,5 @@
 package com.dawid;
 
-import com.dawid.game.Player;
-
 public interface CommandHandler {
     /**
      * Executes the command and returns response.
