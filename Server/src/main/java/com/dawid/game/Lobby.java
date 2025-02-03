@@ -111,9 +111,9 @@ public class Lobby {
         for (int i = 0; i < toAdd; i++) {
             BotPlayer bot = null;
             if (i < 2) {
-                bot = new BotPlayer(System.out, gameEngine, new DeepDistanceBotStrategy());
-            } else {
                 bot = new BotPlayer(System.out, gameEngine, new DistanceBotStrategy());
+            } else {
+                bot = new BotPlayer(System.out, gameEngine, new DeepDistanceBotStrategy());
             }
             addPlayer(bot);
             bots.add(bot);

@@ -104,6 +104,7 @@ public class GUIField extends Circle {
 
         // Handle drag done
         this.setOnDragDone(DragEvent::consume);
+        
     }
 
     public void refresh() {

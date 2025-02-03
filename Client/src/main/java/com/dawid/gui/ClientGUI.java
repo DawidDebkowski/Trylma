@@ -31,7 +31,7 @@ public class ClientGUI extends Application implements IServerClient, IClient {
         communicator = new ServerCommunicator(this);
         lobbies = new ArrayList<>();
 
-        connect("localhost", 5005);
+//        connect("localhost", 5005);
         //test
         //communicator.create();
 //        Thread.sleep(1000);

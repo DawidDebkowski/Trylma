@@ -1,5 +1,7 @@
 package com.dawid.game;
 
+import com.dawid.Player;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,7 +33,13 @@ public class OrderOfChaosVariant implements GameVariant {
             System.out.println("Moved: Player MOVE " + field.getHome() + " MOVE " + board.getCoordinates(field) + " " + board.getCoordinates(field2).toString());
 //            lobby.notifyAll("Moved: Player " + field.getHome() + " MOVE " + board.getCoordinates(field).toString() + " " + board.getCoordinates(field2).toString());
             String[] args = {"MOVE", board.getCoordinates(field).toString(), board.getCoordinates(field2).toString()};
-            lobby.forceMove(lobby.getPlayer(field.getHome()), args);
+            Player player = lobby.getPlayer(field.getHome());
+            if(player != null) {
+                lobby.forceMove(player, args);
+
+            }else {
+                System.out.println("Player " + field.getHome() + " not found");
+            }
             nonHomeFields.remove(field2);
         }
 
